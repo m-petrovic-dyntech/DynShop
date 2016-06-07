@@ -26,4 +26,8 @@
       org.springframework.security.web.session.HttpSessionEventPublisher
     </listener-class>
 </listener>
+	<session-config>
+		<session-timeout>30</session-timeout>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
 </web-app>

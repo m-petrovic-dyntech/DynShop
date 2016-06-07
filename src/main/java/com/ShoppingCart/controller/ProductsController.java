@@ -63,8 +63,10 @@ public class ProductsController {
 		items.add(item);
 		ShoppingCart janinaKolica = new ShoppingCart();
 		janinaKolica.setItems(items);
+		janinaKolica.setTotalCost(55.0);
 		
 		session.setAttribute("cart", janinaKolica);
+		System.out.println("****"+session.getAttribute("cart"));
 		
 		return modelAndView;
 	}
