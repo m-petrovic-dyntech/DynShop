@@ -30,6 +30,12 @@
 			<security:concurrency-control max-sessions="1" expired-url="/expiredSession" />
 		</security:session-management>
 	</security:http>
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+	
 
 </beans>
     
