@@ -27,41 +27,24 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	  this.sessionFactory = sessionFactory;
 	}
 	 
-	public Session getSessionFactory() {
+	public Session getSession() {
 	  return sessionFactory.getCurrentSession();
 	}
 
-	@Transactional
-	@Override
-	public void testWithHibernate() {
-		
-		Session session = sessionFactory.getCurrentSession();
-		
-		EntityTest instance = new EntityTest();
-
-		instance.setInstanceId(999);
-		instance.setRebootDate(null);
-		instance.setServiceName("TestTest");
-		instance.setInstanceName("x55555xxx");
-
-		session.save(instance); 
-				
-	}
-
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public ArrayList<Product> getProducts() {
-		
-		ArrayList<Product> results = (ArrayList<Product>) sessionFactory.getCurrentSession().createCriteria(Product.class).list();	
+		ArrayList<Product> results = (ArrayList<Product>)getSession().createCriteria(Product.class).list();	
 		return results;
 	}
 
 	@Transactional
 	@Override
 	public Product getProduct(int id) {
-		
-		Product product =  (Product) sessionFactory.getCurrentSession().createCriteria(Product.class).add(Restrictions.eq("id",id)).uniqueResult();
+		Product product =  (Product)getSession().createCriteria(Product.class).add(Restrictions.eq("id",id)).uniqueResult();
 		return product;
+		
 	}
 
 }

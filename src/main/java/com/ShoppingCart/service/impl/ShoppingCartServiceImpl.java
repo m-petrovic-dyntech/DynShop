@@ -24,11 +24,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public void testHibernate() {
-		shoppingCartDao.testWithHibernate();
-	}
-
-	@Override
 	public ArrayList<Product> getProducts() {
 		
 		return shoppingCartDao.getProducts();

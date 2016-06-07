@@ -6,8 +6,6 @@ import com.ShoppingCart.entity.Product;
 
 public interface ShoppingCartDao {
 
-	public void testWithHibernate();
-
 	public ArrayList<Product> getProducts();
 
 	public Product getProduct(int id); 
