@@ -41,19 +41,12 @@
 		</property>
 	</bean>
 
-	<!-- <bean id="hib" class="com.ShoppingCart.service.HibernateTestService">
-		<property ref="shoppingCartDao" name="dao" />
-	</bean> -->
-	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
-		<property name="dataSource" ref="dataSource"></property> </bean> -->
-
 	<!-- Services -->
 	<bean name="shoppingCartService" class="com.ShoppingCart.service.impl.ShoppingCartServiceImpl"></bean>
 	<!-- <bean name="userService" class="dyntech.smashconsole.service.impl.UserServiceImpl"></bean> -->
 
 	<!-- DAO -->
 	<bean name="shoppingCartDao" class="com.ShoppingCart.dao.impl.ShoppingCartDaoImpl">
-		<!-- <property name="dataSource" ref="dataSource" /> -->
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

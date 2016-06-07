@@ -33,7 +33,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		session.beginTransaction();
 		EntityTest instance = new EntityTest();
 
 		instance.setInstanceId(999);
