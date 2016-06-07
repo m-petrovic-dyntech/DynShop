@@ -11,3 +11,5 @@
 .settings/org.eclipse.wst.validation.prefs
 .settings/org.jboss.ide.eclipse.as.core.prefs
 /target/
+src/main/webapp/WEB-INF/css/.sass-cache/
+src/main/webapp/WEB-INF/css/main.css.map
