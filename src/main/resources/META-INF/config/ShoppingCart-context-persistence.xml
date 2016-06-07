@@ -25,6 +25,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<!-- Commented -->
 				<!--<prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
 				<prop key="hibernate.connection.url">jdbc:oracle:thin:@192.168.60.16:1521:xe</prop>
 				<prop key="hibernate.connection.username">DYNTECH_SHOP</prop>
