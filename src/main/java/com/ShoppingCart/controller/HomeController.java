@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ShoppingCart.entity.Product;
 
 @Controller
-@RequestMapping(path = "/")
 public class HomeController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
