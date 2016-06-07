@@ -10,30 +10,17 @@
 
 
 	<!-- Local DataSource -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${database.driverClassName}" />
 		<property name="url" value="${database.url}" />
 		<property name="username" value="${database.username}" />
 		<property name="password" value="${database.password}" />
-		<property name="defaultAutoCommit" value="false" />
 	</bean>
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
-				<!-- Commented -->
-				<!--<prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
-				<prop key="hibernate.connection.url">jdbc:oracle:thin:@192.168.60.16:1521:xe</prop>
-				<prop key="hibernate.connection.username">DYNTECH_SHOP</prop>
-				<prop key="hibernate.connection.password">dyntech</prop>-->
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hbm2ddl.auto">update</prop>
-			</props>
-		</property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 		<property name="packagesToScan">
 			<list>
 				<value>com.ShoppingCart.entity</value>
