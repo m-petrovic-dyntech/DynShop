@@ -24,10 +24,13 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect
-				</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<!--<prop key="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</prop>
+				<prop key="hibernate.connection.url">jdbc:oracle:thin:@192.168.60.16:1521:xe</prop>
+				<prop key="hibernate.connection.username">DYNTECH_SHOP</prop>
+				<prop key="hibernate.connection.password">dyntech</prop>-->
 				<prop key="hibernate.show_sql">true</prop>
-				<!--<prop key="hbm2ddl.auto">update</prop> -->
+				<prop key="hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 		<property name="packagesToScan">

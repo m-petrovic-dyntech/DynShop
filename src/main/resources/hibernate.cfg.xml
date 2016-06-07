@@ -3,13 +3,14 @@
 "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
- <session-factory>
-  <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
-  <property name="hibernate.connection.url">jdbc:oracle:thin:@127.0.0.1:1521:xe</property>
-  <property name="hibernate.connection.username">SMASH_KIREY</property>
-  <property name="hibernate.connection.password">kirey</property>
-  <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
-  <!--  <property name="hibernate.default_schema">MKYONG</property> --> 
-  <property name="show_sql">true</property>
-</session-factory>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>  
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@192.168.60.16:1521:xe</property>
+		<property name="hibernate.connection.username">DYNTECH_SHOP</property>
+		<property name="hibernate.connection.password">dyntech</property>
+		<!--<property name="hibernate.default_schema">MKYONG</property>-->
+		<property name="hbm2ddl.auto">update</property>
+		<property name="show_sql">true</property>
+	</session-factory>
 </hibernate-configuration>

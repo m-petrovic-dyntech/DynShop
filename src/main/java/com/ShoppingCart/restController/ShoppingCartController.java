@@ -25,7 +25,7 @@ public class ShoppingCartController {
 	public ResponseEntity<String> test() {
 	
 		System.out.println("*******");
-		shoppingCartService.testHibernate();
+		//shoppingCartService.testHibernate();
 		return new ResponseEntity<String>("SAVED!", HttpStatus.OK);
 	}
 	
