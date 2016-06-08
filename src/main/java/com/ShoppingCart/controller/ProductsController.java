@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.entity.Category;
@@ -34,20 +35,21 @@ public class ProductsController {
 	ShoppingCartService shoppingCartService;
 	
 	@RequestMapping(value = { "/products" }, method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView modelAndView) {
+	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category) {
 		
-		ArrayList<Product> products = shoppingCartService.getProducts();
-		Category category = new Category();
+		List<Product> products = shoppingCartService.getProducts(category);
+		
+		Category selectedCategory = shoppingCartService.getCategoryById(category);
+				
 		ArrayList<Category> categories= new ArrayList<>();
-		categories.add(category);
+		categories.add(selectedCategory);
 		categories.addAll(shoppingCartService.getCategories());
 				
-
 		modelAndView.setViewName("products");
 		
 	    modelAndView.addObject("products", products);
 	    modelAndView.addObject("categories", categories);
-	    modelAndView.addObject("category", category);
+	    modelAndView.addObject("category", selectedCategory);
 		return modelAndView;
 	}
 	

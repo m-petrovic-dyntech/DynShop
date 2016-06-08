@@ -8,12 +8,12 @@ import com.ShoppingCart.entity.Product;
 
 public interface ShoppingCartService {
 	
-	public ArrayList<Product> getProducts();
+	public List<Product> getProducts(Integer categoryId);
 
 	public Product getProduct(int id);
 	
 	public ArrayList<Category> getCategories();
 	
-	public Category getCategoryById(int id);
+	public Category getCategoryById(Integer id);
 
 }
