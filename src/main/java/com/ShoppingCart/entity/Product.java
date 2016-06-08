@@ -14,19 +14,19 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="id")
-	private Integer id;
+	public int id;
 	
 	@Column(name="name")
-	private String name;
-		
+	public String name;
+
 	@Column(name="description")
-	private String description;
+	public String description;
 	
 	@Column(name="price")
-	private Double price;
+	public Double price;
 	
 	@ManyToOne
-	private Category category;
+	public Category category;
 	
 	public Product() {}
 
@@ -36,11 +36,11 @@ public class Product {
 		this.category = category;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -66,5 +66,13 @@ public class Product {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

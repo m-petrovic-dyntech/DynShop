@@ -14,41 +14,41 @@ public class ShoppingCartItem {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="id")
-	private Integer id;
+	public int id;
 	
 	@Column(name="quantity")
-	private Integer quantity;
+	public int quantity;
 	
 	@Column(name="total")
-	private Double total;
+	public Double total;
 	
 	@ManyToOne
-	private Product product;
+	public Product product;
 	
 	@ManyToOne
-	private ShoppingCart shoppingCart;
+	public ShoppingCart shoppingCart;
 	
 	public ShoppingCartItem() {}
 
-	public ShoppingCartItem(Integer quantity, Double total, Product product) {
+	public ShoppingCartItem(int quantity, Double total, Product product) {
 		this.quantity = quantity;
 		this.total = total;
 		this.product = product;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Integer getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 

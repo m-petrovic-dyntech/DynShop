@@ -17,13 +17,13 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="id")
-	private Integer id;
+	public int id;
 	
 	@Column(name="name")
-	private String name;
+	public String name;
 	
 	@OneToMany(mappedBy="category")
-	private List<Product> products;
+	public List<Product> products;
 	
 	public Category() {}
 	
@@ -31,11 +31,11 @@ public class Category {
 		this.name = name;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -46,4 +46,10 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return this.getName();
+	}
+	
 }

@@ -1,10 +1,15 @@
 package com.ShoppingCart.service.impl;
+import java.util.ArrayList;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.dao.ShoppingCartDao;
+import com.ShoppingCart.entity.Category;
+import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.service.ShoppingCartService;
 
 @Service
@@ -21,7 +26,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public void testHibernate() {
-		shoppingCartDao.testWithHibernate();
+	public ArrayList<Product> getProducts() {
+		
+		return shoppingCartDao.getProducts();
+	}
+
+	@Override
+	public Product getProduct(int id) {
+		return shoppingCartDao.getProduct(id);
+	}
+
+	@Override
+	public ArrayList<Category> getCategories() {
+		
+		return shoppingCartDao.getCategories();
+	}
+
+	@Override
+	public ArrayList<Product> getProductsByCategory(int id) {
+		return shoppingCartDao.getProductsByCategory(id);
+		
 	}
 }
