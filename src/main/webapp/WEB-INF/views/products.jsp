@@ -9,7 +9,7 @@
                             <div id="products-filter" class="container-fluid row">
                                 <div class="col-md-4 row">
                                     <div class="form-group">
-                                        <form:select path="category" items="${categories}" itemValue="id" class="form-control input-sm"></form:select>
+                                        <form:select path="category" items="${categories}" itemValue="id" class="form-control input-sm" id="products-filter-select"></form:select>
                                     </div>
                                 </div>
                             </div>
@@ -31,3 +31,10 @@
                         </div>
                     </jsp:attribute>
                 </t:layout>
+                <script type="text/javascript">
+                $('#products-filter-select').change(function() {
+                    var tempSelected = $(this).find('option:selected').val()
+
+                    window.location.href = '${pageContext.request.contextPath}/products' + (tempSelected ? '?category=' + tempSelected : '');
+                })
+                </script>

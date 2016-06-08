@@ -37,8 +37,11 @@ public class ProductsController {
 	public ModelAndView home(ModelAndView modelAndView) {
 		
 		ArrayList<Product> products = shoppingCartService.getProducts();
-		ArrayList<Category> categories = shoppingCartService.getCategories();
 		Category category = new Category();
+		ArrayList<Category> categories= new ArrayList<>();
+		categories.add(category);
+		categories.addAll(shoppingCartService.getCategories());
+				
 
 		modelAndView.setViewName("products");
 		
