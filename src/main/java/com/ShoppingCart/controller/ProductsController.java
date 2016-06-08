@@ -39,34 +39,31 @@ public class ProductsController {
 		ArrayList<Product> products = shoppingCartService.getProducts();
 		ArrayList<Category> categories = shoppingCartService.getCategories();
 		Category category = new Category();
-		Category cat = shoppingCartService.getCategoryById(new Integer(4));
 
 		modelAndView.setViewName("products");
 		
 	    modelAndView.addObject("products", products);
 	    modelAndView.addObject("categories", categories);
 	    modelAndView.addObject("category", category);
-	    logger.debug("************" + Arrays.toString(cat.getProducts().toArray()) + "************");
 		return modelAndView;
 	}
 	
-	/*@RequestMapping(value = { "/products" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/products" }, method = RequestMethod.POST)
 	public ModelAndView getByCategory(@ModelAttribute("category")  Category category, ModelAndView modelAndView) {
 		
-		ArrayList<Product> sortedProducts = shoppingCartService.getProductsByCategory(category.getId());
+		Category cat = shoppingCartService.getCategoryById(new Integer(4));
 
-
-		
 		modelAndView.setViewName("products");
-		modelAndView.addObject("products", sortedProducts);
-		
+		modelAndView.addObject("products", cat);
+	    logger.debug("************" + Arrays.toString(cat.getProducts().toArray()) + "************");
+
 		return modelAndView;
-	}*/
+	}
 	
 	@RequestMapping(value = { "/products/{id}" }, method = RequestMethod.GET)
 	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id) {
 		
-		Product product = shoppingCartService.getProduct(id);//new ArrayList<>();
+		Product product = shoppingCartService.getProduct(id);
 				
 		System.out.println("******"+product.getName()+" u kategoriji "+product.getCategory().getName());
 		

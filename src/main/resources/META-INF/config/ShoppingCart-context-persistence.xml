@@ -10,7 +10,8 @@
 
 
 	<!-- Local DataSource -->
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${database.driverClassName}" />
 		<property name="url" value="${database.url}" />
 		<property name="username" value="${database.username}" />
@@ -27,6 +28,10 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean name="sessionUtil" class="com.ShoppingCart.util.SessionUtil">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 	<!-- Services -->
 	<bean name="shoppingCartService" class="com.ShoppingCart.service.impl.ShoppingCartServiceImpl"></bean>
@@ -34,7 +39,7 @@
 
 	<!-- DAO -->
 	<bean name="shoppingCartDao" class="com.ShoppingCart.dao.impl.ShoppingCartDaoImpl">
-		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="sessionUtil" ref="sessionUtil" />
 	</bean>
 
 	<bean id="transactionManager"
