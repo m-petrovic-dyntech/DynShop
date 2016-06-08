@@ -56,4 +56,11 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		return results;
 	}
 
+	@Transactional
+	@Override
+	public ArrayList<Product> getProductsByCategory(int id) {
+		ArrayList<Product> results = (ArrayList<Product>)getSession().createCriteria(Product.class).add(Restrictions.eq("category", id)).list();
+		return results;
+	}
+
 }

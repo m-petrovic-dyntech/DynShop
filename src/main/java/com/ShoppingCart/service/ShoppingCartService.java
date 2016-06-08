@@ -12,5 +12,7 @@ public interface ShoppingCartService {
 	public Product getProduct(int id);
 	
 	public ArrayList<Category> getCategories();
+	
+	public ArrayList<Product> getProductsByCategory(int id);
 
 }

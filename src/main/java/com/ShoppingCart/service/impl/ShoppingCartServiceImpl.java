@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public ArrayList<Category> getCategories() {
 		
 		return shoppingCartDao.getCategories();
+	}
+
+	@Override
+	public ArrayList<Product> getProductsByCategory(int id) {
+		return shoppingCartDao.getProductsByCategory(id);
+		
 	}
 }

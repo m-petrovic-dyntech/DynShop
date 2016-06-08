@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,17 +31,31 @@ public class ProductsController {
 	public ModelAndView home(ModelAndView modelAndView) {
 		
 		ArrayList<Product> products = shoppingCartService.getProducts();
-		ArrayList<Category> categories = shoppingCartService.getCategories();	
+		ArrayList<Category> categories = shoppingCartService.getCategories();
 		Category category = new Category();
-		
+		ArrayList<Product> sortedProducts = shoppingCartService.getProductsByCategory(4);
+
 		modelAndView.setViewName("products");
 		
 	    modelAndView.addObject("products", products);
 	    modelAndView.addObject("categories", categories);
 	    modelAndView.addObject("category", category);
-		
+		System.out.println("****0" + sortedProducts.toString());
 		return modelAndView;
 	}
+	
+	/*@RequestMapping(value = { "/products" }, method = RequestMethod.POST)
+	public ModelAndView getByCategory(@ModelAttribute("category")  Category category, ModelAndView modelAndView) {
+		
+		ArrayList<Product> sortedProducts = shoppingCartService.getProductsByCategory(category.getId());
+
+
+		
+		modelAndView.setViewName("products");
+		modelAndView.addObject("products", sortedProducts);
+		
+		return modelAndView;
+	}*/
 	
 	@RequestMapping(value = { "/products/{id}" }, method = RequestMethod.GET)
 	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id) {

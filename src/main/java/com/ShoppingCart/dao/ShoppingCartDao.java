@@ -13,4 +13,5 @@ public interface ShoppingCartDao {
 	
 	public ArrayList<Category> getCategories();
 	
-}
+	public ArrayList<Product> getProductsByCategory(int id);
+ }
