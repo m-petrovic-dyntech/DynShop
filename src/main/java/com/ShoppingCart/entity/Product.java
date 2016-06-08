@@ -12,35 +12,27 @@ import javax.persistence.Table;
 @Table(name="product")
 public class Product {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
-	public int id;
+	private Integer id;
 	
 	@Column(name="name")
-	public String name;
+	private String name;
 
 	@Column(name="description")
-	public String description;
+	private String description;
 	
 	@Column(name="price")
-	public Double price;
+	private Double price;
 	
 	@ManyToOne
-	public Category category;
-	
-	public Product() {}
+	private Category category;
 
-	public Product(String description, Double price, Category category) {
-		this.description = description;
-		this.price = price;
-		this.category = category;
-	}
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

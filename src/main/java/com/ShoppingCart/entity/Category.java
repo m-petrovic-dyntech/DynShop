@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -15,27 +15,21 @@ import javax.persistence.Table;
 @Table(name="category")
 public class Category {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
-	public int id;
+	private Integer id;
 	
 	@Column(name="name")
-	public String name;
+	private String name;
 	
-	@OneToMany(mappedBy="category")
-	public List<Product> products;
-	
-	public Category() {}
-	
-	public Category(String name) {
-		this.name = name;
-	}
+	@OneToMany(mappedBy="category", fetch = FetchType.EAGER)
+	private List<Product> products;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -45,6 +39,14 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
 	@Override

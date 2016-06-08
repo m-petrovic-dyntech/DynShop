@@ -1,10 +1,14 @@
 package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -21,8 +25,10 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.ShoppingCartService;
 
 @Controller
-@Scope("session")
+//@Scope("session")
 public class ProductsController {
+	
+	private final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired 
 	ShoppingCartService shoppingCartService;
@@ -33,14 +39,14 @@ public class ProductsController {
 		ArrayList<Product> products = shoppingCartService.getProducts();
 		ArrayList<Category> categories = shoppingCartService.getCategories();
 		Category category = new Category();
-		ArrayList<Product> sortedProducts = shoppingCartService.getProductsByCategory(4);
+		Category cat = shoppingCartService.getCategoryById(new Integer(4));
 
 		modelAndView.setViewName("products");
 		
 	    modelAndView.addObject("products", products);
 	    modelAndView.addObject("categories", categories);
 	    modelAndView.addObject("category", category);
-		System.out.println("****0" + sortedProducts.toString());
+	    logger.debug("************" + Arrays.toString(cat.getProducts().toArray()) + "************");
 		return modelAndView;
 	}
 	

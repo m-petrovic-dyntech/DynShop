@@ -1,6 +1,7 @@
 package com.ShoppingCart.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
@@ -13,5 +14,5 @@ public interface ShoppingCartDao {
 	
 	public ArrayList<Category> getCategories();
 	
-	public ArrayList<Product> getProductsByCategory(int id);
+	public Category getCategoryById(int id);
  }

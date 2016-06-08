@@ -1,9 +1,10 @@
 package com.ShoppingCart.service.impl;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +18,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Autowired
 	private ShoppingCartDao shoppingCartDao;
-	
-	/*
-	 public void setShoppingCartDao(ShoppingCartDao movieDao) {
-	  this.shoppingCartDao = movieDao;
-	 } */
 
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Override
 	public ArrayList<Product> getProducts() {
-		
 		return shoppingCartDao.getProducts();
 	}
 
@@ -38,13 +33,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public ArrayList<Category> getCategories() {
-		
 		return shoppingCartDao.getCategories();
 	}
 
 	@Override
-	public ArrayList<Product> getProductsByCategory(int id) {
-		return shoppingCartDao.getProductsByCategory(id);
-		
+	public Category getCategoryById(int id) {
+		return shoppingCartDao.getCategoryById(id);
 	}
 }

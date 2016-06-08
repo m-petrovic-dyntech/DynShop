@@ -12,12 +12,12 @@ import javax.persistence.Table;
 @Table(name="shoppingcartitem")
 public class ShoppingCartItem {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
-	public int id;
+	public Integer id;
 	
 	@Column(name="quantity")
-	public int quantity;
+	public Integer quantity;
 	
 	@Column(name="total")
 	public Double total;
@@ -27,20 +27,12 @@ public class ShoppingCartItem {
 	
 	@ManyToOne
 	public ShoppingCart shoppingCart;
-	
-	public ShoppingCartItem() {}
 
-	public ShoppingCartItem(int quantity, Double total, Product product) {
-		this.quantity = quantity;
-		this.total = total;
-		this.product = product;
-	}
-
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -48,7 +40,7 @@ public class ShoppingCartItem {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

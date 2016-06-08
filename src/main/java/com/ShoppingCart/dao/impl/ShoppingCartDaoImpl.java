@@ -1,6 +1,7 @@
 package com.ShoppingCart.dao.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
-import com.ShoppingCart.entity.EntityTest;
 import com.ShoppingCart.entity.Product;
 
 @Repository
@@ -29,7 +29,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	}
 	 
 	public Session getSession() {
-	  return sessionFactory.getCurrentSession();
+	  return sessionFactory.openSession();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -43,7 +43,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	@Override
 	public Product getProduct(int id) {
-		Product product =  (Product)getSession().createCriteria(Product.class).add(Restrictions.eq("id",id)).uniqueResult();
+		Product product = (Product)getSession().createCriteria(Product.class).add(Restrictions.eq("id",id)).uniqueResult();
 		return product;
 		
 	}
@@ -58,9 +58,9 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Transactional
 	@Override
-	public ArrayList<Product> getProductsByCategory(int id) {
-		ArrayList<Product> results = (ArrayList<Product>)getSession().createCriteria(Product.class).add(Restrictions.eq("category", id)).list();
-		return results;
+	public Category getCategoryById(int id) {
+		Category category = (Category)getSession().createCriteria(Category.class).add(Restrictions.eq("id", id)).uniqueResult();
+		return category;
 	}
 
 }
