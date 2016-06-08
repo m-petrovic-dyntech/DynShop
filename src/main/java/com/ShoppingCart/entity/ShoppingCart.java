@@ -1,7 +1,7 @@
 package com.ShoppingCart.entity;
 
+import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
-@Scope("session")
+//@Component
+//@Scope("session")
 @Entity
 @Table(name="shoppingcart")
 public class ShoppingCart {
@@ -33,12 +35,17 @@ public class ShoppingCart {
 	@OneToMany(mappedBy="shoppingCart")
 	private List<ShoppingCartItem> items;
 	
+	@Column(name="shoppingDate")
+	@Temporal(TemporalType.DATE)
+	private Date shoppingDate;
+	
 	public ShoppingCart() {}
 
-	public ShoppingCart(ShoppingCartItem shoppingCartItem, Double totalCost, List<ShoppingCartItem> items) {
+	public ShoppingCart(ShoppingCartItem shoppingCartItem, Double totalCost, List<ShoppingCartItem> items, Date date) {
 		this.shoppingCartItem = shoppingCartItem;
 		this.totalCost = totalCost;
 		this.items = items;
+		this.shoppingDate = date;
 	}
 
 	public Integer getId() {
@@ -71,6 +78,14 @@ public class ShoppingCart {
 
 	public void setItems(List<ShoppingCartItem> items) {
 		this.items = items;
+	}
+	
+	public Date getDate() {
+		return shoppingDate;
+	}
+
+	public void setDate(Date date) {
+		this.shoppingDate = date;
 	}
 
 	@Override
