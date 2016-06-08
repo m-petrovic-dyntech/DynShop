@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
@@ -28,10 +29,15 @@ public class ProductsController {
 	@RequestMapping(value = { "/products" }, method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView modelAndView) {
 		
-		ArrayList<Product> products = shoppingCartService.getProducts();//new ArrayList<>();
-				
+		ArrayList<Product> products = shoppingCartService.getProducts();
+		ArrayList<Category> categories = shoppingCartService.getCategories();	
+		Category category = new Category();
+		
 		modelAndView.setViewName("products");
+		
 	    modelAndView.addObject("products", products);
+	    modelAndView.addObject("categories", categories);
+	    modelAndView.addObject("category", category);
 		
 		return modelAndView;
 	}
@@ -69,7 +75,5 @@ public class ProductsController {
 		System.out.println("****"+session.getAttribute("cart"));
 		
 		return modelAndView;
-	}
-	
-
+	}	
 }

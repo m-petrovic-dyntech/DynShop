@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.dao.ShoppingCartDao;
+import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.service.ShoppingCartService;
 
@@ -32,5 +33,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public Product getProduct(int id) {
 		return shoppingCartDao.getProduct(id);
+	}
+
+	@Override
+	public ArrayList<Category> getCategories() {
+		
+		return shoppingCartDao.getCategories();
 	}
 }

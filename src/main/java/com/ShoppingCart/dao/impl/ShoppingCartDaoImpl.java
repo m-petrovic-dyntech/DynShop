@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.ShoppingCartDao;
+import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.EntityTest;
 import com.ShoppingCart.entity.Product;
 
@@ -45,6 +46,14 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		Product product =  (Product)getSession().createCriteria(Product.class).add(Restrictions.eq("id",id)).uniqueResult();
 		return product;
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public ArrayList<Category> getCategories() {
+		ArrayList<Category> results = (ArrayList<Category>)getSession().createCriteria(Category.class).list();
+		return results;
 	}
 
 }
