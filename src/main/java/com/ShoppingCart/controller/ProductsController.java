@@ -42,7 +42,11 @@ public class ProductsController {
 		Category selectedCategory = shoppingCartService.getCategoryById(category);
 				
 		ArrayList<Category> categories= new ArrayList<>();
-		categories.add(selectedCategory);
+		
+		Category firstCategory = new Category();
+		firstCategory.setName("-- Select Category --");
+		
+		categories.add(firstCategory);
 		categories.addAll(shoppingCartService.getCategories());
 				
 		modelAndView.setViewName("products");
