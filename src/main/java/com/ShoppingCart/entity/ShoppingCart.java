@@ -1,5 +1,6 @@
 package com.ShoppingCart.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class ShoppingCart {
 	public ShoppingCart()
 	{
 		this.totalCost = 0.0;
+		this.items = new ArrayList<ShoppingCartItem>();
 	}
 	
 	public Integer getId() {

@@ -2,6 +2,7 @@ package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,14 +77,26 @@ public class ProductsController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = { "product/add/{id}/{quantity}" }, method = RequestMethod.GET)
-	public ModelAndView addProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id, 
-			@PathVariable (value = "quantity") int quantity,
+	
+	@RequestMapping(value = { "/cart" }, method = RequestMethod.GET)
+	public ModelAndView cart(ModelAndView modelAndView) {
+		
+		modelAndView.setViewName("cart");
+
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = { "products/add/{id}/{quantity}" }, method = RequestMethod.GET)
+	public ModelAndView addProduct( @PathVariable (value = "id") int id, 
+			@PathVariable (value = "quantity") int quantity, 
+			@RequestParam(required = true) Integer categoryId,
 			HttpSession session) {
 		
 		Product product = shoppingCartService.getProduct(id);
 		ShoppingCartItem item = new ShoppingCartItem();
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		
+		System.out.println("BEFORE ADDING "+cart.getTotalCost());
 
 		item.setProduct(product);
 		item.setQuantity(quantity);
@@ -98,13 +111,19 @@ public class ProductsController {
 		cart.setTotalCost(cart.getTotalCost()+item.getTotal());
 		
 		session.setAttribute("cart", cart);
-		System.out.println("****"+cart.getTotalCost());
+		System.out.println("AFTER ADDING "+cart.getTotalCost());
 		
-		return modelAndView;
+		if(categoryId == 0)
+			return  new ModelAndView("redirect:/products");
+		else 
+			return  new ModelAndView("redirect:/products?category="+categoryId);
+		
 	}	
 	
-	@RequestMapping(value = { "product/delete/{id}" }, method = RequestMethod.GET)
-	public ModelAndView addProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id, 
+	@RequestMapping(value = { "products/delete/{id}" }, method = RequestMethod.GET)
+	public ModelAndView deleteProduct(
+			@RequestParam(required = true) Integer categoryId,
+			@PathVariable (value = "id") int id, 
 			HttpSession session) {
 		
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
@@ -113,18 +132,24 @@ public class ProductsController {
 		
 		
 		System.out.println("BEFORE REMOVING "+cart.getTotalCost());
-		
-		for (ShoppingCartItem shoppingCartItem : items) {
-			if(shoppingCartItem.getProduct().getId() == id)
-			{
-				cart.setTotalCost(cart.getTotalCost()-shoppingCartItem.getTotal());
-				cart.getItems().remove(shoppingCartItem);
-			}
-		}
-		
+				
+		Iterator<ShoppingCartItem> itr = items.iterator();
+	     while(itr.hasNext()) {
+	    	  ShoppingCartItem element = (ShoppingCartItem) itr.next();
+	         if(element.getProduct().getId() == id)
+				{
+					cart.setTotalCost(cart.getTotalCost()-element.getTotal());
+					itr.remove();
+				}
+	      }
+		 
 		session.setAttribute("cart", cart);
 		System.out.println("AFTER REMOVING"+cart.getTotalCost());
+
+		if(categoryId == 0)
+			return  new ModelAndView("redirect:/products");
+		else 
+			return  new ModelAndView("redirect:/products?category="+categoryId);
 		
-		return modelAndView;
 	}	
 }
