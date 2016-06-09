@@ -70,6 +70,16 @@ public class ShoppingCart {
 	public void setDate(Date date) {
 		this.shoppingDate = date;
 	}
+	
+	public ShoppingCartItem findItemByProductId(int productId)
+	{
+		for (ShoppingCartItem shoppingCartItem : this.items) {
+			if(shoppingCartItem.getProduct().getId() == productId)
+				return shoppingCartItem;
+		}
+		
+		return null;
+	}
 
 	@Override
 	public String toString() {
