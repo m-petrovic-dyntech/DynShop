@@ -23,10 +23,9 @@
                                     </div>
                                     <div class="products-item-price">${product.price.intValue()}.00</div>
                                     <div class="clearfix">
-                                        <a class="products-item-more btn btn-primary" href="${pageContext.request.contextPath}/products/${product.id}">Detaljnije</a>
-                                        <!-- <a class="products-item-cart btn btn-success" href="${pageContext.request.contextPath}/add/${product.id}">U korpu</a> -->
+                                        <a class="products-item-more btn btn-default" href="${pageContext.request.contextPath}/products/${product.id}">Detaljnije</a>
                                         <div class="dropup products-item-cart">
-                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 U korpu
                                             </button>
                                             <div class="dropdown-menu products-item-cart-popup" aria-labelledby="dropdownMenu2">
@@ -51,14 +50,26 @@
                                 window.location.href = '${pageContext.request.contextPath}/products' + (tempSelected ? '?category=' + tempSelected : '');
                             });
                             $('.products-item-cart-add_item').click(function() {
-                                var tempElementIndex = $(this).attr('item-index');
-                                var tempValue = $('.products-item-' + tempElementIndex).find('.products-item-cart-add_item-input').val();
-                                var tempLink = $(this).attr('item-cart-link');
-
-                                console.log(tempValue);
-
-                                window.location.href = tempLink + (tempValue != '' && tempValue != 0 ? tempValue : 1);
+                                addItem($(this));
                             });
+
+                            $('.products-item-cart-add_item-input').keypress(function(event) {
+                                var tempElement = $(this).next('.input-group-btn').find('.products-item-cart-add_item');
+                                if (event.which == 13) {
+                                    addItem($(tempElement));
+                                }
+                            });
+
+                            function addItem(element) {
+                                var tempElementIndex = $(element).attr('item-index');
+                                var tempValue = $('.products-item-' + tempElementIndex).find('.products-item-cart-add_item-input').val();
+                                var tempLink = $(element).attr('item-cart-link');
+
+                                var tempCategory = '${category.id}';
+                                var tempCategoryId = '?categoryId=' + (tempCategory ? '${category.id}' : '0');
+
+                                window.location.href = tempLink + (tempValue != '' && tempValue != 0 ? tempValue : 1) + tempCategoryId;
+                            }
                         })
                         </script>
                     </jsp:attribute>

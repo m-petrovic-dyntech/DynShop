@@ -32,6 +32,9 @@
                                     </a>
                                 </li>
                             </c:forEach>
+                            <c:if test="${sessionScope.cart.getItems().isEmpty() || sessionScope.cart.getItems() == null}">
+                                <div class="mini_cart-message">Nothing in cart</div>
+                            </c:if>
                         </ul>
                     </li>
                 </ul>
