@@ -32,6 +32,11 @@ public class ShoppingCart {
 	@Temporal(TemporalType.DATE)
 	private Date shoppingDate;
 
+	public ShoppingCart()
+	{
+		this.totalCost = 0.0;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

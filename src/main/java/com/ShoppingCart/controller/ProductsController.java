@@ -35,10 +35,13 @@ public class ProductsController {
 	ShoppingCartService shoppingCartService;
 	
 	@RequestMapping(value = { "/products" }, method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category) {
+	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category, HttpSession session ) {
 		
+		if(session.getAttribute("cart") == null)
+			session.setAttribute("cart", new ShoppingCart());
+			
 		List<Product> products = shoppingCartService.getProducts(category);
-		
+				
 		Category selectedCategory = shoppingCartService.getCategoryById(category);
 				
 		ArrayList<Category> categories= new ArrayList<>();
@@ -48,23 +51,14 @@ public class ProductsController {
 		modelAndView.setViewName("products");
 		
 	    modelAndView.addObject("products", products);
+	    
 	    modelAndView.addObject("categories", categories);
 	    modelAndView.addObject("category", selectedCategory);
+	    modelAndView.addObject("cart", session.getAttribute("cart") );
+	    
 		return modelAndView;
 	}
-	
-	@RequestMapping(value = { "/products" }, method = RequestMethod.POST)
-	public ModelAndView getByCategory(@ModelAttribute("category")  Category category, ModelAndView modelAndView) {
 		
-		Category cat = shoppingCartService.getCategoryById(new Integer(4));
-
-		modelAndView.setViewName("products");
-		modelAndView.addObject("products", cat);
-	    logger.debug("************" + Arrays.toString(cat.getProducts().toArray()) + "************");
-
-		return modelAndView;
-	}
-	
 	@RequestMapping(value = { "/products/{id}" }, method = RequestMethod.GET)
 	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id) {
 		
@@ -78,24 +72,54 @@ public class ProductsController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = { "/add/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "product/add/{id}/{quantity}" }, method = RequestMethod.GET)
 	public ModelAndView addProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id, 
+			@PathVariable (value = "quantity") int quantity,
 			HttpSession session) {
 		
 		Product product = shoppingCartService.getProduct(id);
 		ShoppingCartItem item = new ShoppingCartItem();
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+
 		item.setProduct(product);
-		item.setQuantity(4);
+		item.setQuantity(quantity);
+		item.total = quantity*product.getPrice();
 		item.setTotal(item.getQuantity()*product.getPrice());
+
+		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
 		
-		ArrayList<ShoppingCartItem> items = new ArrayList<ShoppingCartItem>();
 		items.add(item);
-		ShoppingCart janinaKolica = new ShoppingCart();
-		janinaKolica.setItems(items);
-		janinaKolica.setTotalCost(55.0);
+	
+		cart.setItems(cart.getItems());
+		cart.setTotalCost(cart.getTotalCost()+item.getTotal());
 		
-		session.setAttribute("cart", janinaKolica);
-		System.out.println("****"+session.getAttribute("cart"));
+		session.setAttribute("cart", cart);
+		System.out.println("****"+cart.getTotalCost());
+		
+		return modelAndView;
+	}	
+	
+	@RequestMapping(value = { "product/delete/{id}" }, method = RequestMethod.GET)
+	public ModelAndView addProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id, 
+			HttpSession session) {
+		
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		
+		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
+		
+		
+		System.out.println("BEFORE REMOVING "+cart.getTotalCost());
+		
+		for (ShoppingCartItem shoppingCartItem : items) {
+			if(shoppingCartItem.getProduct().getId() == id)
+			{
+				cart.setTotalCost(cart.getTotalCost()-shoppingCartItem.getTotal());
+				cart.getItems().remove(shoppingCartItem);
+			}
+		}
+		
+		session.setAttribute("cart", cart);
+		System.out.println("AFTER REMOVING"+cart.getTotalCost());
 		
 		return modelAndView;
 	}	
