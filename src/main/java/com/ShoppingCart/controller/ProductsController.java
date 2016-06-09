@@ -119,37 +119,4 @@ public class ProductsController {
 			return  new ModelAndView("redirect:/products?category="+categoryId);
 		
 	}	
-	
-	@RequestMapping(value = { "products/delete/{id}" }, method = RequestMethod.GET)
-	public ModelAndView deleteProduct(
-			@RequestParam(required = true) Integer categoryId,
-			@PathVariable (value = "id") int id, 
-			HttpSession session) {
-		
-		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-		
-		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
-		
-		
-		System.out.println("BEFORE REMOVING "+cart.getTotalCost());
-				
-		Iterator<ShoppingCartItem> itr = items.iterator();
-	     while(itr.hasNext()) {
-	    	  ShoppingCartItem element = (ShoppingCartItem) itr.next();
-	         if(element.getProduct().getId() == id)
-				{
-					cart.setTotalCost(cart.getTotalCost()-element.getTotal());
-					itr.remove();
-				}
-	      }
-		 
-		session.setAttribute("cart", cart);
-		System.out.println("AFTER REMOVING"+cart.getTotalCost());
-
-		if(categoryId == 0)
-			return  new ModelAndView("redirect:/products");
-		else 
-			return  new ModelAndView("redirect:/products?category="+categoryId);
-		
-	}	
 }
