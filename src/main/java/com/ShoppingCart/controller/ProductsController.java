@@ -92,9 +92,11 @@ public class ProductsController {
 			@RequestParam(required = true) Integer categoryId,
 			HttpSession session) {
 		
-		Product product = shoppingCartService.getProduct(id);
-		ShoppingCartItem item = new ShoppingCartItem();
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
+		Product product = shoppingCartService.getProduct(id);
+				
+		ShoppingCartItem item = new ShoppingCartItem();
 		
 		System.out.println("BEFORE ADDING "+cart.getTotalCost());
 
@@ -103,8 +105,6 @@ public class ProductsController {
 		item.total = quantity*product.getPrice();
 		item.setTotal(item.getQuantity()*product.getPrice());
 
-		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
-		
 		items.add(item);
 	
 		cart.setItems(cart.getItems());
