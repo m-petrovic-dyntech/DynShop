@@ -9,6 +9,68 @@ body {
     background: #F1F1F1;
 }
 
+#navbar-cart_view {
+    padding: 8px 0;
+    &-totalCost {
+        font-size: 19px;
+        padding: 0 8px;
+        margin-right: 9px;
+        color: #1CB91C;
+        position: relative;
+        top: -2px;
+        &:after {
+            content: ' din';
+        }
+    }
+    &-totalCount {
+        font-size: 18px;
+        position: relative;
+        top: -4px;
+        margin-right: 8px;
+        padding-left: 2px;
+        &:after {
+            content: ')';
+        }
+        &:before {
+            content: '(';
+        }
+    }
+    .glyphicon {
+        font-size: 23px;
+        padding-top: 3px;
+        color: #777;
+    }
+    .dropdown-toggle {
+        padding: 15px 10px 15px 7px;
+    }
+    .mini_cart {
+        &-item {
+            font-size: 15px;
+            padding: 3px 11px;
+        }
+        &-name {
+            font-weight: bold;
+            padding-right: 32px;
+            &:before {
+                counter-increment: section;
+                content: counter(section) ". ";
+                font-weight: normal;
+            }
+        }
+        &-price {
+            padding-right: 5px;
+        }
+        &-quantity {
+            &:before {
+                content: '(';
+            }
+            &:after {
+                content: ')';
+            }
+        }
+    }
+}
+
 .products {
     &-item {
         border-bottom: 1px solid #F1F1F1;
@@ -38,6 +100,17 @@ body {
         &-cart {
             float: right;
             margin-top: 10px;
+            &-popup {
+                min-width: auto;
+                padding: 5px 8px;
+                input {
+                    min-width: 82px;
+                    height: 34px;
+                }
+                .input-group-btn button {
+                    padding: 9px 12px;
+                }
+            }
         }
         &-price {
             clear: both;
