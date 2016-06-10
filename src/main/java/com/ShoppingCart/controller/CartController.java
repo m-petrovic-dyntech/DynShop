@@ -2,11 +2,9 @@ package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +19,10 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 public class CartController {
 
 	@RequestMapping(value = { "/cart" }, method = RequestMethod.GET)
-	public ModelAndView cart(ModelAndView modelAndView) {
+	public ModelAndView cart(ModelAndView modelAndView, HttpSession session) {
 		
 		modelAndView.setViewName("cart");
-
+		modelAndView.addObject("cart", session.getAttribute("cart"));
 		return modelAndView;
 	}
 	
