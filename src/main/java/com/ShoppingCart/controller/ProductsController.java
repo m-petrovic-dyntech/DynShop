@@ -59,20 +59,22 @@ public class ProductsController {
 		return modelAndView;
 	}
 		
-	@RequestMapping(value = { "/products/{id}" }, method = RequestMethod.GET)
-	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id) {
+	@RequestMapping(value = { "/product/{id}" }, method = RequestMethod.GET)
+	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id,
+			@RequestParam(required = true) Integer categoryId) {
 		
 		Product product = shoppingCartService.getProduct(id);
 				
 		System.out.println("******"+product.getName()+" u kategoriji "+product.getCategory().getName());
 		
-		modelAndView.setViewName("products");
+		modelAndView.setViewName("product");
 	    modelAndView.addObject("product", product);
+	    modelAndView.addObject("categoryId", categoryId);
 		
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = { "products/add/{id}/{quantity}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "product/add/{id}/{quantity}" }, method = RequestMethod.GET)
 	public ModelAndView addProductToCart( @PathVariable (value = "id") int id, 
 			@PathVariable (value = "quantity") int quantity, 
 			@RequestParam(required = true) Integer categoryId,

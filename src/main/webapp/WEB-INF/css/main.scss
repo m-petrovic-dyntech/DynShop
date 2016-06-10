@@ -17,6 +17,7 @@ body {
 #main_content_container {
     height: 100%;
     padding-top: 52px;
+    position: relative;
 }
 
 
@@ -25,7 +26,7 @@ body {
 ===========================*/
 
 #navbar-cart_view {
-    padding: 8px 0;
+    padding: 8px 11px;
     &-totalCost {
         font-size: 19px;
         color: #1CB91C;
@@ -104,6 +105,14 @@ body {
 
 /*=====  End of Nav  ======*/
 
+#products {
+    &-main_box {
+        height: 100%;
+        overflow: auto;
+        padding-top: 20px;
+    }
+}
+
 .products {
     &-item {
         border-bottom: 1px solid #F1F1F1;
@@ -170,6 +179,32 @@ body {
         overflow: auto;
         padding-top: 20px;
     }
+    &-total_box {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        &-price {
+            background: white;
+            float: right;
+            box-shadow: 0 0 6px 1px #777777;
+            border-radius: 3px 3px 0 0;
+            padding: 8px 19px 10px;
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+            &-value {
+                font-size: 30px;
+                text-align: right;
+                color: #616161;
+                margin-bottom: 5px;
+            }
+            &-options {
+                text-align: right;
+            }
+        }
+    }
 }
 
 .cart {
@@ -195,7 +230,7 @@ body {
         }
         &-desc {
             @media (max-width: 768px) {
-                padding-bottom: 33px;
+                padding-bottom: 78px;
             }
         }
         &-price_box {
@@ -215,7 +250,7 @@ body {
             right: 15px;
             bottom: 0;
             &_total {
-                font-size: 30px;
+                font-size: 27px;
                 text-align: right;
                 clear: both;
                 border-top: 1px solid #aaa;
