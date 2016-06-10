@@ -2,14 +2,17 @@ package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.tomcat.util.http.fileupload.MultipartStream.ItemInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -77,39 +80,39 @@ public class ProductsController {
 		return modelAndView;
 	}
 	
-	
-	@RequestMapping(value = { "/cart" }, method = RequestMethod.GET)
-	public ModelAndView cart(ModelAndView modelAndView) {
-		
-		modelAndView.setViewName("cart");
-
-		return modelAndView;
-	}
-	
 	@RequestMapping(value = { "products/add/{id}/{quantity}" }, method = RequestMethod.GET)
-	public ModelAndView addProduct( @PathVariable (value = "id") int id, 
+	public ModelAndView addProductToCart( @PathVariable (value = "id") int id, 
 			@PathVariable (value = "quantity") int quantity, 
 			@RequestParam(required = true) Integer categoryId,
 			HttpSession session) {
 		
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
-		Product product = shoppingCartService.getProduct(id);
 				
-		ShoppingCartItem item = new ShoppingCartItem();
-		
 		System.out.println("BEFORE ADDING "+cart.getTotalCost());
 
-		item.setProduct(product);
-		item.setQuantity(quantity);
-		item.total = quantity*product.getPrice();
-		item.setTotal(item.getQuantity()*product.getPrice());
-
-		items.add(item);
+		if(cart.findItemByProductId(id) == null)
+		{
+			Product product = shoppingCartService.getProduct(id);
+			
+			ShoppingCartItem item = new ShoppingCartItem();
+			item.setProduct(product);
+			item.setQuantity(quantity);
+			item.total = quantity*product.getPrice();
+			item.setTotal(item.getQuantity()*product.getPrice());
 	
-		cart.setItems(cart.getItems());
-		cart.setTotalCost(cart.getTotalCost()+item.getTotal());
+			items.add(item);
+		}
+		//edit existing ShoppingCartItem quantity
+		else{
+			cart.setTotalCost(cart.getTotalCost()-cart.findItemByProductId(id).getTotal());
+		    cart.findItemByProductId(id).setQuantity(cart.findItemByProductId(id).getQuantity()+quantity);
+		    cart.findItemByProductId(id).setTotal(cart.findItemByProductId(id).getQuantity()*cart.findItemByProductId(id).getProduct().getPrice());
+		    items.set(items.indexOf(cart.findItemByProductId(id)), cart.findItemByProductId(id));  
+		}
 		
+		cart.setTotalCost(cart.getTotalCost()+cart.findItemByProductId(id).getTotal());
+		cart.setItems(items);
 		session.setAttribute("cart", cart);
 		System.out.println("AFTER ADDING "+cart.getTotalCost());
 		
