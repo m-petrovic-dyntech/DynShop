@@ -27,7 +27,7 @@
 }" currencySymbol="" type="currency" />
                                         </div>
                                         <div class="clearfix">
-                                            <a class="products-item-more btn btn-default" href="${pageContext.request.contextPath}/products/${product.id}">Detaljnije</a>
+                                            <a class="products-item-more btn btn-default" href="${pageContext.request.contextPath}/product/${product.id}">Detaljnije</a>
                                             <div class="dropup products-item-cart">
                                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     U korpu
