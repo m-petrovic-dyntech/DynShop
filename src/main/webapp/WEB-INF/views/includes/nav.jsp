@@ -1,7 +1,7 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -19,7 +19,7 @@
                         <ul class="nav navbar-nav navbar-right" id="navbar-cart_view">
                             <li>
                                 <span id="navbar-cart_view-totalCost">
-                                    <fmt:formatNumber value="${sessionScope.cart.getTotalCost().intValue()}" currencySymbol="" type="currency"/>
+                                    <fmt:formatNumber value="${sessionScope.cart.getTotalCost() != null ? sessionScope.cart.getTotalCost() : 0}" currencySymbol="" type="currency"/>
                                 </span>
                                 <a href="${pageContext.request.contextPath}/cart" id="navbar-cart_view-link">
                                     <span class="glyphicon glyphicon-shopping-cart"></span>
@@ -33,7 +33,7 @@
                                         <li>
                                             <a class="mini_cart-item">
                                                 <span class="mini_cart-name">${item.getProduct().getName()} <span class="mini_cart-quantity">${item.getQuantity()}</span></span>
-                                                <span class="mini_cart-price"><fmt:formatNumber value="${item.getProduct().getPrice().intValue()}" currencySymbol="" type="currency"/></span>
+                                                <span class="mini_cart-price"><fmt:formatNumber value="${item.getProduct().getPrice()}" currencySymbol="" type="currency"/></span>
                                             </a>
                                         </li>
                                     </c:forEach>

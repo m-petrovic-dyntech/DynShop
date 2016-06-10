@@ -11,7 +11,18 @@
 
 body {
     background: #F1F1F1;
+    overflow: hidden;
 }
+
+#main_content_container {
+    height: 100%;
+    padding-top: 52px;
+}
+
+
+/*===========================
+=            Nav            =
+===========================*/
 
 #navbar-cart_view {
     padding: 8px 0;
@@ -90,6 +101,9 @@ body {
     }
 }
 
+
+/*=====  End of Nav  ======*/
+
 .products {
     &-item {
         border-bottom: 1px solid #F1F1F1;
@@ -150,21 +164,67 @@ body {
 =            Cart            =
 ============================*/
 
+#cart {
+    &-main_box {
+        height: 100%;
+        overflow: auto;
+        padding-top: 20px;
+    }
+}
+
 .cart {
     &-item {
         border-bottom: 1px solid #ccc;
         padding-bottom: 16px;
+        position: relative;
+        &:nth-child(n+2) {
+            margin-top: 20px;
+        }
         /****/
-        img {
+        &-img {
+            background-size: contain;
+            background-position: top center;
+            background-repeat: no-repeat;
             width: 100%;
+            height: 176px;
         }
         &-heading {
             @media (min-width: 768px) {
                 margin-top: 0;
             }
         }
+        &-desc {
+            @media (max-width: 768px) {
+                padding-bottom: 33px;
+            }
+        }
+        &-price_box {
+            padding-right: 0;
+        }
+        &-remove_button {
+            position: absolute;
+            top: 0px;
+            right: 15px;
+            box-shadow: 0 0 41px 0 rgba(241, 241, 241, 0.74) inset;
+            border-radius: 4px;
+            padding: 0px 1px 2px 1px;
+        }
         &-price {
             text-align: right;
+            position: absolute;
+            right: 15px;
+            bottom: 0;
+            &_total {
+                font-size: 30px;
+                text-align: right;
+                clear: both;
+                border-top: 1px solid #aaa;
+                margin-top: 13px;
+                color: #69B330;
+                &:after {
+                    content: ' din';
+                }
+            }
             &-value {
                 font-size: 21px;
                 top: 4px;
@@ -183,7 +243,7 @@ body {
                 width: 40px;
                 display: inline;
             }
-            &-dropdown {
+            &-dropup {
                 float: right;
                 position: relative;
                 top: 1px;
@@ -195,7 +255,7 @@ body {
                 }
             }
             &-popup {
-                left: -102px;
+                left: -122px!important;
                 padding: 5px 7px;
                 input {
                     height: 34px;

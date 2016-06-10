@@ -14,7 +14,7 @@
     	<%@include file="/WEB-INF/views/includes/nav.jsp"%>
     </header>
 
-	<section>
+	<section id="main_content_container">
 		<jsp:invoke fragment="body_area" />
 	</section>
 

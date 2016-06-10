@@ -23,7 +23,8 @@
                                             ${product.description}
                                         </div>
                                         <div class="products-item-price">
-                                            <fmt:formatNumber value="${product.price.intValue()}" currencySymbol="" type="currency" />
+                                            <fmt:formatNumber value="${product.price
+}" currencySymbol="" type="currency" />
                                         </div>
                                         <div class="clearfix">
                                             <a class="products-item-more btn btn-default" href="${pageContext.request.contextPath}/products/${product.id}">Detaljnije</a>
