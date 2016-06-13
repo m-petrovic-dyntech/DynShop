@@ -1,8 +1,6 @@
 package com.ShoppingCart.dao.impl;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -18,15 +16,16 @@ import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
-import com.ShoppingCart.entity.ShoppingCartItem;
 
 @Repository
 
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
+	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
 	
 	private SessionFactory sessionFactory;
+	@SuppressWarnings("unused")
 	private Session session;
 	
 	@Autowired

@@ -20,6 +20,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Autowired
 	private ShoppingCartDao shoppingCartDao;
 
+	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Override

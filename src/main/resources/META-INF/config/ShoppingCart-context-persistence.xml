@@ -39,7 +39,6 @@
 	
 	<!-- Services -->
 	<bean name="shoppingCartService" class="com.ShoppingCart.service.impl.ShoppingCartServiceImpl"></bean>
-	<!-- <bean name="userService" class="dyntech.smashconsole.service.impl.UserServiceImpl"></bean> -->
 
 	<!-- DAO -->
 	<bean name="shoppingCartDao" class="com.ShoppingCart.dao.impl.ShoppingCartDaoImpl">
@@ -48,7 +47,6 @@
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-		<!--<property name="sessionFactory" ref="sessionFactory" />-->
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

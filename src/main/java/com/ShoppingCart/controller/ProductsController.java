@@ -1,7 +1,5 @@
 package com.ShoppingCart.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,9 +21,9 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.ShoppingCartService;
 
 @Controller
-//@Scope("session")
 public class ProductsController {
 	
+	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired 
@@ -34,9 +31,7 @@ public class ProductsController {
 	
 	@RequestMapping(value = { "/products" }, method = RequestMethod.GET)
 	public ModelAndView home(@RequestParam(required = false) Integer category, ModelAndView modelAndView, HttpSession session ) {
-		
-		if(session.getAttribute("cart") == null)
-			session.setAttribute("cart", new ShoppingCart());
+		initializeSession(session);
 		
 		Category selectedCategory = new Category();
 		
@@ -45,9 +40,7 @@ public class ProductsController {
 		
 		List<Product> products = shoppingCartService.getProducts(selectedCategory);
 				
-		ArrayList<Category> categories= new ArrayList<>();
-		
-		categories.addAll(shoppingCartService.getCategories());
+		List<Category> categories= (List<Category>)shoppingCartService.getCategories();
 				
 		modelAndView.setViewName("products");
 		
@@ -60,12 +53,12 @@ public class ProductsController {
 	}
 		
 	@RequestMapping(value = { "/product/{id}" }, method = RequestMethod.GET)
-	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id,
-			@RequestParam(required = true) Integer categoryId) {
-		
+	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id, @RequestParam(required = true) Integer categoryId, HttpSession session) {
+		initializeSession(session);
 		Product product = shoppingCartService.getProduct(id);
-				
-		System.out.println("******"+product.getName()+" u kategoriji "+product.getCategory().getName());
+		
+		//Testing	
+		//System.out.println("******"+product.getName()+" u kategoriji "+product.getCategory().getName());
 		
 		modelAndView.setViewName("product");
 	    modelAndView.addObject("product", product);
@@ -75,31 +68,28 @@ public class ProductsController {
 	}
 	
 	@RequestMapping(value = { "product/add/{id}/{quantity}" }, method = RequestMethod.GET)
-	public ModelAndView addProductToCart( @PathVariable (value = "id") int id, 
-			@PathVariable (value = "quantity") int quantity, 
-			@RequestParam(required = true) Integer categoryId,
-			HttpSession session) {
-		
+	public ModelAndView addProductToCart( @PathVariable (value = "id") int id, @PathVariable (value = "quantity") int quantity, @RequestParam(required = false) Integer categoryId, HttpSession session) {
+		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		
 		List<ShoppingCartItem> items = (List<ShoppingCartItem>)cart.getItems();
-				
-		System.out.println("BEFORE ADDING "+cart.getTotalCost());
+		
+		//Testing
+		//System.out.println("BEFORE ADDING "+cart.getTotalCost());
 
-		if(cart.findItemByProductId(id) == null)
-		{
+		if(cart.findItemByProductId(id) == null) {
 			Product product = shoppingCartService.getProduct(id);
-			
 			ShoppingCartItem item = new ShoppingCartItem();
+			
 			item.setProduct(product);
 			item.setQuantity(quantity);
 			item.total = quantity*product.getPrice();
 			item.setTotal(item.getQuantity()*product.getPrice());
 			item.setShoppingCart(cart);
-	
+			
 			items.add(item);
-		}
-		//edit existing ShoppingCartItem quantity
-		else{
+		} else {
+			//edit existing ShoppingCartItem quantity
 			cart.setTotalCost(cart.getTotalCost()-cart.findItemByProductId(id).getTotal());
 		    cart.findItemByProductId(id).setQuantity(cart.findItemByProductId(id).getQuantity()+quantity);
 		    cart.findItemByProductId(id).setTotal(cart.findItemByProductId(id).getQuantity()*cart.findItemByProductId(id).getProduct().getPrice());
@@ -109,12 +99,18 @@ public class ProductsController {
 		cart.setTotalCost(cart.getTotalCost()+cart.findItemByProductId(id).getTotal());
 		cart.setItems(items);
 		session.setAttribute("cart", cart);
-		System.out.println("AFTER ADDING "+cart.getTotalCost());
 		
-		if(categoryId == 0)
+		//Testing
+		//System.out.println("AFTER ADDING "+cart.getTotalCost());
+		
+		if(categoryId == null || categoryId == 0)
 			return  new ModelAndView("redirect:/products");
 		else 
 			return  new ModelAndView("redirect:/products?category="+categoryId);
-		
-	}	
+	}
+	
+	private void initializeSession(HttpSession session) {
+		if(session.getAttribute("cart") == null)
+			session.setAttribute("cart", new ShoppingCart());
+	}
 }

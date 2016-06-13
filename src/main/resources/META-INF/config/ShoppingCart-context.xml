@@ -10,12 +10,8 @@
 			 http://www.springframework.org/schema/security
          	 http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
-
-
-
 	<!-- Enable annotations -->
 	<context:annotation-config />
-
 
 	<!-- Property file used for value substitution -->
 	<context:property-placeholder location="classpath:application.properties" />
@@ -24,13 +20,12 @@
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations" value="classpath:application.properties"></property>
 	</bean>
-<!-- 
-	<security:http create-session="ifRequired">
+	
+	<!--<security:http create-session="ifRequired">
 		<security:session-management invalid-session-url="/invalidSession" session-fixation-protection="migrateSession">
 			<security:concurrency-control max-sessions="1" expired-url="/expiredSession" />
 		</security:session-management>
-	</security:http>
-	 -->
+	</security:http>-->
 
 </beans>
     

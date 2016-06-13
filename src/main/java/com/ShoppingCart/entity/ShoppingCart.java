@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,7 +28,7 @@ public class ShoppingCart {
 	@Column(name="totalCost")
 	private Double totalCost;
 	
-	@OneToMany(mappedBy="shoppingCart")
+	@OneToMany(mappedBy="shoppingCart", cascade=CascadeType.ALL)
 	private List<ShoppingCartItem> items;
 	
 	@Column(name="shoppingDate")

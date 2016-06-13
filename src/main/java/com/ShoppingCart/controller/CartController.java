@@ -1,7 +1,6 @@
 package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpSession;
@@ -26,7 +25,7 @@ public class CartController {
 	
 	@RequestMapping(value = { "/cart" }, method = RequestMethod.GET)
 	public ModelAndView cart(ModelAndView modelAndView, HttpSession session) {
-
+		initializeSession(session);
 		modelAndView.setViewName("cart");
 		modelAndView.addObject("cart", session.getAttribute("cart"));
 		return modelAndView;
@@ -34,12 +33,13 @@ public class CartController {
 
 	@RequestMapping(value = { "/cart/delete/{id}" }, method = RequestMethod.GET)
 	public ModelAndView deleteProduct(@PathVariable(value = "id") int id, HttpSession session) {
-
+		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 
 		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
 
-		System.out.println("BEFORE REMOVING " + cart.getTotalCost());
+		//Testing
+		//System.out.println("BEFORE REMOVING " + cart.getTotalCost());
 
 		Iterator<ShoppingCartItem> itr = items.iterator();
 		while (itr.hasNext()) {
@@ -49,39 +49,29 @@ public class CartController {
 				itr.remove();
 			}
 		}
+		
 		session.setAttribute("cart", cart);
-		System.out.println("AFTER REMOVING" + cart.getTotalCost());
+		//Testing
+		//System.out.println("AFTER REMOVING" + cart.getTotalCost());
 		return new ModelAndView("redirect:/cart");
 
 	}
 
 	@RequestMapping(value = { "/cart/deleteAll" }, method = RequestMethod.GET)
 	public ModelAndView deleteCart(HttpSession session) {
-
-		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-
-		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
-
-		System.out.println("BEFORE DELETING ALL " + cart.getTotalCost());
-
-		items.clear();
-		cart.setItems(items);
-		cart.setTotalCost(0.0);
-
-		session.setAttribute("cart", cart);
-		System.out.println("AFTER  DELETING ALL " + cart.getTotalCost());
+		initializeSession(session);
+		session.setAttribute("cart", new ShoppingCart());
 		return new ModelAndView("redirect:/products");
 	}
 
 	@RequestMapping(value = { "/cart/edit/{id}" }, method = RequestMethod.GET)
 	public ModelAndView changeQuantityOfItem(@PathVariable(value = "id") int id,
 			@RequestParam(required = true) Integer value, HttpSession session) {
-
+		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-		// ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>)
-		// cart.getItems();
 
-		System.out.println("BEFORE EDIT QUANTITY " + cart.getTotalCost());
+		//Testing
+		//System.out.println("BEFORE EDIT QUANTITY " + cart.getTotalCost());
 
 		if (cart.findItemByProductId(id) != null) {
 			cart.findItemByProductId(id).setQuantity(value);
@@ -91,20 +81,27 @@ public class CartController {
 
 			cart.setTotalCost(currentTotal + cart.findItemByProductId(id).getTotal());
 		}
-		System.out.println("AFTER EDIT QUANTITY " + cart.getTotalCost());
+		//Testing
+		//System.out.println("AFTER EDIT QUANTITY " + cart.getTotalCost());
 
 		return new ModelAndView("redirect:/cart");
 	}
 	
 	@RequestMapping(value = { "/cartSave" }, method = RequestMethod.GET)
 	public ModelAndView cartSave(ModelAndView modelAndView, HttpSession session) {
-		
-		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-//		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>);
+		initializeSession(session);
+		ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
 		shoppingCartService.saveCart(cart);
+		
+		session.setAttribute("cart", new ShoppingCart());
 		
 		modelAndView.setViewName("cart");
 		modelAndView.addObject("cart", cart);
 		return modelAndView;
+	}
+	
+	private void initializeSession(HttpSession session) {
+		if(session.getAttribute("cart") == null)
+			session.setAttribute("cart", new ShoppingCart());
 	}
 }

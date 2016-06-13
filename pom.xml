@@ -14,6 +14,11 @@
 		<spring.version>4.2.4.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<security.version>4.0.3.RELEASE</security.version>
+		<hibernate.version>5.1.0.Final</hibernate.version>
+		<junit.version>4.12</junit.version>
+		<jackson.version>2.6.3</jackson.version>
+		<jacksonmapper.version>1.9.13</jacksonmapper.version>
+		<jstl.version>3.1.0</jstl.version>
 	</properties>
 
 	<dependencies>
@@ -84,7 +89,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.1.0.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 		<!-- jUnit -->
@@ -92,7 +97,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
@@ -133,26 +138,26 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.6.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.6.3</version>
+			<version>${jackson.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
+			<version>${jacksonmapper.version}</version>
 		</dependency>
 
 		<!--jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
+			<version>${jstl.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
