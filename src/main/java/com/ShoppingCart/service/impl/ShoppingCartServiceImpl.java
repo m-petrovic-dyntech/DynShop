@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
+import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.service.ShoppingCartService;
 
 @Service
@@ -23,10 +24,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public List<Product> getProducts(Integer categoryId) {
-		
-		if(categoryId == null)
+
+		if (categoryId == null)
 			return shoppingCartDao.getProducts();
-		else return shoppingCartDao.getCategoryById(categoryId).getProducts();
+		else
+			return shoppingCartDao.getCategoryById(categoryId).getProducts();
 	}
 
 	@Override
@@ -41,8 +43,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public Category getCategoryById(Integer id) {
-		if(id == null)
+		if (id == null)
 			return new Category();
 		return shoppingCartDao.getCategoryById(id);
+	}
+
+	@Override
+	public void saveCart(ShoppingCart cart) {
+		shoppingCartDao.saveCart(cart);
 	}
 }

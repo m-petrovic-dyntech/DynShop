@@ -10,6 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+@SequenceGenerator(initialValue = 1, name = "id", sequenceName = "shoppingCartSeq")
 @Table(name="shoppingcartitem")
 public class ShoppingCartItem {
 	@Id
