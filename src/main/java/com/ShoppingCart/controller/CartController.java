@@ -94,9 +94,9 @@ public class CartController {
 		shoppingCartService.saveCart(cart);
 		
 		session.setAttribute("cart", new ShoppingCart());
-		
-		modelAndView.setViewName("cart");
 		modelAndView.addObject("cart", cart);
+		
+		modelAndView.setViewName("redirect: products");
 		return modelAndView;
 	}
 	
