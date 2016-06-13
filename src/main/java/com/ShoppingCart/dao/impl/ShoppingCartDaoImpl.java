@@ -3,6 +3,7 @@ package com.ShoppingCart.dao.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -71,17 +72,18 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		Category category = (Category) getSession().createCriteria(Category.class).add(Restrictions.eq("id", id)).uniqueResult();
 		return category;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Product> getProductsByCategory(Category category) {
+		return (List<Product>)getSession().createCriteria(Product.class).add(Restrictions.eq("category", category)).list();
+	}
 
 	@Override
 	@Transactional
 	public void saveCart(ShoppingCart cart) {
-				
 		cart.setDate(new java.util.Date());
-		
-		for (ShoppingCartItem shoppingCartItem : cart.getItems()) {
-			getSession().saveOrUpdate(shoppingCartItem);
-		}
-		
 		getSession().saveOrUpdate(cart);
 	}
 

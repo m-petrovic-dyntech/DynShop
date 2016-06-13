@@ -12,7 +12,10 @@
                                         <div id="products-filter" class="container-fluid row">
                                             <div class="col-md-4 row">
                                                 <div class="form-group">
-                                                    <form:select path="category.id" items="${categories}" itemValue="id" class="form-control input-sm" id="products-filter-select"></form:select>
+                                                    <form:select modelAttribute="category" path="category.id" class="form-control input-sm" id="products-filter-select">
+                                                    	<form:option value="">-- Select Category --</form:option>
+                                                    	<form:options items="${categories}" itemValue="id" itemLabel="name" />
+                                                    </form:select>
                                                 </div>
                                             </div>
                                         </div>

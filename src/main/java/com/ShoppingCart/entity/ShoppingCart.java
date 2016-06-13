@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,11 +18,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@SequenceGenerator(initialValue = 1, name = "id", sequenceName = "shoppingCartSeq")
 @Table(name="shoppingcart")
 public class ShoppingCart {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="shoppingcart_gen", sequenceName="shoppingcart_seq", allocationSize=1, initialValue=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="shoppingcart_gen")
 	@Column(name="id")
 	private Integer id;
 	
@@ -73,14 +74,21 @@ public class ShoppingCart {
 		this.shoppingDate = date;
 	}
 	
-	public ShoppingCartItem findItemByProductId(int productId)
-	{
+	public ShoppingCartItem findItemByProductId(int productId) {
 		for (ShoppingCartItem shoppingCartItem : this.items) {
 			if(shoppingCartItem.getProduct().getId() == productId)
 				return shoppingCartItem;
 		}
 		
 		return null;
+	}
+
+	public Date getShoppingDate() {
+		return shoppingDate;
+	}
+
+	public void setShoppingDate(Date shoppingDate) {
+		this.shoppingDate = shoppingDate;
 	}
 
 	@Override
