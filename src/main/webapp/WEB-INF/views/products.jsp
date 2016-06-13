@@ -20,17 +20,21 @@
                                             </div>
                                         </div>
                                         <c:forEach items="${products}" var="product" varStatus="loop">
-                                            <div class="products-item col-sm-3 products-item-${loop.index}">
-                                                <h4>${product.name}</h4>
-                                                <img class="products-item-img" src="<c:url value=" resources/images/picture.png " />" alt="karadzica">
-                                                <span class="products-item-date">10.10.2010.</span>
-                                                <div class="products-item-desc">
-                                                    ${product.description}
+                                            <div class="products-item col-sm-3 products-item-${loop.index} clearfix">
+                                                <div class="clearfix products-item-head row">
+                                                    <h4>${product.name}</h4>
+                                                    <span class="products-item-category">${product.category}</span>
+                                                </div>
+                                                <div class="products-item-text_img">
+                                                    <img class="products-item-img" src="<c:url value=" resources/images/picture.png " />" alt="karadzica">
+                                                    <div class="products-item-desc">
+                                                        ${product.description}
+                                                    </div>
                                                 </div>
                                                 <div class="products-item-price">
                                                     <fmt:formatNumber value="${product.price}" currencySymbol="" type="currency" />
                                                 </div>
-                                                <div class="clearfix">
+                                                <div class="clearfix products-item-options row">
                                                     <a class="products-item-more btn btn-default" href="${pageContext.request.contextPath}/product/${product.id}?categoryId=${category.id != null ? category.id : 0}">Detaljnije</a>
                                                     <div class="dropup products-item-cart">
                                                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,6 +52,10 @@
                                                 </div>
                                             </div>
                                         </c:forEach>
+                                        <c:if test="${category.id == 0}">
+                                            Moze
+                                        </c:if>
+                                        ${category.id}
                                     </div>
                                 </div>
                                 <!-- JS -->

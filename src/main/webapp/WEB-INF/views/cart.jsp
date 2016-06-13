@@ -41,23 +41,28 @@
                                             </a>
                                         </div>
                                     </c:forEach>
+                                    <c:if test="${cart.getItems().size() == 0}">
+                                        <div class="alert alert-info">Korpa je prazna. Kako bi DynTech opstao kao firma, i radnici ne koristili novine kao toalet papir, molimo ubacite nešto u korpu. <b>Preporuka:</b> Vladine Usne</div>
+                                    </c:if>
                                 </div>
                             </div>
-                            <div id="cart-total_box" class="container clearfix">
-                                <div id="cart-total_box-price">
-                                    <div id="cart-total_box-price-value">
-                                        <fmt:formatNumber value="${cart.getTotalCost()}" currencySymbol="" type="currency" /> din
-                                    </div>
-                                    <div id="cart-total_box-price-options">
-                                        <a href="${pageContext.request.contextPath}/cart/deleteAll" id="cart-total_box-price-options-remove_all" class="btn btn-danger">
+                            <c:if test="${cart.getItems().size() > 0}">
+                                <div id="cart-total_box" class="container clearfix">
+                                    <div id="cart-total_box-price">
+                                        <div id="cart-total_box-price-value">
+                                            <fmt:formatNumber value="${cart.getTotalCost()}" currencySymbol="" type="currency" /> din
+                                        </div>
+                                        <div id="cart-total_box-price-options">
+                                            <a href="${pageContext.request.contextPath}/cart/deleteAll" id="cart-total_box-price-options-remove_all" class="btn btn-danger">
 	                                    	Poništi
 	                                    </a>
-                                        <a id="cart-total_box-price-options-confirm" class="btn btn-success">
+                                            <a id="cart-total_box-price-options-confirm" class="btn btn-success">
 	                                    	Završi kupovinu
 	                                    </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:if>
                             <script type="text/javascript">
                             $(document).ready(function() {
                                 $('.cart-item-cart-edit_quantity').click(function() {
