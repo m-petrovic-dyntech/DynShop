@@ -1,6 +1,7 @@
 package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -81,7 +82,7 @@ public class ProductsController {
 			HttpSession session) {
 		
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
+		List<ShoppingCartItem> items = (List<ShoppingCartItem>)cart.getItems();
 				
 		System.out.println("BEFORE ADDING "+cart.getTotalCost());
 
@@ -94,6 +95,7 @@ public class ProductsController {
 			item.setQuantity(quantity);
 			item.total = quantity*product.getPrice();
 			item.setTotal(item.getQuantity()*product.getPrice());
+			item.setShoppingCart(cart);
 	
 			items.add(item);
 		}

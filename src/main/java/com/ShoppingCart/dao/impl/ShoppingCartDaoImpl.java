@@ -77,10 +77,10 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public void saveCart(ShoppingCart cart) {
 				
 		cart.setDate(new java.util.Date());
-		
-		for (ShoppingCartItem shoppingCartItem : cart.getItems()) {
+		//Unnecessary
+		/*for (ShoppingCartItem shoppingCartItem : cart.getItems()) {
 			getSession().saveOrUpdate(shoppingCartItem);
-		}
+		}*/
 		
 		getSession().saveOrUpdate(cart);
 	}

@@ -5,12 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(initialValue = 1, name = "id", sequenceName = "shoppingCartSeq")
 @Table(name="shoppingcartitem")
 public class ShoppingCartItem {
 	@Id
@@ -26,9 +26,11 @@ public class ShoppingCartItem {
 	public Double total;
 	
 	@ManyToOne
+	@JoinColumn(name = "PRODUCT_ID", referencedColumnName="ID")
 	public Product product;
 	
 	@ManyToOne
+	@JoinColumn(name = "SHOPPINGCART_ID", referencedColumnName="ID")
 	public ShoppingCart shoppingCart;
 
 	public Integer getId() {
@@ -61,5 +63,13 @@ public class ShoppingCartItem {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
 	}
 }

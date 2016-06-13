@@ -1,6 +1,7 @@
 package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpSession;
@@ -101,7 +102,6 @@ public class CartController {
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 //		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>);
 		shoppingCartService.saveCart(cart);
-		
 		
 		modelAndView.setViewName("cart");
 		modelAndView.addObject("cart", cart);
