@@ -1,9 +1,13 @@
 package com.ShoppingCart.dao.impl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,49 +16,73 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
-import com.ShoppingCart.util.SessionUtil;
+import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.entity.ShoppingCartItem;
 
 @Repository
+
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	private final Log logger = LogFactory.getLog(getClass());
 	
-	private SessionUtil sessionUtil;
+	private SessionFactory sessionFactory;
+	private Session session;
 	
 	@Autowired
-	public void setSessionUtil(SessionUtil sessionUtil) {
-		this.sessionUtil = sessionUtil;
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public Session getSession() {
+	  return sessionFactory.getCurrentSession();
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional
 	@Override
+	@Transactional
 	public ArrayList<Product> getProducts() {
-		ArrayList<Product> results = (ArrayList<Product>) sessionUtil.getSession().createCriteria(Product.class).list();	
+		ArrayList<Product> results = (ArrayList<Product>) getSession().createCriteria(Product.class).list();	
 		return results;
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public Product getProduct(int id) {
-		Product product = (Product) sessionUtil.getSession().createCriteria(Product.class).add(Restrictions.eq("id",id)).uniqueResult();
+		Product product = (Product) getSession().createCriteria(Product.class).add(Restrictions.eq("id",id)).uniqueResult();
 		return product;
 		
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional
 	@Override
+	@Transactional
 	public ArrayList<Category> getCategories() {
-		ArrayList<Category> results = (ArrayList<Category>) sessionUtil.getSession().createCriteria(Category.class).list();
+		ArrayList<Category> results = (ArrayList<Category>) getSession().createCriteria(Category.class).list();
 		return results;
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public Category getCategoryById(int id) {
-		Category category = (Category) sessionUtil.getSession().createCriteria(Category.class).add(Restrictions.eq("id", id)).uniqueResult();
+		Category category = (Category) getSession().createCriteria(Category.class).add(Restrictions.eq("id", id)).uniqueResult();
 		return category;
+	}
+
+	@Override
+	@Transactional
+	public void saveCart(ShoppingCart cart) {
+				
+		cart.setDate(new java.util.Date());
+		
+		for (ShoppingCartItem shoppingCartItem : cart.getItems()) {
+			getSession().saveOrUpdate(shoppingCartItem);
+		}
+		
+		getSession().saveOrUpdate(cart);
 	}
 
 }

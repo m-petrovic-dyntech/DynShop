@@ -6,13 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+@SequenceGenerator(initialValue = 1, name = "id", sequenceName = "shoppingCartSeq")
 @Table(name="shoppingcartitem")
 public class ShoppingCartItem {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="id")
 	public Integer id;
 	

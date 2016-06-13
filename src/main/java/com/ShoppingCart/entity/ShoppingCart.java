@@ -10,16 +10,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
+@SequenceGenerator(initialValue = 1, name = "id", sequenceName = "shoppingCartSeq")
 @Table(name="shoppingcart")
 public class ShoppingCart {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	@Column(name="id")
 	private Integer id;
 	

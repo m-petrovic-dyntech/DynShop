@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
+import com.ShoppingCart.entity.ShoppingCart;
 
 public interface ShoppingCartService {
 	
@@ -15,5 +16,7 @@ public interface ShoppingCartService {
 	public ArrayList<Category> getCategories();
 	
 	public Category getCategoryById(Integer id);
+	
+	public void saveCart(ShoppingCart cart);
 
 }
