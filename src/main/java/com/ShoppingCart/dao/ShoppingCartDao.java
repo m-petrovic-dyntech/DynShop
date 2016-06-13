@@ -18,4 +18,6 @@ public interface ShoppingCartDao {
 	public Category getCategoryById(int id);
 	
 	public void saveCart(ShoppingCart cart);
+	
+	public List<Product> getProductsByCategory(Category category);
  }

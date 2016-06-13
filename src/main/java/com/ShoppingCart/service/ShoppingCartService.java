@@ -9,7 +9,7 @@ import com.ShoppingCart.entity.ShoppingCart;
 
 public interface ShoppingCartService {
 	
-	public List<Product> getProducts(Integer categoryId);
+	public List<Product> getProducts(Category category);
 
 	public Product getProduct(int id);
 	
@@ -19,4 +19,5 @@ public interface ShoppingCartService {
 	
 	public void saveCart(ShoppingCart cart);
 
+	public List<Product> getProductsByCategory(Category category);
 }

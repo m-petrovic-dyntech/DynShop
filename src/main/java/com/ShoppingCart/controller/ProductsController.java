@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,30 +33,28 @@ public class ProductsController {
 	ShoppingCartService shoppingCartService;
 	
 	@RequestMapping(value = { "/products" }, method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category, HttpSession session ) {
+	public ModelAndView home(@RequestParam(required = false) Integer category, ModelAndView modelAndView, HttpSession session ) {
 		
 		if(session.getAttribute("cart") == null)
 			session.setAttribute("cart", new ShoppingCart());
-			
-		List<Product> products = shoppingCartService.getProducts(category);
-				
-		Category selectedCategory = shoppingCartService.getCategoryById(category);
+		
+		Category selectedCategory = new Category();
+		
+		if(category!=null && category!=0)
+			selectedCategory = shoppingCartService.getCategoryById(category);
+		
+		List<Product> products = shoppingCartService.getProducts(selectedCategory);
 				
 		ArrayList<Category> categories= new ArrayList<>();
 		
-		Category firstCategory = new Category();
-		firstCategory.setName("-- Select Category --");
-		
-		categories.add(firstCategory);
 		categories.addAll(shoppingCartService.getCategories());
 				
 		modelAndView.setViewName("products");
 		
 	    modelAndView.addObject("products", products);
-	    
 	    modelAndView.addObject("categories", categories);
 	    modelAndView.addObject("category", selectedCategory);
-	    modelAndView.addObject("cart", session.getAttribute("cart") );
+	    modelAndView.addObject("cart", session.getAttribute("cart"));
 	    
 		return modelAndView;
 	}

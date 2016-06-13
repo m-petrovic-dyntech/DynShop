@@ -29,7 +29,7 @@ public class ShoppingCart {
 	@Column(name="totalCost")
 	private Double totalCost;
 	
-	@OneToMany(mappedBy="shoppingCart", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="shoppingCart")
 	private List<ShoppingCartItem> items;
 	
 	@Column(name="shoppingDate")

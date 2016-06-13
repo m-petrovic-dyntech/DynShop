@@ -23,12 +23,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public List<Product> getProducts(Integer categoryId) {
-
-		if (categoryId == null)
+	public List<Product> getProducts(Category category) {
+		if(category.getName()==null)
 			return shoppingCartDao.getProducts();
 		else
-			return shoppingCartDao.getCategoryById(categoryId).getProducts();
+			return shoppingCartDao.getProductsByCategory(category);
 	}
 
 	@Override
@@ -51,5 +50,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public void saveCart(ShoppingCart cart) {
 		shoppingCartDao.saveCart(cart);
+	}
+	
+	@Override
+	public List<Product> getProductsByCategory(Category category) {
+		return shoppingCartDao.getProductsByCategory(category);
 	}
 }
