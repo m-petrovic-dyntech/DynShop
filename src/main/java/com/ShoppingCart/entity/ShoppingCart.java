@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,7 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="shoppingcart")
+@Table(name="shoppingcarts")
 public class ShoppingCart {
 	@Id
 	@SequenceGenerator(name="shoppingcart_gen", sequenceName="shoppingcart_seq", allocationSize=1, initialValue=1)
@@ -34,6 +36,10 @@ public class ShoppingCart {
 	@Column(name="shoppingDate")
 	@Temporal(TemporalType.DATE)
 	private Date shoppingDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "CUSTOMER_ID", referencedColumnName="ID")
+	private Customer customer;
 
 	public ShoppingCart()
 	{
@@ -88,6 +94,14 @@ public class ShoppingCart {
 
 	public void setShoppingDate(Date shoppingDate) {
 		this.shoppingDate = shoppingDate;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	@Override

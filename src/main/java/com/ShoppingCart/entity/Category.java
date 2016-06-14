@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @SuppressWarnings("unused")
 @Entity
-@Table(name="category")
+@Table(name="categories")
 public class Category {
 	@Id
 	@SequenceGenerator(name="cat_gen", sequenceName="category_seq", allocationSize=1, initialValue=1)

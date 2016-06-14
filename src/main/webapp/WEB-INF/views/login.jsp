@@ -9,18 +9,19 @@
                             <div class="container-fluid" id="login-main_box">
                                 <div class="container">
                                     <div class="col-md-4 col-md-offset-4">
-                                        <form:form method="POST" action="/login">
+                                        <c:url value='/j_spring_security_check' var='loginPath' />
+                                        <form:form action="${loginPath}" modelAttribute="customer" method="POST">
                                             <div id="login-input_box">
                                                 <div class="form-group" id="login-input_box-username_box">
                                                     <div class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                        <form:input path="" class="form-control" placeholder="Username" />
+                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
+                                                        <form:input path="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1"></form:input>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                                        <form:password path="" class="form-control" placeholder="Password" />
+                                                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                                                        <form:password path="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1"></form:password>
                                                     </div>
                                                 </div>
                                                 <div class="form-group text-center">
