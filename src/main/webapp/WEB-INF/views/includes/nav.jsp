@@ -16,7 +16,6 @@
                         <ul class="nav navbar-nav">
                             <li><a href="${pageContext.request.contextPath}/products">Products</a></li>
                             <li><a href="${pageContext.request.contextPath}/userLogin">Login</a></li>
-                            <li><a href="${pageContext.request.contextPath}/userRegister">Login</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right" id="navbar-cart_view">
                             <li>

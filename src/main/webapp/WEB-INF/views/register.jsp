@@ -4,14 +4,14 @@
             <%@ page contentType="text/html; charset=UTF-8" %>
                 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
                     <!-- Content -->
-                    <t:layout title="DynTech Shop | Login">
+                    <t:layout title="DynTech Shop | Register">
                         <jsp:attribute name="body_area">
-                            <div class="container-fluid" id="login-main_box">
+                            <div class="container-fluid" id="register-main_box">
                                 <div class="container">
                                     <div class="col-md-4 col-md-offset-4">
-                                        <form:form method="POST" action="/login">
-                                            <div id="login-input_box">
-                                                <div class="form-group" id="login-input_box-username_box">
+                                        <form:form method="POST" action="/register">
+                                            <div id="register-input_box">
+                                                <div class="form-group" id="register-input_box-username_box">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                         <form:input path="" class="form-control" placeholder="Username" />
@@ -24,10 +24,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group text-center">
-                                                    <input type="submit" class="btn btn-primary" id="login-login_button" value="Sign in" />
-                                                </div>
-                                                <div id="login-input_box-register">
-                                                    <a href="${pageContext.request.contextPath}/userRegister">Don't have account? Register here.</a>
+                                                    <input type="submit" class="btn btn-primary" id="register-register_button" value="Register" />
                                                 </div>
                                             </div>
                                         </form:form>
