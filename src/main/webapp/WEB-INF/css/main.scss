@@ -345,6 +345,16 @@ body {
         overflow: auto;
         padding-top: 20px;
     }
+    &-input_box {
+        margin-top: 211px;
+        &-username_box {
+            margin-bottom: 22px;
+        }
+    }
+    &-login_button {
+        padding: 6px 21px;
+        margin-top: 11px;
+    }
 }
 
 

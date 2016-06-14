@@ -9,12 +9,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
-	
+
 	@RequestMapping(value = { "/userLogin" }, method = RequestMethod.GET)
-	public ModelAndView cart(ModelAndView modelAndView, HttpSession session) {
+	public ModelAndView userLogin(ModelAndView modelAndView) {
 		
-		modelAndView.setViewName("login");
+		modelAndView.setViewName("login");		
 		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = { "/userRegister" }, method = RequestMethod.GET)
+	public ModelAndView userRegister(ModelAndView modelAndView) {
+		
+		modelAndView.setViewName("register");	
+	
 		return modelAndView;
 	}
 }
