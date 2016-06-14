@@ -20,12 +20,6 @@
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations" value="classpath:application.properties"></property>
 	</bean>
-	
-	<!--<security:http create-session="ifRequired">
-		<security:session-management invalid-session-url="/invalidSession" session-fixation-protection="migrateSession">
-			<security:concurrency-control max-sessions="1" expired-url="/expiredSession" />
-		</security:session-management>
-	</security:http>-->
 
 </beans>
     

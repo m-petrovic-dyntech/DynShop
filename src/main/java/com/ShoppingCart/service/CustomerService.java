@@ -1,12 +1,11 @@
-package com.ShoppingCart.dao;
+package com.ShoppingCart.service;
 
 import java.util.ArrayList;
 
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.ShoppingCart;
 
-public interface CustomerDao {
-
+public interface CustomerService {
 	public ArrayList<Customer> getAllCustomers();
 
 	public Customer getCustomer(int id);
@@ -20,5 +19,4 @@ public interface CustomerDao {
 	public ArrayList<ShoppingCart> getCartsByCustomerId(int id);
 	
 	public ArrayList<ShoppingCart> getAllCarts();
-
 }

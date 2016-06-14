@@ -60,8 +60,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	@Transactional
-	public void editCustomer(int id, Customer newCustomer) {
-		newCustomer.setId(id);
+	public void editCustomer(Customer newCustomer) {
 		getSession().saveOrUpdate(newCustomer);
 	}
 

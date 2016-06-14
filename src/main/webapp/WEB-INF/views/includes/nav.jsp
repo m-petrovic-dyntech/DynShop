@@ -17,6 +17,14 @@
                             <li><a href="${pageContext.request.contextPath}/products">Products</a></li>
                             <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
                             <li><a href="${pageContext.request.contextPath}/register">Register</a></li>
+                            <li>
+                            <c:url value='/logout' var='logoutUrl' />
+								<form action="${logoutUrl}" method="post">
+									<input class="btn btn-primary" type="submit" name="submit"
+										value="Logout" />
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								</form>
+							</li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right" id="navbar-cart_view">
                             <li>

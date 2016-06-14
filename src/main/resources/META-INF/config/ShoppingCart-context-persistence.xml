@@ -39,11 +39,13 @@
 	
 	<!-- Services -->
 	<bean name="shoppingCartService" class="com.ShoppingCart.service.impl.ShoppingCartServiceImpl"></bean>
+	<bean name="customerService" class="com.ShoppingCart.service.impl.CustomerServiceImpl"></bean>
 
 	<!-- DAO -->
 	<bean name="shoppingCartDao" class="com.ShoppingCart.dao.impl.ShoppingCartDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
 	<bean name="CustomerDao" class="com.ShoppingCart.dao.impl.CustomerDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
