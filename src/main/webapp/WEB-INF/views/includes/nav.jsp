@@ -15,6 +15,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="${pageContext.request.contextPath}/products">Products</a></li>
+                            <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right" id="navbar-cart_view">
                             <li>

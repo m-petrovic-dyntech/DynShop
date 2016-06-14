@@ -96,7 +96,7 @@ public class CartController {
 		session.setAttribute("cart", new ShoppingCart());
 		modelAndView.addObject("cart", cart);
 		
-		modelAndView.setViewName("redirect: products");
+		modelAndView.setViewName("redirect:products");
 		return modelAndView;
 	}
 	
