@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.ShoppingCart.util.PasswordUtil;
 
 @Entity
-@Table(name="customer")
+@Table(name="customers")
 public class Customer {
 	@Id
 	@SequenceGenerator(name="user_gen", sequenceName="user_seq", allocationSize=1, initialValue=1)
@@ -28,11 +28,14 @@ public class Customer {
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="role")
-	private Role role;
-	
+	@Column(name="enabled")
+	private Boolean enabled;
+
 	@OneToMany(mappedBy="customer")
 	private List<ShoppingCart> shoppingCarts;
+	
+	@OneToMany(mappedBy="customer")
+	private List<Role> roles;
 
 	public Integer getId() {
 		return id;
@@ -57,13 +60,13 @@ public class Customer {
 	public void setPassword(String password) {
 		this.password = PasswordUtil.getMD5(password);
 	}
-
-	public Role getRole() {
-		return role;
+	
+	public Boolean getEnabled() {
+		return enabled;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public List<ShoppingCart> getShoppingCarts() {
@@ -74,8 +77,17 @@ public class Customer {
 		this.shoppingCarts = shoppingCarts;
 	}
 
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", role=" + role + "]";
+		return "Customer [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+				+ "]";
 	}
 }
