@@ -9,11 +9,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.CustomerDao;
+import com.ShoppingCart.dto.CustomUserDetails;
 import com.ShoppingCart.entity.Customer;
-import com.ShoppingCart.entity.Product;
+import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.ShoppingCart;
 
 public class CustomerDaoImpl implements CustomerDao {
@@ -48,7 +54,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	@Transactional
-	public Customer getCustomer(int id) {
+	public Customer getCustomerById(int id) {
 		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("id",id)).uniqueResult();
 	}
 
@@ -73,8 +79,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public ArrayList<ShoppingCart> getCartsByCustomerId(int id) {
-		Customer customer= getCustomer(id);
+	public ArrayList<ShoppingCart> getCartsByCustomer(Customer customer) {
 		return (ArrayList<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
 	}
 
@@ -83,6 +88,15 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Transactional
 	public ArrayList<ShoppingCart> getAllCarts() {
 		return  (ArrayList<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public Customer getCustomerByUsername(String username) {
+		Customer c = (Customer)getSession().createCriteria(Customer.class).add(Restrictions.eq("username", username)).uniqueResult();
+		c.setRoles((List<Role>)getSession().createCriteria(Role.class).add(Restrictions.eq("customer", c)).list());
+		return c;
 	}
 
 }

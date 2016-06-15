@@ -9,16 +9,18 @@ public interface CustomerDao {
 
 	public ArrayList<Customer> getAllCustomers();
 
-	public Customer getCustomer(int id);
-	
+	public Customer getCustomerById(int id);
+
 	public void addCustomer(Customer customer);
-	
+
 	public void editCustomer(Customer newCustomer);
-	
+
 	public void deleteCustomer(int id);
-	
-	public ArrayList<ShoppingCart> getCartsByCustomerId(int id);
-	
+
+	public ArrayList<ShoppingCart> getCartsByCustomer(Customer customer);
+
 	public ArrayList<ShoppingCart> getAllCarts();
+
+	public Customer getCustomerByUsername(String username);
 
 }
