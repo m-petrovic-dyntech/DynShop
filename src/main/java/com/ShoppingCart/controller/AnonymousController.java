@@ -215,8 +215,7 @@ public class AnonymousController extends ControllerUtil {
 				modelAndView.setViewName("redirect:products");
 		} else 
 				modelAndView.setViewName("redirect:login");
-				
-		System.out.println(getAuthenticatedUser().toString());
+		
 		return modelAndView;
 	}
 }
