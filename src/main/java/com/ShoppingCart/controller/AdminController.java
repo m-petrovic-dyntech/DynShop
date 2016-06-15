@@ -78,7 +78,7 @@ public class AdminController extends ControllerUtil {
 	@RequestMapping(value = { "/admin/panel/deleteCustomer/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
 		
-		customerService.deleteCustomer(id);
+		customerService.disableCustomer(customerService.getCustomerById(id));
 		
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
@@ -87,24 +87,7 @@ public class AdminController extends ControllerUtil {
 	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
 		
-		Product product = shoppingCartService.getProduct(id);
-		Category category = shoppingCartService.getCategoryById(product.getCategory().getId());
-		
-		List<Product> products = shoppingCartService.getProducts(category);
-
-		Iterator<Product> itr = products.iterator();
-		while (itr.hasNext()) {
-			Product element = (Product) itr.next();
-			if (element.getId() == id) {
-				itr.remove();
-			}
-		}
-		
-		category.setProducts(products);
-		shoppingCartService.editCategory(category);
-		product.setCategory(null);
-		shoppingCartService.editProduct(product);
-		shoppingCartService.deleteProduct(product);
+		shoppingCartService.disableProduct(shoppingCartService.getProduct(id));
 		
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
@@ -113,20 +96,7 @@ public class AdminController extends ControllerUtil {
 	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
 		
-		Category category = shoppingCartService.getCategoryById(id);
-
-		/*
-		List<Product> products = shoppingCartService.getProducts(category);
-		
-		for (Product product : products) {
-			product.setCategory(null);
-			shoppingCartService.editProduct(product);
-		}
-				
-		category.setProducts(null);
-		shoppingCartService.editCategory(category);
-		*/
-		shoppingCartService.deleteCategory(category);
+		shoppingCartService.disableCategory(shoppingCartService.getCategoryById(id));
 		
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;

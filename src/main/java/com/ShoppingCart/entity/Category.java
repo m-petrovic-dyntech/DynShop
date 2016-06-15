@@ -24,11 +24,11 @@ public class Category {
 	
 	@Column(name="name")
 	private String name;
-	
-	@OneToMany(mappedBy="category", cascade=CascadeType.ALL)
+	 
 	@Column(name="enabled")
 	private Boolean enabled;
-
+	 
+	@OneToMany(mappedBy="category")
 	private List<Product> products;
 
 	public Integer getId() {
