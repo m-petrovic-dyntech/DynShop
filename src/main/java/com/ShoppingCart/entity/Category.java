@@ -25,7 +25,7 @@ public class Category {
 	@Column(name="name")
 	private String name;
 	
-	@OneToMany(mappedBy="category")
+	@OneToMany(mappedBy="category", cascade=CascadeType.ALL)
 	private List<Product> products;
 
 	public Integer getId() {

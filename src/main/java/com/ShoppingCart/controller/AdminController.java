@@ -2,6 +2,7 @@ package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.ControllerUtil;
@@ -72,5 +74,73 @@ public class AdminController extends ControllerUtil {
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = { "/admin/panel/deleteCustomer/{id}" }, method = RequestMethod.GET)
+	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+		
+		customerService.deleteCustomer(id);
+		
+		modelAndView.setViewName("admin_panel_users");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
+	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+		
+		Product product = shoppingCartService.getProduct(id);
+		Category category = shoppingCartService.getCategoryById(product.getCategory().getId());
+		
+		List<Product> products = shoppingCartService.getProducts(category);
 
+		Iterator<Product> itr = products.iterator();
+		while (itr.hasNext()) {
+			Product element = (Product) itr.next();
+			if (element.getId() == id) {
+				itr.remove();
+			}
+		}
+		
+		category.setProducts(products);
+		shoppingCartService.editCategory(category);
+		product.setCategory(null);
+		shoppingCartService.editProduct(product);
+		shoppingCartService.deleteProduct(product);
+		
+		modelAndView.setViewName("admin_panel_products");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
+	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+		
+		Category category = shoppingCartService.getCategoryById(id);
+
+		/*
+		List<Product> products = shoppingCartService.getProducts(category);
+		
+		for (Product product : products) {
+			product.setCategory(null);
+			shoppingCartService.editProduct(product);
+		}
+				
+		category.setProducts(null);
+		shoppingCartService.editCategory(category);
+		*/
+		shoppingCartService.deleteCategory(category);
+		
+		modelAndView.setViewName("admin_panel_products");
+		return modelAndView;
+	}
+	
+	/*
+	@RequestMapping(value = { "/admin/panel/editProduct/{id}" }, method = RequestMethod.GET)
+	public ModelAndView adminEditProduct(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+		
+		Product product = shoppingCartService.getProduct(id);
+		shoppingCartService.editProduct(product);
+		
+		modelAndView.setViewName("admin_panel_users");
+		return modelAndView;
+	}
+ 	*/
 }

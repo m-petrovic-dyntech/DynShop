@@ -23,6 +23,7 @@ import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
+import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.ControllerUtil;
 
@@ -34,6 +35,10 @@ public class AnonymousController extends ControllerUtil {
 
 	@Autowired
 	private ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	private CustomerService customerService;
+	
 
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public ModelAndView userLogin(ModelAndView modelAndView, HttpSession session) {
@@ -203,6 +208,7 @@ public class AnonymousController extends ControllerUtil {
 		
 		if(!(getAuthentication() instanceof AnonymousAuthenticationToken)) {
 				ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
+				cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
 				shoppingCartService.saveCart(cart);
 				session.setAttribute("cart", new ShoppingCart());
 				modelAndView.addObject("cart", cart);
