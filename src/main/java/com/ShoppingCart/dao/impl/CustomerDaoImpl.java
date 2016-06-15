@@ -68,9 +68,10 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	@Transactional
-	public void deleteCustomer(int id) {
+	public void deactivateCustomer(int id) {
 		Customer c= getCustomerById(id);
-		getSession().delete(c);
+		c.setEnabled(Boolean.FALSE);
+		getSession().saveOrUpdate(c);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -80,6 +81,18 @@ public class CustomerDaoImpl implements CustomerDao {
 		Customer c = (Customer)getSession().createCriteria(Customer.class).add(Restrictions.eq("username", username)).uniqueResult();
 		c.setRoles((List<Role>)getSession().createCriteria(Role.class).add(Restrictions.eq("customer", c)).list());
 		return c;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> getActiveCustomers() {
+		return (List<Customer>) getSession().createCriteria(Customer.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Customer> getInactiveCustomers() {
+		return (List<Customer>) getSession().createCriteria(Customer.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
 	}
 
 }
