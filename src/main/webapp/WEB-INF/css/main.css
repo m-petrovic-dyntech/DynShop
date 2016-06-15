@@ -19,6 +19,8 @@ body {
 ===========================*/
 #navbar-cart_view {
   padding: 8px 11px; }
+  #navbar-cart_view a {
+    padding: 7px 12px; }
   #navbar-cart_view-totalCost {
     font-size: 19px;
     color: #1CB91C;
@@ -70,6 +72,22 @@ body {
     border-bottom: 1px solid #ECECEC; }
     #navbar-cart_view .mini_cart li:last-child {
       border: none; }
+  #navbar-cart_view #logout_dropdown {
+    min-width: auto; }
+    #navbar-cart_view #logout_dropdown input {
+      color: #777;
+      background: transparent;
+      border: none; }
+    #navbar-cart_view #logout_dropdown form {
+      margin-bottom: 0; }
+  #navbar-cart_view #navbar-username_dropdown {
+    margin-right: 11px; }
+  #navbar-cart_view #navbar-username_preview {
+    padding: 7px 10px 7px 12px; }
+    #navbar-cart_view #navbar-username_preview .username {
+      text-transform: capitalize;
+      padding-right: 4px;
+      font-size: 15px; }
 
 /*=====  End of Nav  ======*/
 #products-main_box {

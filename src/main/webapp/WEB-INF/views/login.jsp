@@ -28,7 +28,7 @@
                                                     <input type="submit" class="btn btn-primary" id="login-login_button" value="Sign in" />
                                                 </div>
                                                 <div id="login-input_box-register">
-                                                    <a href="${pageContext.request.contextPath}/userRegister">Don't have account? Register here.</a>
+                                                    <a href="${pageContext.request.contextPath}/register">Don't have account? Register here.</a>
                                                 </div>
                                             </div>
                                         </form:form>
