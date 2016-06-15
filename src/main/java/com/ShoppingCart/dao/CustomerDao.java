@@ -9,7 +9,7 @@ public interface CustomerDao {
 
 	public ArrayList<Customer> getAllCustomers();
 
-	public Customer getCustomer(int id);
+	public Customer getCustomerById(int id);
 	
 	public void addCustomer(Customer customer);
 	

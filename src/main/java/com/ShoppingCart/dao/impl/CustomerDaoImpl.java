@@ -1,7 +1,6 @@
 package com.ShoppingCart.dao.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.CustomerDao;
 import com.ShoppingCart.entity.Customer;
-import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 
 public class CustomerDaoImpl implements CustomerDao {
@@ -48,7 +46,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	@Transactional
-	public Customer getCustomer(int id) {
+	public Customer getCustomerById(int id) {
 		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("id",id)).uniqueResult();
 	}
 
@@ -67,14 +65,15 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public void deleteCustomer(int id) {
-		getSession().delete(id);
+		Customer c= getCustomerById(id);
+		getSession().delete(c);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public ArrayList<ShoppingCart> getCartsByCustomerId(int id) {
-		Customer customer= getCustomer(id);
+		Customer customer= getCustomerById(id);
 		return (ArrayList<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
 	}
 
