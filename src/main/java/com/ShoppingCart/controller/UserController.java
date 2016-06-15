@@ -1,6 +1,6 @@
 package com.ShoppingCart.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,9 +26,8 @@ public class UserController extends ControllerUtil {
 	public ModelAndView getCartsByCustomerId(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 
-		ArrayList<ShoppingCart> carts = new ArrayList<ShoppingCart>();
 		Customer customer = (Customer) customerService.getCustomerById(getAuthenticatedUser().getId());
-		carts = customerService.getCartsByCustomer(customer);
+		List<ShoppingCart> carts = customerService.getCartsByCustomer(customer);
 
 		modelAndView.setViewName("history");
 		modelAndView.addObject("history", carts);

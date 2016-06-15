@@ -1,6 +1,5 @@
 package com.ShoppingCart.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ShoppingCart.entity.Customer;
