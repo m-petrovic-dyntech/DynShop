@@ -85,7 +85,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	public void saveCart(ShoppingCart cart) {
 		//May throw error
-		//cart.setShoppingDate(new java.util.Date());
+		cart.setShoppingDate(new java.util.Date());
 		getSession().saveOrUpdate(cart);
 	}
 
