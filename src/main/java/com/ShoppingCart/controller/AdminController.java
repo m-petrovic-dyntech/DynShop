@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.service.CustomerService;
@@ -50,21 +51,24 @@ public class AdminController extends ControllerUtil {
 
 	@RequestMapping(value = { "/admin/panel/products" }, method = RequestMethod.GET)
 	public ModelAndView adminGetProducts(ModelAndView modelAndView, HttpSession session) {
-				
+		
+		modelAndView.addObject("products", shoppingCartService.getProducts(null));
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/users" }, method = RequestMethod.GET)
 	public ModelAndView adminGetUsers(ModelAndView modelAndView, HttpSession session) {
-				
+		
+		modelAndView.addObject("customers", customerService.getAllCustomers());
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
 	public ModelAndView adminCategories(ModelAndView modelAndView, HttpSession session) {
-				
+		
+		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
 	}

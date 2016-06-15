@@ -27,7 +27,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public List<Product> getProducts(Category category) {
-		if(category.getName()==null)
+		if(category==null)
 			return shoppingCartDao.getProducts();
 		else
 			return shoppingCartDao.getProductsByCategory(category);
