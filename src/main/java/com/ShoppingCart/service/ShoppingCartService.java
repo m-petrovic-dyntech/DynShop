@@ -45,7 +45,7 @@ public interface ShoppingCartService {
 
 	public List<Category> getDisabledCategories();
 
-	public List<Product> getEnabledProducts();
-
+	public List<Product> getEnabledProducts(Category category);
+	
 	public List<Product> getDisabledProducts();
 }

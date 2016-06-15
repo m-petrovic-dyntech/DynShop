@@ -47,5 +47,9 @@ public interface ShoppingCartDao {
 
 	public List<Product> getEnabledProducts();
 
+	public List<Product> getEnabledProductsByCategory(Category category);
+	
 	public List<Product> getDisabledProducts();
+	
+
  }

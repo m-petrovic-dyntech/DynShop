@@ -154,25 +154,39 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Category> getEnabledCategories() {
 		return (List<Category>) getSession().createCriteria(Category.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Category> getDisabledCategories() {
 		return (List<Category>) getSession().createCriteria(Category.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Product> getEnabledProducts() {
 		return (List<Product>) getSession().createCriteria(Product.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
+	public List<Product> getEnabledProductsByCategory(Category category) {
+		return (List<Product>) getSession().createCriteria(Product.class).add(Restrictions.eq("enabled", Boolean.TRUE))
+				.add(Restrictions.eq("category", category)).list();		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
 	public List<Product> getDisabledProducts() {
 		return (List<Product>) getSession().createCriteria(Product.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
 	}
+
+	
 }
