@@ -28,4 +28,16 @@ public interface ShoppingCartDao {
 	public List<ShoppingCart> getAllCarts();
 
 	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart);
+	
+	public void editCategory(Category category);
+	
+	public void addCategory(Category category);
+
+	public void deleteCategory(Category category);
+	
+	public void editProduct(Product product);
+
+	public void deleteProduct(Product product);
+	
+	public void addProduct(Product product);
  }

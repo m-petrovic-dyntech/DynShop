@@ -109,5 +109,46 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart) {
 		return (List<ShoppingCartItem>)getSession().createCriteria(ShoppingCartItem.class).add(Restrictions.eq("shoppingCart", cart)).list();
 	}
+
+	@Override
+	@Transactional
+	public void editCategory(Category category) {
+		getSession().saveOrUpdate(category);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteCategory(Category category) {
+		getSession().delete(category);
+	}
+
+	@Override
+	@Transactional
+	public void editProduct(Product product) {
+		getSession().saveOrUpdate(product);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteProduct(Product product) {
+		getSession().delete(product);
+		
+	}
+
+	@Override
+	@Transactional
+	public void addCategory(Category category) {
+		getSession().save(category);		
+	}
+
+	@Override
+	@Transactional
+	public void addProduct(Product product) {
+		getSession().save(product);
+	}
+	
+	
 	
 }

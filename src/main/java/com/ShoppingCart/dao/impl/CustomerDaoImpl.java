@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ShoppingCart.dao.CustomerDao;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Role;
-import com.ShoppingCart.entity.ShoppingCart;
 
 
 @Repository
