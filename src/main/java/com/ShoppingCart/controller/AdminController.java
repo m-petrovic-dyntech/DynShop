@@ -39,6 +39,10 @@ public class AdminController extends ControllerUtil {
 		
 		List<ShoppingCart> carts = shoppingCartService.getAllCarts();
 		
+		for (ShoppingCart shoppingCart : carts) {
+			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart));
+		}
+		
 		modelAndView.addObject("carts", carts);
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
