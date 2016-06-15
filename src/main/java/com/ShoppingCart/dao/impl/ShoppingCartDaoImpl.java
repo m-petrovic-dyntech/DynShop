@@ -93,9 +93,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	public List<ShoppingCart> getCartsByCustomer(Customer customer) {
 		List<ShoppingCart> carts= getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
-		for (ShoppingCart shoppingCart : carts) {
-			shoppingCart.setItems(this.getItemsByCart(shoppingCart));
-		}
 		return carts;
 	}
 
@@ -104,9 +101,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	public List<ShoppingCart> getAllCarts() {
 		List<ShoppingCart> carts=  (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
-		for (ShoppingCart shoppingCart : carts) {
-			shoppingCart.setItems(getItemsByCart(shoppingCart));
-		}
 		return carts;
 	}
 
@@ -116,6 +110,42 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		return (List<ShoppingCartItem>)getSession().createCriteria(ShoppingCartItem.class).add(Restrictions.eq("shoppingCart", cart)).list();
 	}
 
-	
-	
+	@Override
+	@Transactional
+	public void editCategory(Category category) {
+		getSession().saveOrUpdate(category);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteCategory(Category category) {
+		getSession().delete(category);
+	}
+
+	@Override
+	@Transactional
+	public void editProduct(Product product) {
+		getSession().saveOrUpdate(product);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteProduct(Product product) {
+		getSession().delete(product);
+		
+	}
+
+	@Override
+	@Transactional
+	public void addCategory(Category category) {
+		getSession().save(category);		
+	}
+
+	@Override
+	@Transactional
+	public void addProduct(Product product) {
+		getSession().save(product);
+	}
 }

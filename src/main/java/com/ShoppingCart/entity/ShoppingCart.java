@@ -106,7 +106,7 @@ public class ShoppingCart {
 
 	@Override
 	public String toString() {
-		return "ShoppingCart [id=" + id + ", totalCost=" + totalCost + ", items=" + items + ", shoppingDate="
+		return "ShoppingCart [id=" + id + ", totalCost=" + totalCost + ", shoppingDate="
 				+ shoppingDate + "]";
 	}
 }

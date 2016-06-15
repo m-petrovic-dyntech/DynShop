@@ -27,7 +27,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public List<Product> getProducts(Category category) {
-		if(category.getName()==null)
+		if(category==null)
 			return shoppingCartDao.getProducts();
 		else
 			return shoppingCartDao.getProductsByCategory(category);
@@ -75,5 +75,39 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		return shoppingCartDao.getItemsByCart(cart);
 	}
 
+	@Override
+	public void editCategory(Category category) {
+		shoppingCartDao.editCategory(category);
+		
+	}
 
+	@Override
+	public void addCategory(Category category) {
+		shoppingCartDao.addCategory(category);
+		
+	}
+
+	@Override
+	public void deleteCategory(Category category) {
+		shoppingCartDao.deleteCategory(category);
+		
+	}
+
+	@Override
+	public void editProduct(Product product) {
+		shoppingCartDao.editProduct(product);
+		
+	}
+
+	@Override
+	public void deleteProduct(Product product) {
+		shoppingCartDao.deleteProduct(product);;
+		
+	}
+
+	@Override
+	public void addProduct(Product product) {
+		shoppingCartDao.addProduct(product);
+		
+	}
 }

@@ -38,6 +38,8 @@ public class AnonymousController extends ControllerUtil {
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public ModelAndView userLogin(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
+		
+				
 		modelAndView.addObject("customer", new Customer());
 		modelAndView.setViewName("login");
 		return modelAndView;
@@ -50,7 +52,7 @@ public class AnonymousController extends ControllerUtil {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="/products", method = RequestMethod.GET)
+	@RequestMapping(value={"/products", "admin/products"}, method = RequestMethod.GET)
 	public ModelAndView home(@RequestParam(required = false) Integer category, ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 		
@@ -199,19 +201,15 @@ public class AnonymousController extends ControllerUtil {
 	public ModelAndView cartSave(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 		
-		if(!getAuthentication().isAuthenticated()) {
-			if(!(getAuthentication() instanceof AnonymousAuthenticationToken))
-			{
+		if(!(getAuthentication() instanceof AnonymousAuthenticationToken)) {
 				ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
 				shoppingCartService.saveCart(cart);
 				session.setAttribute("cart", new ShoppingCart());
 				modelAndView.addObject("cart", cart);
 				modelAndView.setViewName("redirect:products");
-			}else 
+		} else 
 				modelAndView.setViewName("redirect:login");
-		}else 
-			modelAndView.setViewName("redirect:login");
-		
+				
 		System.out.println(getAuthenticatedUser().toString());
 		return modelAndView;
 	}
