@@ -84,7 +84,8 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Override
 	@Transactional
 	public void saveCart(ShoppingCart cart) {
-		cart.setDate(new java.util.Date());
+		//May throw error
+		//cart.setShoppingDate(new java.util.Date());
 		getSession().saveOrUpdate(cart);
 	}
 

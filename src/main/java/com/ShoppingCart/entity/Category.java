@@ -25,6 +25,9 @@ public class Category {
 	@Column(name="name")
 	private String name;
 	
+	@Column(name="enabled")
+	private Boolean enabled;
+	
 	@OneToMany(mappedBy="category")
 	private List<Product> products;
 
@@ -43,7 +46,15 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -51,10 +62,4 @@ public class Category {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-
-	@Override
-	public String toString() {
-		return this.getName();
-	}
-	
 }
