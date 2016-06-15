@@ -11,11 +11,19 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#">DynTech Shop</a>
+                            <a class="navbar-brand" href="${pageContext.request.contextPath}/products">DynTech Shop</a>
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <sec:authorize access="isAuthenticated()">
+                                <sec:authorize access="isAnonymous()">
+                                    <li><a href="${pageContext.request.contextPath}/products">Products</a></li>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                    <li><a href="${pageContext.request.contextPath}/admin/panel/products">Control panel</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/products">Products</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/admin/cartLogs">Cart Logs</a></li>
+                                </sec:authorize>
+                                <sec:authorize access="hasRole('ROLE_USER')">
                                     <li><a href="${pageContext.request.contextPath}/products">Products</a></li>
                                 </sec:authorize>
                             </ul>
@@ -38,35 +46,34 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <span id="navbar-cart_view-totalCost">
-                                            <fmt:formatNumber value="${sessionScope.cart.getTotalCost() != null ? sessionScope.cart.getTotalCost() : 0}" currencySymbol="" type="currency"/>
-                                        </span>
-                                        <a href="${pageContext.request.contextPath}/cart" id="navbar-cart_view-link">
-                                            <span class="glyphicon glyphicon-shopping-cart"></span>
-                                            <span id="navbar-cart_view-totalCount">${sessionScope.cart.items.size() != null ? sessionScope.cart.items.size() : 0}</span>
-                                        </a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
-                                        <ul class="dropdown-menu mini_cart">
-                                            <c:forEach items="${sessionScope.cart.getItems()}" var="item" varStatus="loop">
-                                                <li>
-                                                    <a class="mini_cart-item">
-                                                        <span class="mini_cart-name">${item.getProduct().getName()} <span class="mini_cart-quantity">${item.getQuantity()}</span></span>
-                                                        <span class="mini_cart-price"><fmt:formatNumber value="${item.getProduct().getPrice()}" currencySymbol="" type="currency"/></span>
-                                                    </a>
-                                                </li>
-                                            </c:forEach>
-                                            <c:if test="${sessionScope.cart.getItems().isEmpty() || sessionScope.cart.getItems() == null}">
-                                                <div class="mini_cart-message">Nothing in cart</div>
-                                            </c:if>
-                                        </ul>
-                                    </li>
                                 </sec:authorize>
+                                <li>
+                                    <span id="navbar-cart_view-totalCost">
+                                        <fmt:formatNumber value="${sessionScope.cart.getTotalCost() != null ? sessionScope.cart.getTotalCost() : 0}" currencySymbol="" type="currency"/>
+                                    </span>
+                                    <a href="${pageContext.request.contextPath}/cart" id="navbar-cart_view-link">
+                                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                                        <span id="navbar-cart_view-totalCount">${sessionScope.cart.items.size() != null ? sessionScope.cart.items.size() : 0}</span>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+                                    <ul class="dropdown-menu mini_cart">
+                                        <c:forEach items="${sessionScope.cart.getItems()}" var="item" varStatus="loop">
+                                            <li>
+                                                <a class="mini_cart-item">
+                                                    <span class="mini_cart-name">${item.getProduct().getName()} <span class="mini_cart-quantity">${item.getQuantity()}</span></span>
+                                                    <span class="mini_cart-price"><fmt:formatNumber value="${item.getProduct().getPrice()}" currencySymbol="" type="currency"/></span>
+                                                </a>
+                                            </li>
+                                        </c:forEach>
+                                        <c:if test="${sessionScope.cart.getItems().isEmpty() || sessionScope.cart.getItems() == null}">
+                                            <div class="mini_cart-message">Nothing in cart</div>
+                                        </c:if>
+                                    </ul>
+                                </li>
                                 <sec:authorize access="isAnonymous()">
                                     <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/register">Register</a></li>
                                 </sec:authorize>
                             </ul>
                         </div>

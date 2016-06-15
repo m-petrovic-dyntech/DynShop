@@ -6,12 +6,12 @@
                     <!-- Content -->
                     <t:layout title="DynTech Shop | Products">
                         <jsp:attribute name="body_area">
-                            <div class="container-fluid" id="cart-main_box">
+                            <div class="container-fluid page-main_box" id="cart-main_box">
                                 <div class="container">
                                     <c:forEach items="${cart.getItems()}" var="cartItem" varStatus="loop">
                                         <div class="container-fluid row cart-item">
                                             <div class="col-sm-3">
-                                                <div class="cart-item-img" style="background-image: url(<c:url value=" resources/images/picture.png "/>)"></div>
+                                                <div class="cart-item-img" style="background-image: url(${pageContext.request.contextPath}/resources/images/picture.png)"></div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <h3 class="cart-item-heading">${cartItem.getProduct().getName()}</h3>

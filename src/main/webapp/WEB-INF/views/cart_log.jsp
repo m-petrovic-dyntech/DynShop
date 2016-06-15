@@ -7,6 +7,6 @@
                         <!-- Content -->
                         <t:layout title="DynTech Shop | Products">
                             <jsp:attribute name="body_area">
-                               CART LOG
+                               ${carts.get(0).getItems().get(0).getProduct().getName()}
                             </jsp:attribute>
                         </t:layout>

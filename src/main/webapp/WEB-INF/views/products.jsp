@@ -7,55 +7,53 @@
                         <!-- Content -->
                         <t:layout title="DynTech Shop | Products">
                             <jsp:attribute name="body_area">
-                                <div class="container-fluid" id="products-main_box">
-                                    <div class="container">
-                                        <div id="products-filter" class="container-fluid row">
-                                            <div class="col-md-4 row">
-                                                <div class="form-group">
-                                                    <form:select path="category.id" class="form-control input-sm" id="products-filter-select">
-                                                        <form:option value="">-- Select Category --</form:option>
-                                                        <form:options items="${categories}" itemValue="id" itemLabel="name" />
-                                                    </form:select>
-                                                </div>
+                                <div class="container page-main_box" id="products-main_box">
+                                    <div id="products-filter" class="container-fluid row">
+                                        <div class="col-md-4 row">
+                                            <div class="form-group">
+                                                <form:select path="category.id" class="form-control input-sm" id="products-filter-select">
+                                                    <form:option value="">-- Select Category --</form:option>
+                                                    <form:options items="${categories}" itemValue="id" itemLabel="name" />
+                                                </form:select>
                                             </div>
                                         </div>
-                                        <c:forEach items="${products}" var="product" varStatus="loop">
-                                            <div class="products-item col-sm-3 products-item-${loop.index} clearfix">
-                                                <!-- <div class="clearfix products-item-head row"> -->
-                                                <h4>${product.name}</h4>
-                                                <!-- <span class="products-item-category">${product.category}</span> -->
-                                                <!-- </div> -->
-                                                <div class="products-item-text_img">
-                                                    <img class="products-item-img" src="<c:url value=" resources/images/picture.png " />" alt="karadzica">
-                                                    <div class="products-item-desc">
-                                                        ${product.description}
-                                                    </div>
+                                    </div>
+                                    <c:forEach items="${products}" var="product" varStatus="loop">
+                                        <div class="products-item col-sm-3 products-item-${loop.index} clearfix">
+                                            <!-- <div class="clearfix products-item-head row"> -->
+                                            <h4>${product.name}</h4>
+                                            <!-- <span class="products-item-category">${product.category}</span> -->
+                                            <!-- </div> -->
+                                            <div class="products-item-text_img">
+                                                <img class="products-item-img" src="${pageContext.request.contextPath}/resources/images/picture.png" alt="karadzica">
+                                                <div class="products-item-desc">
+                                                    ${product.description}
                                                 </div>
-                                                <div class="products-item-price">
-                                                    <fmt:formatNumber value="${product.price}" currencySymbol="" type="currency" />
-                                                </div>
-                                                <div class="clearfix products-item-options row">
-                                                    <a class="products-item-more btn btn-default" href="${pageContext.request.contextPath}/product/${product.id}?categoryId=${category.id != null ? category.id : 0}">Detaljnije</a>
-                                                    <div class="dropup products-item-cart">
-                                                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            U korpu
-                                                        </button>
-                                                        <div class="dropdown-menu products-item-cart-popup" aria-labelledby="dropdownMenu2">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control products-item-cart-add_item-input" placeholder="Quantity" value="1">
-                                                                <span class="input-group-btn">
+                                            </div>
+                                            <div class="products-item-price">
+                                                <fmt:formatNumber value="${product.price}" currencySymbol="" type="currency" />
+                                            </div>
+                                            <div class="clearfix products-item-options row">
+                                                <a class="products-item-more btn btn-default" href="${pageContext.request.contextPath}/product/${product.id}?categoryId=${category.id != null ? category.id : 0}">Detaljnije</a>
+                                                <div class="dropup products-item-cart">
+                                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        U korpu
+                                                    </button>
+                                                    <div class="dropdown-menu products-item-cart-popup" aria-labelledby="dropdownMenu2">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control products-item-cart-add_item-input" placeholder="Quantity" value="1">
+                                                            <span class="input-group-btn">
                                                             <button class="btn btn-success products-item-cart-add_item" type="button" item-index="${loop.index}" item-cart-link="${pageContext.request.contextPath}/product/add/${product.id}/"><span class="glyphicon glyphicon-ok"></span></button>
-                                                                </span>
-                                                            </div>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </c:forEach>
-                                        <c:if test="${category.id == 0}">
-                                            Ne moze
-                                        </c:if>
-                                    </div>
+                                        </div>
+                                    </c:forEach>
+                                    <c:if test="${category.id == 0}">
+                                        Ne moze
+                                    </c:if>
                                 </div>
                                 <!-- JS -->
                                 <script type="text/javascript">

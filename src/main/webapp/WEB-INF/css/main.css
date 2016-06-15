@@ -90,11 +90,6 @@ body {
       font-size: 15px; }
 
 /*=====  End of Nav  ======*/
-#products-main_box {
-  height: 100%;
-  overflow: auto;
-  padding-top: 20px; }
-
 .products-item {
   border-bottom: 1px solid #F1F1F1;
   border-right: 1px solid #F1F1F1;
@@ -164,10 +159,6 @@ body {
 /*============================
 =            Cart            =
 ============================*/
-#cart-main_box {
-  height: 100%;
-  overflow: auto;
-  padding-top: 20px; }
 #cart-total_box {
   position: absolute;
   bottom: 0;
@@ -304,6 +295,87 @@ body {
   margin-top: 11px; }
 
 /*=====  End of Login  ======*/
+/*===================================
+=            Admin panel            =
+===================================*/
+.admin_panel-wrapper {
+  padding: 0 0 0 250px !important;
+  transition: all 0.5s ease; }
+  .admin_panel-wrapper.toggled {
+    padding: 0 !important; }
+    .admin_panel-wrapper.toggled #admin_panel-sidebar-toggle-right {
+      display: block; }
+    .admin_panel-wrapper.toggled #admin_panel-sidebar-toggle-left {
+      display: none; }
+    .admin_panel-wrapper.toggled #admin_panel-sidebar {
+      left: -250px; }
+
+#admin_panel {
+  /*----------  Sidebar  ----------*/
+  /*----------  Products  ----------*/ }
+  #admin_panel-content_box {
+    width: 100%;
+    height: 100%;
+    padding: 20px; }
+  #admin_panel-sidebar {
+    position: fixed;
+    background: #333;
+    top: 51px;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    transition: all 0.5s ease; }
+    #admin_panel-sidebar-toggle {
+      font-size: 27px;
+      position: absolute;
+      bottom: 56px;
+      right: -29px;
+      cursor: pointer;
+      width: 62px; }
+      #admin_panel-sidebar-toggle-left {
+        transition: all 0.5s ease;
+        color: #fff;
+        float: left; }
+      #admin_panel-sidebar-toggle-right {
+        transition: all 0.5s ease;
+        float: right;
+        display: none; }
+    #admin_panel-sidebar-header {
+      color: #999999;
+      padding: 6px 0 0 19px; }
+    #admin_panel-sidebar-nav {
+      /*position: absolute;*/
+      top: 0;
+      width: 250px;
+      margin: 0;
+      padding: 0;
+      list-style: none; }
+      #admin_panel-sidebar-nav .sidebar-nav_item {
+        text-indent: 20px;
+        line-height: 40px; }
+        #admin_panel-sidebar-nav .sidebar-nav_item-link {
+          display: block;
+          text-decoration: none;
+          color: #999999; }
+          #admin_panel-sidebar-nav .sidebar-nav_item-link:hover {
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2); }
+          #admin_panel-sidebar-nav .sidebar-nav_item-link .glyphicon {
+            margin-left: -19px;
+            padding-right: 10px; }
+  #admin_panel-products .admin_panel-products-col-desc {
+    width: 58%; }
+  #admin_panel-products .admin_panel-products-col-edit, #admin_panel-products .admin_panel-products-col-delete {
+    vertical-align: middle;
+    text-align: center;
+    width: 61px; }
+
+/*=====  End of Admin panel  ======*/
 /*----------  Utility classes  ----------*/
+.page-main_box {
+  height: 100%;
+  overflow: auto;
+  padding-top: 20px; }
 
 /*# sourceMappingURL=main.css.map */

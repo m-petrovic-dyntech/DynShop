@@ -6,7 +6,7 @@
                     <!-- Content -->
                     <t:layout title="DynTech Shop | Login">
                         <jsp:attribute name="body_area">
-                            <div class="container-fluid" id="login-main_box">
+                            <div class="container-fluid page-main_box" id="login-main_box">
                                 <div class="container">
                                     <div class="col-md-4 col-md-offset-4">
                                         <c:url value='/j_spring_security_check' var='loginPath' />
