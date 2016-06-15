@@ -93,9 +93,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	public List<ShoppingCart> getCartsByCustomer(Customer customer) {
 		List<ShoppingCart> carts= getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
-		for (ShoppingCart shoppingCart : carts) {
-			shoppingCart.setItems(this.getItemsByCart(shoppingCart));
-		}
 		return carts;
 	}
 
@@ -104,9 +101,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	public List<ShoppingCart> getAllCarts() {
 		List<ShoppingCart> carts=  (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
-		for (ShoppingCart shoppingCart : carts) {
-			shoppingCart.setItems(getItemsByCart(shoppingCart));
-		}
 		return carts;
 	}
 
