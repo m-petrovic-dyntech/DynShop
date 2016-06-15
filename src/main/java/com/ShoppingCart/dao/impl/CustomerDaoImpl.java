@@ -1,6 +1,7 @@
 package com.ShoppingCart.dao.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.CustomerDao;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Role;
+import com.ShoppingCart.entity.ShoppingCart;
 
 
 @Repository
@@ -71,5 +74,13 @@ public class CustomerDaoImpl implements CustomerDao {
 		getSession().delete(c);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public Customer getCustomerByUsername(String username) {
+		Customer c = (Customer)getSession().createCriteria(Customer.class).add(Restrictions.eq("username", username)).uniqueResult();
+		c.setRoles((List<Role>)getSession().createCriteria(Role.class).add(Restrictions.eq("customer", c)).list());
+		return c;
+	}
 
 }

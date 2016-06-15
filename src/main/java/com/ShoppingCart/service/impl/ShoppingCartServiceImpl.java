@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
+import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.service.ShoppingCartService;
@@ -59,8 +60,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 	
 	@Override
-	public List<ShoppingCart> getCartsByCustomerId(int id) {
-		return shoppingCartDao.getCartsByCustomerId(id);
+	public List<ShoppingCart> getCartsByCustomer(Customer customer) {
+		return shoppingCartDao.getCartsByCustomer(customer);
 	}
 
 	@Override

@@ -9,9 +9,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,6 +65,7 @@ public class AnonymousController extends ControllerUtil {
 				
 		modelAndView.setViewName("products");
 		
+		//modelAndView.addObject("username",getAuthenticatedUser().getName());
 	    modelAndView.addObject("products", products);
 	    modelAndView.addObject("categories", categories);
 	    modelAndView.addObject("category", selectedCategory);
@@ -197,15 +198,21 @@ public class AnonymousController extends ControllerUtil {
 	@RequestMapping(value="/cartSave", method = RequestMethod.GET)
 	public ModelAndView cartSave(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
-		ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
-		shoppingCartService.saveCart(cart);
 		
-		session.setAttribute("cart", new ShoppingCart());
-		modelAndView.addObject("cart", cart);
+		if(!getAuthentication().isAuthenticated()){
+			if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+			{
+				ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
+				shoppingCartService.saveCart(cart);
+				session.setAttribute("cart", new ShoppingCart());
+				modelAndView.addObject("cart", cart);
+				modelAndView.setViewName("redirect:products");
+			}else 
+				modelAndView.setViewName("redirect:login");
+		}else 
+			modelAndView.setViewName("redirect:login");
 		
-		
-		//TODO redirect to login if user is not logged in
-		modelAndView.setViewName("redirect:products");
+		System.out.println(getAuthenticatedUser().toString());
 		return modelAndView;
 	}
 }

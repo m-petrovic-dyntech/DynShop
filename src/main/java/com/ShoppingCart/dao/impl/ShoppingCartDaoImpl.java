@@ -91,11 +91,10 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<ShoppingCart> getCartsByCustomerId(int id) {
-		Customer customer= getCustomerById(id);
+	public List<ShoppingCart> getCartsByCustomer(Customer customer) {
 		List<ShoppingCart> carts= getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
 		for (ShoppingCart shoppingCart : carts) {
-			shoppingCart.setItems(getItemsByCart(shoppingCart));
+			shoppingCart.setItems(this.getItemsByCart(shoppingCart));
 		}
 		return carts;
 	}
@@ -115,11 +114,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart) {
 		return (List<ShoppingCartItem>)getSession().createCriteria(ShoppingCartItem.class).add(Restrictions.eq("shoppingCart", cart)).list();
-	}
-	
-	@Transactional
-	private Customer getCustomerById(int id) {
-		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("id",id)).uniqueResult();
 	}
 	
 }

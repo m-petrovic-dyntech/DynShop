@@ -27,6 +27,9 @@ body {
 
 #navbar-cart_view {
     padding: 8px 11px;
+    a {
+        padding: 7px 12px;
+    }
     &-totalCost {
         font-size: 19px;
         color: #1CB91C;
@@ -97,6 +100,30 @@ body {
             border-bottom: 1px solid #ECECEC;
             &:last-child {
                 border: none;
+            }
+        }
+    }
+    #logout_dropdown {
+        min-width: auto;
+        input {
+            color: #777;
+            background: transparent;
+            border: none;
+        }
+        form {
+            margin-bottom: 0;
+        }
+    }
+    #navbar-username {
+        &_dropdown {
+            margin-right: 11px;
+        }
+        &_preview {
+            padding: 7px 10px 7px 12px;
+            .username {
+                text-transform: capitalize;
+                padding-right: 4px;
+                font-size: 15px;
             }
         }
     }
