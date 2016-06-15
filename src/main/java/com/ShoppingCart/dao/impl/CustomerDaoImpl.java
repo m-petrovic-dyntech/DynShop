@@ -68,9 +68,8 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	@Transactional
-	public void deactivateCustomer(int id) {
-		Customer c= getCustomerById(id);
-		c.setEnabled(Boolean.FALSE);
+	public void disableCustomer(Customer customer) {
+		customer.setEnabled(Boolean.FALSE);
 		getSession().saveOrUpdate(c);
 	}
 

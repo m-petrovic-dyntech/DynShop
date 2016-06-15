@@ -14,11 +14,11 @@ public interface CustomerDao {
 
 	public void editCustomer(Customer newCustomer);
 
-	public void deactivateCustomer(int id);
+	public void disableCustomer(int id);
 
 	public Customer getCustomerByUsername(String username);
 
-	public List<Customer> getActiveCustomers();
+	public List<Customer> getEnabledCustomers();
 	
-	public List<Customer> getInactiveCustomers();
+	public List<Customer> getDisabledCustomers();
 }

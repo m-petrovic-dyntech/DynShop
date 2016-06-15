@@ -33,11 +33,11 @@ public interface ShoppingCartDao {
 	
 	public void addCategory(Category category);
 
-	public void deactivateCategory(Category category);
+	public void disableCategory(Category category);
 	
 	public void editProduct(Product product);
 
-	public void deactivateProduct(Product product);
+	public void disableProduct(Product product);
 	
 	public void addProduct(Product product);
  }

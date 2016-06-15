@@ -120,7 +120,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Override
 	@Transactional
-	public void deactivateCategory(Category category) {
+	public void disableCategory(Category category) {
 		category.setEnabled(Boolean.FALSE);
 		getSession().saveOrUpdate(category);
 	}
@@ -134,8 +134,8 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Override
 	@Transactional
-	public void deactivateProduct(Product product) {
-		getSession().setEnabled(Boolean.FALSE);
+	public void disableProduct(Product product) {
+		product.setEnabled(Boolean.FALSE);
 		getSession().saveOrUpdate(product);
 		
 	}
