@@ -46,7 +46,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
-	<bean name="CustomerDao" class="com.ShoppingCart.dao.impl.CustomerDaoImpl">
+	<bean name="customerDao" class="com.ShoppingCart.dao.impl.CustomerDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
