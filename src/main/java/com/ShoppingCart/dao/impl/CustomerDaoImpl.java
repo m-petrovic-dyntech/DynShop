@@ -73,21 +73,22 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public void deleteCustomer(int id) {
-		getSession().delete(id);
+		Customer c= getCustomerById(id);
+		getSession().delete(c);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public ArrayList<ShoppingCart> getCartsByCustomer(Customer customer) {
-		return (ArrayList<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
+	public List<ShoppingCart> getCartsByCustomer(Customer customer) {
+		return (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public ArrayList<ShoppingCart> getAllCarts() {
-		return  (ArrayList<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
+	public List<ShoppingCart> getAllCarts() {
+		return  (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
 	}
 
 	@SuppressWarnings("unchecked")

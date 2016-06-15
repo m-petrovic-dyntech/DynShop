@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	private CustomerDao customerDao;
 
 	@Override
-	public ArrayList<Customer> getAllCustomers() {
+	public List<Customer> getAllCustomers() {
 		return customerDao.getAllCustomers();
 	}
 
@@ -52,12 +52,12 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	}
 
 	@Override
-	public ArrayList<ShoppingCart> getCartsByCustomer(Customer customer) {
+	public List<ShoppingCart> getCartsByCustomer(Customer customer) {
 		return customerDao.getCartsByCustomer(customer);
 	}
 
 	@Override
-	public ArrayList<ShoppingCart> getAllCarts() {
+	public List<ShoppingCart> getAllCarts() {
 		return customerDao.getAllCarts();
 	}
 
