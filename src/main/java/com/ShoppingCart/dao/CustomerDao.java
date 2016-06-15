@@ -3,7 +3,6 @@ package com.ShoppingCart.dao;
 import java.util.ArrayList;
 
 import com.ShoppingCart.entity.Customer;
-import com.ShoppingCart.entity.ShoppingCart;
 
 public interface CustomerDao {
 
@@ -16,9 +15,5 @@ public interface CustomerDao {
 	public void editCustomer(Customer newCustomer);
 	
 	public void deleteCustomer(int id);
-	
-	public ArrayList<ShoppingCart> getCartsByCustomerId(int id);
-	
-	public ArrayList<ShoppingCart> getAllCarts();
 
 }

@@ -20,4 +20,8 @@ public interface ShoppingCartService {
 	public void saveCart(ShoppingCart cart);
 
 	public List<Product> getProductsByCategory(Category category);
+
+	public List<ShoppingCart> getCartsByCustomerId(int id);
+
+	public List<ShoppingCart> getAllCarts();
 }

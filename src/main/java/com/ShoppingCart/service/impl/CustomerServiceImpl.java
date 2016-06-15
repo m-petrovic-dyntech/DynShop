@@ -1,6 +1,7 @@
 package com.ShoppingCart.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,16 +40,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void deleteCustomer(int id) {
 		customerDao.deleteCustomer(id);
-	}
-
-	@Override
-	public ArrayList<ShoppingCart> getCartsByCustomerId(int id) {
-		return customerDao.getCartsByCustomerId(id);
-	}
-
-	@Override
-	public ArrayList<ShoppingCart> getAllCarts() {
-		return customerDao.getAllCarts();
 	}
 
 }

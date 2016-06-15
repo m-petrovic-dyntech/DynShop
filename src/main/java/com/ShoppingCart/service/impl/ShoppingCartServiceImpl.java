@@ -57,4 +57,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public List<Product> getProductsByCategory(Category category) {
 		return shoppingCartDao.getProductsByCategory(category);
 	}
+	
+	@Override
+	public List<ShoppingCart> getCartsByCustomerId(int id) {
+		return shoppingCartDao.getCartsByCustomerId(id);
+	}
+
+	@Override
+	public List<ShoppingCart> getAllCarts() {
+		return shoppingCartDao.getAllCarts();
+	}
 }

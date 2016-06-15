@@ -72,4 +72,12 @@ public class ShoppingCartItem {
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
+
+	@Override
+	public String toString() {
+		return "ShoppingCartItem [id=" + id + ", quantity=" + quantity + ", total=" + total + ", product=" + product
+				+ ", shoppingCart=" + shoppingCart + "]";
+	}
+	
+	
 }

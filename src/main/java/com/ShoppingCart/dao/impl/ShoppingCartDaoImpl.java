@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
+import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.entity.ShoppingCartItem;
 
 @Repository
 
@@ -86,4 +88,38 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		getSession().saveOrUpdate(cart);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<ShoppingCart> getCartsByCustomerId(int id) {
+		Customer customer= getCustomerById(id);
+		List<ShoppingCart> carts= getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
+		for (ShoppingCart shoppingCart : carts) {
+			shoppingCart.setItems(getItemsByCart(shoppingCart));
+		}
+		return carts;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<ShoppingCart> getAllCarts() {
+		List<ShoppingCart> carts=  (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
+		for (ShoppingCart shoppingCart : carts) {
+			shoppingCart.setItems(getItemsByCart(shoppingCart));
+		}
+		return carts;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart) {
+		return (List<ShoppingCartItem>)getSession().createCriteria(ShoppingCartItem.class).add(Restrictions.eq("shoppingCart", cart)).list();
+	}
+	
+	@Transactional
+	private Customer getCustomerById(int id) {
+		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("id",id)).uniqueResult();
+	}
+	
 }

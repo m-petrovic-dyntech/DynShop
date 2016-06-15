@@ -8,12 +8,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.CustomerDao;
 import com.ShoppingCart.entity.Customer;
-import com.ShoppingCart.entity.ShoppingCart;
 
+
+@Repository
 public class CustomerDaoImpl implements CustomerDao {
 
 	
@@ -69,19 +71,5 @@ public class CustomerDaoImpl implements CustomerDao {
 		getSession().delete(c);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	@Transactional
-	public ArrayList<ShoppingCart> getCartsByCustomerId(int id) {
-		Customer customer= getCustomerById(id);
-		return (ArrayList<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	@Transactional
-	public ArrayList<ShoppingCart> getAllCarts() {
-		return  (ArrayList<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
-	}
 
 }

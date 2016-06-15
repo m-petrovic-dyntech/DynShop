@@ -1,6 +1,7 @@
 package com.ShoppingCart.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.ShoppingCart;
@@ -15,8 +16,4 @@ public interface CustomerService {
 	public void editCustomer(Customer newCustomer);
 	
 	public void deleteCustomer(int id);
-	
-	public ArrayList<ShoppingCart> getCartsByCustomerId(int id);
-	
-	public ArrayList<ShoppingCart> getAllCarts();
 }
