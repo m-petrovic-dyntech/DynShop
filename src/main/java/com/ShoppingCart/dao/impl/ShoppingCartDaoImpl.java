@@ -115,5 +115,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart) {
 		return (List<ShoppingCartItem>)getSession().createCriteria(ShoppingCartItem.class).add(Restrictions.eq("shoppingCart", cart)).list();
 	}
+
+	
 	
 }

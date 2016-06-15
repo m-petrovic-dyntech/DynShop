@@ -7,6 +7,7 @@ import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.entity.ShoppingCartItem;
 
 public interface ShoppingCartService {
 	
@@ -25,4 +26,6 @@ public interface ShoppingCartService {
 	public List<ShoppingCart> getCartsByCustomer(Customer customer);
 
 	public List<ShoppingCart> getAllCarts();
+	
+	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart);
 }

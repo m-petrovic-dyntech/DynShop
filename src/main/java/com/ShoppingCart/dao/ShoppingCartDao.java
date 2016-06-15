@@ -28,4 +28,5 @@ public interface ShoppingCartDao {
 	public List<ShoppingCart> getAllCarts();
 
 	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart);
+	
  }
