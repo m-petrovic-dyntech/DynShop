@@ -53,6 +53,7 @@ public class AdminController extends ControllerUtil {
 
 	@RequestMapping(value = { "/admin/panel/products" }, method = RequestMethod.GET)
 	public ModelAndView adminGetProducts(ModelAndView modelAndView, HttpSession session) {
+		initializeSession(session);
 		
 		modelAndView.addObject("products", shoppingCartService.getProducts(null));
 		modelAndView.setViewName("admin_panel_products");
@@ -61,6 +62,7 @@ public class AdminController extends ControllerUtil {
 	
 	@RequestMapping(value = { "/admin/panel/users" }, method = RequestMethod.GET)
 	public ModelAndView adminGetUsers(ModelAndView modelAndView, HttpSession session) {
+		initializeSession(session);
 		
 		modelAndView.addObject("customers", customerService.getAllCustomers());
 		modelAndView.setViewName("admin_panel_users");
@@ -69,6 +71,7 @@ public class AdminController extends ControllerUtil {
 	
 	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
 	public ModelAndView adminCategories(ModelAndView modelAndView, HttpSession session) {
+		initializeSession(session);
 		
 		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_categories");
@@ -77,6 +80,7 @@ public class AdminController extends ControllerUtil {
 	
 	@RequestMapping(value = { "/admin/panel/deleteCustomer/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+		initializeSession(session);
 		
 		customerService.disableCustomer(customerService.getCustomerById(id));
 		
@@ -86,6 +90,7 @@ public class AdminController extends ControllerUtil {
 	
 	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+		initializeSession(session);
 		
 		shoppingCartService.disableProduct(shoppingCartService.getProduct(id));
 		
@@ -95,7 +100,7 @@ public class AdminController extends ControllerUtil {
 	
 	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
-		
+		initializeSession(session);
 		shoppingCartService.disableCategory(shoppingCartService.getCategoryById(id));
 		
 		modelAndView.setViewName("admin_panel_products");
