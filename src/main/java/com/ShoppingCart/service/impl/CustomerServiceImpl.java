@@ -45,8 +45,8 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	}
 
 	@Override
-	public void deleteCustomer(int id) {
-		customerDao.deleteCustomer(id);
+	public void disableCustomer(Customer customer) {
+		customerDao.disableCustomer(customer);
 	}
 
 	@Override
@@ -62,5 +62,15 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	@Override
 	public Customer getCustomerByUsername(String username) {
 		return (Customer) customerDao.getCustomerByUsername(username);
+	}
+
+	@Override
+	public List<Customer> getEnabledCustomers() {
+		return customerDao.getEnabledCustomers();
+	}
+
+	@Override
+	public List<Customer> getDisabledCustomers() {
+		return customerDao.getDisabledCustomers();
 	}
 }

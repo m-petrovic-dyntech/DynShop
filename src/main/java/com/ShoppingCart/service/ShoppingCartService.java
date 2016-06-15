@@ -33,11 +33,19 @@ public interface ShoppingCartService {
 	
 	public void addCategory(Category category);
 
-	public void deleteCategory(Category category);
+	public void disableCategory(Category category);
 	
 	public void editProduct(Product product);
 
-	public void deleteProduct(Product product);
+	public void disableProduct(Product product);
 	
 	public void addProduct(Product product);
+	
+	public List<Category> getEnabledCategories();
+
+	public List<Category> getDisabledCategories();
+
+	public List<Product> getEnabledProducts();
+
+	public List<Product> getDisabledProducts();
 }

@@ -25,6 +25,9 @@ public class ShoppingCartItem {
 	@Column(name="total")
 	public Double total;
 	
+	@Column(name="enabled")
+	private Boolean enabled;
+	
 	@ManyToOne
 	@JoinColumn(name = "PRODUCT_ID", referencedColumnName="ID")
 	public Product product;
@@ -56,6 +59,14 @@ public class ShoppingCartItem {
 	public void setTotal(Double total) {
 		this.total = total;
 	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public Product getProduct() {
 		return product;
@@ -72,12 +83,4 @@ public class ShoppingCartItem {
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
-
-	@Override
-	public String toString() {
-		return "ShoppingCartItem [id=" + id + ", quantity=" + quantity + ", total=" + total + ", product=" + product
-				+ ", shoppingCart=" + shoppingCart + "]";
-	}
-	
-	
 }

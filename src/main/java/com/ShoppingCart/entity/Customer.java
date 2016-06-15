@@ -84,10 +84,4 @@ public class Customer {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ "]";
-	}
 }

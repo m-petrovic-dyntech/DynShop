@@ -30,16 +30,19 @@ public class ShoppingCart {
 	@Column(name="totalCost")
 	private Double totalCost;
 	
-	@OneToMany(mappedBy="shoppingCart", cascade=CascadeType.ALL)
-	private List<ShoppingCartItem> items;
-	
 	@Column(name="shoppingDate")
 	@Temporal(TemporalType.DATE)
 	private Date shoppingDate;
 	
+	@Column(name="enabled")
+	private Boolean enabled;
+	
 	@ManyToOne
 	@JoinColumn(name = "CUSTOMER_ID", referencedColumnName="ID")
 	private Customer customer;
+	
+	@OneToMany(mappedBy="shoppingCart", cascade=CascadeType.ALL)
+	private List<ShoppingCartItem> items;
 
 	public ShoppingCart()
 	{
@@ -62,6 +65,30 @@ public class ShoppingCart {
 	public void setTotalCost(Double totalCost) {
 		this.totalCost = totalCost;
 	}
+	
+	public Date getShoppingDate() {
+		return shoppingDate;
+	}
+
+	public void setShoppingDate(Date shoppingDate) {
+		this.shoppingDate = shoppingDate;
+	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	public List<ShoppingCartItem> getItems() {
 		return items;
@@ -71,14 +98,6 @@ public class ShoppingCart {
 		this.items = items;
 	}
 	
-	public Date getDate() {
-		return shoppingDate;
-	}
-
-	public void setDate(Date date) {
-		this.shoppingDate = date;
-	}
-	
 	public ShoppingCartItem findItemByProductId(int productId) {
 		for (ShoppingCartItem shoppingCartItem : this.items) {
 			if(shoppingCartItem.getProduct().getId() == productId)
@@ -86,27 +105,5 @@ public class ShoppingCart {
 		}
 		
 		return null;
-	}
-
-	public Date getShoppingDate() {
-		return shoppingDate;
-	}
-
-	public void setShoppingDate(Date shoppingDate) {
-		this.shoppingDate = shoppingDate;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	@Override
-	public String toString() {
-		return "ShoppingCart [id=" + id + ", totalCost=" + totalCost + ", shoppingDate="
-				+ shoppingDate + "]";
 	}
 }

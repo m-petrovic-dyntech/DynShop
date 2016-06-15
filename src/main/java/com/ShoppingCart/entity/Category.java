@@ -26,6 +26,9 @@ public class Category {
 	private String name;
 	
 	@OneToMany(mappedBy="category", cascade=CascadeType.ALL)
+	@Column(name="enabled")
+	private Boolean enabled;
+
 	private List<Product> products;
 
 	public Integer getId() {
@@ -43,7 +46,15 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
 
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 	public List<Product> getProducts() {
 		return products;
 	}
@@ -51,10 +62,4 @@ public class Category {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-
-	@Override
-	public String toString() {
-		return this.getName();
-	}
-	
 }

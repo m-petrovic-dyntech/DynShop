@@ -19,12 +19,15 @@ public class Role {
 	@Column(name="id")
 	private Integer id;
 	
+	@Column(name="role")
+	private String role;
+	
+	@Column(name="enabled")
+	private Boolean enabled;
+	
 	@ManyToOne
 	@JoinColumn(name="CUSTOMER_ID", referencedColumnName="ID")
 	private Customer customer;
-	
-	@Column(name="role")
-	private String role;
 
 	public Integer getId() {
 		return id;
@@ -33,6 +36,22 @@ public class Role {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -40,13 +59,5 @@ public class Role {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 }

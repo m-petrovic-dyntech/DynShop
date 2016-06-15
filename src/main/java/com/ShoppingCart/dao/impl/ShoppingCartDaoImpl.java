@@ -84,7 +84,8 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Override
 	@Transactional
 	public void saveCart(ShoppingCart cart) {
-		cart.setDate(new java.util.Date());
+		//May throw error
+		//cart.setShoppingDate(new java.util.Date());
 		getSession().saveOrUpdate(cart);
 	}
 
@@ -119,8 +120,9 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Override
 	@Transactional
-	public void deleteCategory(Category category) {
-		getSession().delete(category);
+	public void disableCategory(Category category) {
+		category.setEnabled(Boolean.FALSE);
+		getSession().saveOrUpdate(category);
 	}
 
 	@Override
@@ -132,8 +134,9 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Override
 	@Transactional
-	public void deleteProduct(Product product) {
-		getSession().delete(product);
+	public void disableProduct(Product product) {
+		product.setEnabled(Boolean.FALSE);
+		getSession().saveOrUpdate(product);
 		
 	}
 
@@ -149,6 +152,27 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		getSession().save(product);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Category> getEnabledCategories() {
+		return (List<Category>) getSession().createCriteria(Category.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Category> getDisabledCategories() {
+		return (List<Category>) getSession().createCriteria(Category.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
+	}
 	
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getEnabledProducts() {
+		return (List<Product>) getSession().createCriteria(Product.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getDisabledProducts() {
+		return (List<Product>) getSession().createCriteria(Product.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
+	}
 }

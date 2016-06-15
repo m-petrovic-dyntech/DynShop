@@ -28,6 +28,9 @@ public class Product {
 	@Column(name="price")
 	private Double price;
 	
+	@Column(name="enabled")
+	private Boolean enabled;
+	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID", referencedColumnName="ID")
 	private Category category;
@@ -38,6 +41,14 @@ public class Product {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescription() {
@@ -55,6 +66,14 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public Category getCategory() {
 		return category;
@@ -62,14 +81,6 @@ public class Product {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 	
 }
