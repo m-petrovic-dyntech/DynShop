@@ -88,8 +88,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public void deleteCategory(Category category) {
-		shoppingCartDao.deleteCategory(category);
+	public void deactivateCategory(Category category) {
+		shoppingCartDao.deactivateCategory(category);
 		
 	}
 
@@ -100,8 +100,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public void deleteProduct(Product product) {
-		shoppingCartDao.deleteProduct(product);;
+	public void deactivateProduct(Product product) {
+		shoppingCartDao.deactivateProduct(product);;
 		
 	}
 

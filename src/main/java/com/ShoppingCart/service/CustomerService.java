@@ -15,7 +15,11 @@ public interface CustomerService {
 
 	public void editCustomer(Customer newCustomer);
 
-	public void deleteCustomer(int id);
+	public void deactivateCustomer(int id);
 
 	public Customer getCustomerByUsername(String username);
+	
+	public List<Customer> getActiveCustomers();
+	
+	public List<Customer> getInactiveCustomers();
 }
