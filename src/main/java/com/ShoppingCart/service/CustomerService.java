@@ -1,10 +1,8 @@
 package com.ShoppingCart.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ShoppingCart.entity.Customer;
-import com.ShoppingCart.entity.ShoppingCart;
 
 public interface CustomerService {
 	public List<Customer> getAllCustomers();
@@ -15,11 +13,12 @@ public interface CustomerService {
 
 	public void editCustomer(Customer newCustomer);
 
-	public void deactivateCustomer(int id);
-
 	public Customer getCustomerByUsername(String username);
+
+	public List<Customer> getEnabledCustomers();
+
+	public List<Customer> getDisabledCustomers();
+
+	public void disableCustomer(Customer customer);
 	
-	public List<Customer> getActiveCustomers();
-	
-	public List<Customer> getInactiveCustomers();
 }

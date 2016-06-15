@@ -70,7 +70,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Transactional
 	public void disableCustomer(Customer customer) {
 		customer.setEnabled(Boolean.FALSE);
-		getSession().saveOrUpdate(c);
+		getSession().saveOrUpdate(customer);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -84,13 +84,13 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Customer> getActiveCustomers() {
+	public List<Customer> getEnabledCustomers() {
 		return (List<Customer>) getSession().createCriteria(Customer.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Customer> getInactiveCustomers() {
+	public List<Customer> getDisabledCustomers() {
 		return (List<Customer>) getSession().createCriteria(Customer.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
 	}
 

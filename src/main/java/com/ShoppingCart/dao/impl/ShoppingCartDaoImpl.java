@@ -151,4 +151,28 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public void addProduct(Product product) {
 		getSession().save(product);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Category> getEnabledCategories() {
+		return (List<Category>) getSession().createCriteria(Category.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Category> getDisabledCategories() {
+		return (List<Category>) getSession().createCriteria(Category.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getEnabledProducts() {
+		return (List<Product>) getSession().createCriteria(Product.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Product> getDisabledProducts() {
+		return (List<Product>) getSession().createCriteria(Product.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
+	}
 }

@@ -40,4 +40,12 @@ public interface ShoppingCartDao {
 	public void disableProduct(Product product);
 	
 	public void addProduct(Product product);
+
+	public List<Category> getEnabledCategories();
+
+	public List<Category> getDisabledCategories();
+
+	public List<Product> getEnabledProducts();
+
+	public List<Product> getDisabledProducts();
  }
