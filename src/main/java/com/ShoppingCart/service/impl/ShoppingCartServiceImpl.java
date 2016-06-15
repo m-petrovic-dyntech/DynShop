@@ -13,6 +13,7 @@ import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.ShoppingCartService;
 
 @Service
@@ -67,5 +68,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public List<ShoppingCart> getAllCarts() {
 		return shoppingCartDao.getAllCarts();
+	}
+
+	@Override
+	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart) {
+		return shoppingCartDao.getItemsByCart(cart);
 	}
 }
