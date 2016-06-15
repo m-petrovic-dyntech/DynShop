@@ -199,8 +199,8 @@ public class AnonymousController extends ControllerUtil {
 	public ModelAndView cartSave(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 		
-		if(!getAuthentication().isAuthenticated()){
-			if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken))
+		if(!getAuthentication().isAuthenticated()) {
+			if(!(getAuthentication() instanceof AnonymousAuthenticationToken))
 			{
 				ShoppingCart cart = (ShoppingCart)session.getAttribute("cart");
 				shoppingCartService.saveCart(cart);
