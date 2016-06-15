@@ -122,8 +122,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public List<Product> getEnabledProducts() {
-		return shoppingCartDao.getEnabledProducts();
+	public List<Product> getEnabledProducts(Category category) {
+		if(category==null || category.getName() == null)
+			return shoppingCartDao.getEnabledProducts();
+		else
+			return shoppingCartDao.getEnabledProductsByCategory(category);
 	}
 
 	@Override

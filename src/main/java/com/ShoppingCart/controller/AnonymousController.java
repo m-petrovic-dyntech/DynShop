@@ -10,7 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,7 +65,7 @@ public class AnonymousController extends ControllerUtil {
 		if(category!=null && category!=0)
 			selectedCategory = shoppingCartService.getCategoryById(category);
 		
-		List<Product> products = shoppingCartService.getProducts(selectedCategory);
+		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory);
 				
 		List<Category> categories= (List<Category>)shoppingCartService.getCategories();
 				
