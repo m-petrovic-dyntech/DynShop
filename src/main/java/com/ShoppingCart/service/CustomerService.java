@@ -18,7 +18,5 @@ public interface CustomerService {
 	public List<Customer> getEnabledCustomers();
 
 	public List<Customer> getDisabledCustomers();
-
-	public void disableCustomer(Customer customer);
 	
 }

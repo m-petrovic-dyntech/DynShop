@@ -45,11 +45,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	}
 
 	@Override
-	public void disableCustomer(Customer customer) {
-		customerDao.disableCustomer(customer);
-	}
-
-	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Customer c = (Customer) this.getCustomerByUsername(username);
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();

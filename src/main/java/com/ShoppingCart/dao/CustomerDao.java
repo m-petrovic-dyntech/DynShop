@@ -14,8 +14,6 @@ public interface CustomerDao {
 
 	public void editCustomer(Customer newCustomer);
 
-	public void disableCustomer(Customer customer);
-
 	public Customer getCustomerByUsername(String username);
 
 	public List<Customer> getEnabledCustomers();
