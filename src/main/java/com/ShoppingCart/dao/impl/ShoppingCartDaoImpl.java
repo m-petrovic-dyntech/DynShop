@@ -84,7 +84,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Override
 	@Transactional
 	public void saveCart(ShoppingCart cart) {
-		//May throw error
 		cart.setShoppingDate(new java.util.Date());
 		getSession().saveOrUpdate(cart);
 	}
@@ -93,7 +92,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Override
 	@Transactional
 	public List<ShoppingCart> getCartsByCustomer(Customer customer) {
-		List<ShoppingCart> carts= getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
+		List<ShoppingCart> carts = (List<ShoppingCart>)getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("customer", customer)).list();
 		return carts;
 	}
 
@@ -101,7 +100,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Override
 	@Transactional
 	public List<ShoppingCart> getAllCarts() {
-		List<ShoppingCart> carts=  (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
+		List<ShoppingCart> carts = (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).list();
 		return carts;
 	}
 
@@ -120,22 +119,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Override
 	@Transactional
-	public void disableCategory(Category category) {
-		category.setEnabled(Boolean.FALSE);
-		getSession().saveOrUpdate(category);
-	}
-
-	@Override
-	@Transactional
 	public void editProduct(Product product) {
-		getSession().saveOrUpdate(product);
-		
-	}
-
-	@Override
-	@Transactional
-	public void disableProduct(Product product) {
-		product.setEnabled(Boolean.FALSE);
 		getSession().saveOrUpdate(product);
 		
 	}

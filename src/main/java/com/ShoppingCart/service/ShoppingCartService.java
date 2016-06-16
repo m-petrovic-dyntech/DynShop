@@ -32,12 +32,8 @@ public interface ShoppingCartService {
 	public void editCategory(Category category);
 	
 	public void addCategory(Category category);
-
-	public void disableCategory(Category category);
 	
 	public void editProduct(Product product);
-
-	public void disableProduct(Product product);
 	
 	public void addProduct(Product product);
 	

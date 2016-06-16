@@ -88,20 +88,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public void disableCategory(Category category) {
-		shoppingCartDao.disableCategory(category);
-		
-	}
-
-	@Override
 	public void editProduct(Product product) {
 		shoppingCartDao.editProduct(product);
-		
-	}
-
-	@Override
-	public void disableProduct(Product product) {
-		shoppingCartDao.disableProduct(product);
 		
 	}
 

@@ -1,8 +1,5 @@
 package com.ShoppingCart.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.entity.Category;
+import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
-import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.ControllerUtil;
@@ -82,7 +79,10 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
 		initializeSession(session);
 		
-		customerService.disableCustomer(customerService.getCustomerById(id));
+		Customer customer = (Customer)customerService.getCustomerById(id);
+		customer.setEnabled(Boolean.FALSE);
+		
+		customerService.editCustomer(customer);
 		
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
@@ -92,7 +92,10 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
 		initializeSession(session);
 		
-		shoppingCartService.disableProduct(shoppingCartService.getProduct(id));
+		Product product = (Product)shoppingCartService.getProduct(id);
+		product.setEnabled(Boolean.FALSE);
+		
+		shoppingCartService.editProduct(product);
 		
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
@@ -101,7 +104,11 @@ public class AdminController extends ControllerUtil {
 	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
 		initializeSession(session);
-		shoppingCartService.disableCategory(shoppingCartService.getCategoryById(id));
+		
+		Category category = (Category)shoppingCartService.getCategoryById(id);
+		category.setEnabled(Boolean.FALSE);
+		
+		shoppingCartService.editCategory(category);
 		
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
