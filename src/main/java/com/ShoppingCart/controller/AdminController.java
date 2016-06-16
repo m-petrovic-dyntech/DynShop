@@ -140,5 +140,21 @@ public class AdminController extends ControllerUtil {
 		modelAndView.setViewName("redirect:/admin/panel/product");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = { "/admin/panel/addProduct" }, method = RequestMethod.GET)
+	public ModelAndView adminAddProduct(ModelAndView modelAndView, HttpSession session, @ModelAttribute("product") Product product) {
+		
+		shoppingCartService.addProduct(product);
+		modelAndView.setViewName("redirect:/admin/panel/product");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = { "/admin/panel/addCategory" }, method = RequestMethod.GET)
+	public ModelAndView adminAddCategory(ModelAndView modelAndView, HttpSession session, @ModelAttribute("product") Category category) {
+		
+		shoppingCartService.addCategory(category);		
+		modelAndView.setViewName("redirect:/admin/panel/categories");
+		return modelAndView;
+	}
  	
 }
