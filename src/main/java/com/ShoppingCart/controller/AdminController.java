@@ -132,12 +132,12 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = { "/admin/panel/editCategory1" }, method = RequestMethod.GET)
-	public ModelAndView adminEditCategory1(ModelAndView modelAndView, HttpSession session, @ModelAttribute("category") Category category) {
+	@RequestMapping(value = { "/admin/panel/editProduct" }, method = RequestMethod.GET)
+	public ModelAndView adminEditProduct(ModelAndView modelAndView, HttpSession session, @ModelAttribute("product") Product product) {
 		
-		shoppingCartService.editCategory(category);
+		shoppingCartService.editProduct(product);
 		
-		modelAndView.setViewName("redirect:/admin/panel/categories");
+		modelAndView.setViewName("redirect:/admin/panel/product");
 		return modelAndView;
 	}
  	
