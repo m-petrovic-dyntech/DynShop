@@ -55,6 +55,7 @@ public class AdminController extends ControllerUtil {
 		initializeSession(session);
 		
 		modelAndView.addObject("products", shoppingCartService.getProducts(null));
+		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
 	}
