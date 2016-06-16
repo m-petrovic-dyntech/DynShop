@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.entity.Category;
@@ -117,15 +118,29 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 	
-	/*
-	@RequestMapping(value = { "/admin/panel/editProduct/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminEditProduct(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+	@RequestMapping(value = { "/admin/panel/editCategory" }, method = RequestMethod.GET)
+	public ModelAndView adminEditCategory(ModelAndView modelAndView, HttpSession session,  @RequestParam("id") int id, 
+			@RequestParam("name") String name, @RequestParam("enabled") Boolean enabled) {
 		
-		Product product = shoppingCartService.getProduct(id);
-		shoppingCartService.editProduct(product);
+		Category category = (Category)shoppingCartService.getCategoryById(id);
+		category.setName(name);
+		category.setEnabled(enabled);
+		shoppingCartService.editCategory(category);
 		
-		modelAndView.setViewName("admin_panel_users");
+		modelAndView.setViewName("redirect:/admin/panel/categories");
 		return modelAndView;
 	}
- 	*/
+	
+	@RequestMapping(value = { "/admin/panel/editCategory1" }, method = RequestMethod.GET)
+	public ModelAndView adminEditCategory1(ModelAndView modelAndView, HttpSession session, Category category) {
+		
+		//Category category = (Category)shoppingCartService.getCategoryById(id);
+		//category.setName(name);
+		//category.setEnabled(enabled);
+		shoppingCartService.editCategory(category);
+		
+		modelAndView.setViewName("redirect:/admin/panel/categories");
+		return modelAndView;
+	}
+ 	
 }
