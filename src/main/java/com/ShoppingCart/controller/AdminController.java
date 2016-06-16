@@ -51,12 +51,15 @@ public class AdminController extends ControllerUtil {
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
 	}
-
+	
 	@RequestMapping(value = { "/admin/panel/products" }, method = RequestMethod.GET)
-	public ModelAndView adminGetProducts(ModelAndView modelAndView, HttpSession session) {
+	public ModelAndView adminGetProductsByCategory(ModelAndView modelAndView, HttpSession session,  @RequestParam(required = false) Integer categoryId) {
 		initializeSession(session);
 		
-		modelAndView.addObject("products", shoppingCartService.getProducts(null));
+		if(categoryId == null || categoryId == 0)	
+			modelAndView.addObject("products", shoppingCartService.getProducts(null));
+		else modelAndView.addObject("products", shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId)));
+		
 		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
@@ -126,6 +129,7 @@ public class AdminController extends ControllerUtil {
 		Category category = (Category)shoppingCartService.getCategoryById(id);
 		category.setName(name);
 		category.setEnabled(enabled);
+		
 		shoppingCartService.editCategory(category);
 		
 		modelAndView.setViewName("redirect:/admin/panel/categories");
@@ -133,7 +137,7 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/editProduct" }, method = RequestMethod.GET)
-	public ModelAndView adminEditProduct(ModelAndView modelAndView, HttpSession session, @ModelAttribute("product") Product product) {
+	public ModelAndView adminEditProduct(ModelAndView modelAndView, HttpSession session, @ModelAttribute("productEditModel") Product product) {
 		
 		shoppingCartService.editProduct(product);
 		
