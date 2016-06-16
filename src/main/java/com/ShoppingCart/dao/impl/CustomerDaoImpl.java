@@ -66,13 +66,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		getSession().saveOrUpdate(newCustomer);
 	}
 
-	@Override
-	@Transactional
-	public void disableCustomer(Customer customer) {
-		customer.setEnabled(Boolean.FALSE);
-		getSession().saveOrUpdate(customer);
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
