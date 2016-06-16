@@ -87,7 +87,7 @@ public class AdminController extends ControllerUtil {
 		
 		customerService.editCustomer(customer);
 		
-		modelAndView.setViewName("redirect:admin_panel_users");
+		modelAndView.setViewName("redirect:/admin_panel_users");
 		return modelAndView;
 	}
 	
@@ -100,7 +100,7 @@ public class AdminController extends ControllerUtil {
 		
 		shoppingCartService.editProduct(product);
 		
-		modelAndView.setViewName("redirect:admin/panel/products");
+		modelAndView.setViewName("redirect:/admin/panel/products");
 		return modelAndView;
 	}
 	
@@ -113,7 +113,7 @@ public class AdminController extends ControllerUtil {
 		
 		shoppingCartService.editCategory(category);
 		
-		modelAndView.setViewName("redirect:admin/panel/categories");
+		modelAndView.setViewName("redirect:/admin/panel/categories");
 		return modelAndView;
 	}
 	
