@@ -1,8 +1,11 @@
 package com.ShoppingCart.util;
 
+import java.util.Collection;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.ShoppingCart.dto.CustomUserDetails;
@@ -22,5 +25,15 @@ public class ControllerUtil {
 	public CustomUserDetails getAuthenticatedUser() {
 		CustomUserDetails cud = (CustomUserDetails) getAuthentication().getPrincipal();
 		return cud;
+	}
+	
+	public boolean ifUserHasRole(String role)
+	{
+		Collection<GrantedAuthority> gerantedAutorities = getAuthenticatedUser().getAuthorities();
+		for (GrantedAuthority grantedAuthority : gerantedAutorities) {
+			if (grantedAuthority.getAuthority().equals(role))
+				return true;
+		}
+		return false;
 	}
 }

@@ -2,6 +2,7 @@ package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +41,7 @@ public class AdminController extends ControllerUtil {
 	@RequestMapping(value = { "/admin/cartLogs" }, method = RequestMethod.GET)
 	public ModelAndView deleteCart(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
-		
+				
 		List<ShoppingCart> carts = shoppingCartService.getAllCarts();
 		
 		for (ShoppingCart shoppingCart : carts) {
@@ -84,7 +86,7 @@ public class AdminController extends ControllerUtil {
 		
 		customerService.disableCustomer(customerService.getCustomerById(id));
 		
-		modelAndView.setViewName("admin_panel_users");
+		modelAndView.setViewName("redirect:admin_panel_users");
 		return modelAndView;
 	}
 	
@@ -94,16 +96,16 @@ public class AdminController extends ControllerUtil {
 		
 		shoppingCartService.disableProduct(shoppingCartService.getProduct(id));
 		
-		modelAndView.setViewName("admin_panel_products");
+		modelAndView.setViewName("redirect:admin/panel/products");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
 		initializeSession(session);
-		shoppingCartService.disableCategory(shoppingCartService.getCategoryById(id));
+		shoppingCartService.disableCategory(shoppingCartService.getCategoryById(id));	
 		
-		modelAndView.setViewName("admin_panel_products");
+		modelAndView.setViewName("redirect:admin/panel/categories");
 		return modelAndView;
 	}
 	
