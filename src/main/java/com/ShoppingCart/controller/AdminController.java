@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -132,11 +133,8 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/editCategory1" }, method = RequestMethod.GET)
-	public ModelAndView adminEditCategory1(ModelAndView modelAndView, HttpSession session, Category category) {
+	public ModelAndView adminEditCategory1(ModelAndView modelAndView, HttpSession session, @ModelAttribute("category") Category category) {
 		
-		//Category category = (Category)shoppingCartService.getCategoryById(id);
-		//category.setName(name);
-		//category.setEnabled(enabled);
 		shoppingCartService.editCategory(category);
 		
 		modelAndView.setViewName("redirect:/admin/panel/categories");
