@@ -39,11 +39,11 @@ public class ControllerUtil {
 		return false;
 	}
 	
-	public PagedListHolder getPaginatedList(List results, int page, int pageSize)
+	public PagedListHolder getPaginatedList(List results, Integer page, Integer pageSize)
 	{
 		PagedListHolder pagedListHolder = new PagedListHolder(results);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(pageSize);
+		//pagedListHolder.setPage(page);
+		//pagedListHolder.setPageSize(pageSize);
 		return pagedListHolder;
 	}
 	
