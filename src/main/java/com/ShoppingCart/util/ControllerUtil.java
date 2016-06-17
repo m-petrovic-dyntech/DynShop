@@ -1,9 +1,11 @@
 package com.ShoppingCart.util;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,4 +38,14 @@ public class ControllerUtil {
 		}
 		return false;
 	}
+	
+	public PagedListHolder getPaginatedList(List results, int page, int pageSize)
+	{
+		PagedListHolder pagedListHolder = new PagedListHolder(results);
+		//int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(pageSize);
+		return pagedListHolder;
+	}
+	
 }

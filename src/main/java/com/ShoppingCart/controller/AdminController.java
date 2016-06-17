@@ -1,14 +1,10 @@
 package com.ShoppingCart.controller;
 
-
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,9 +49,12 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/products" }, method = RequestMethod.GET)
-	public ModelAndView adminGetProductsByCategory(ModelAndView modelAndView, HttpSession session,  @RequestParam(required = false) Integer categoryId) {
+	public ModelAndView adminGetProductsByCategory(ModelAndView modelAndView, HttpSession session, 
+		@RequestParam(required = false) Integer categoryId, @RequestParam(required = false) Integer page, 
+		@RequestParam(required = false) Integer size) {
 		initializeSession(session);
 		
+		//TODO doati page i size
 		if(categoryId == null || categoryId == 0)	
 			modelAndView.addObject("products", shoppingCartService.getProducts(null));
 		else modelAndView.addObject("products", shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId)));
@@ -75,9 +74,13 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
-	public ModelAndView adminCategories(ModelAndView modelAndView, HttpSession session) {
+	public ModelAndView adminCategories(ModelAndView modelAndView, HttpSession session,
+			@RequestParam(required = false) Integer categoryId, @RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size) {
 		initializeSession(session);
 		
+		modelAndView.addObject("paginatedCategories", getPaginatedList(shoppingCartService.getCategories(), page, size));
+
 		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
