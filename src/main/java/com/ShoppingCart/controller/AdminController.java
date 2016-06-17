@@ -75,11 +75,11 @@ public class AdminController extends ControllerUtil {
 	
 	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
 	public ModelAndView adminCategories(ModelAndView modelAndView, HttpSession session,
-			@RequestParam(required = false) Integer categoryId, @RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer page, 
 			@RequestParam(required = false) Integer size) {
 		initializeSession(session);
 		
-		modelAndView.addObject("paginatedCategories", getPaginatedList(shoppingCartService.getCategories(), page, size));
+		//modelAndView.addObject("paginatedCategories", getPaginatedList(shoppingCartService.getCategories(),page, size));
 
 		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_categories");

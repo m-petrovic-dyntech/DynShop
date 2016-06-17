@@ -42,7 +42,6 @@ public class ControllerUtil {
 	public PagedListHolder getPaginatedList(List results, int page, int pageSize)
 	{
 		PagedListHolder pagedListHolder = new PagedListHolder(results);
-		//int page = ServletRequestUtils.getIntParameter(request, "p", 0);
 		pagedListHolder.setPage(page);
 		pagedListHolder.setPageSize(pageSize);
 		return pagedListHolder;
