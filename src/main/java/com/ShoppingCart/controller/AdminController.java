@@ -56,8 +56,8 @@ public class AdminController extends ControllerUtil {
 		
 		//TODO doati page i size
 		if(categoryId == null || categoryId == 0)	
-			modelAndView.addObject("products", shoppingCartService.getProducts(null));
-		else modelAndView.addObject("products", shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId)));
+			modelAndView.addObject("products", shoppingCartService.getProducts(null,page,size));
+		else modelAndView.addObject("products", shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
 		
 		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_products");
@@ -79,7 +79,7 @@ public class AdminController extends ControllerUtil {
 			@RequestParam(required = false) Integer size) {
 		initializeSession(session);
 		
-		//modelAndView.addObject("paginatedCategories", getPaginatedList(shoppingCartService.getCategories(),page, size));
+		modelAndView.addObject("paginatedCategories", getPaginatedList(shoppingCartService.getCategories(),page, size));
 
 		modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_categories");
