@@ -11,9 +11,9 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 
 public interface ShoppingCartService {
 	
-	public List<Product> getProducts(Category category);
-
 	public Product getProduct(int id);
+	
+	public List<Product> getProducts(Category category, Integer page, Integer size);
 	
 	public ArrayList<Category> getCategories();
 	
@@ -41,7 +41,8 @@ public interface ShoppingCartService {
 
 	public List<Category> getDisabledCategories();
 
-	public List<Product> getEnabledProducts(Category category);
+	public List<Product> getEnabledProducts(Category category, Integer page, Integer size);
 	
 	public List<Product> getDisabledProducts();
+
 }

@@ -54,8 +54,11 @@ public class AnonymousController extends ControllerUtil {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/products", "admin/products" }, method = RequestMethod.GET)
-	public ModelAndView home(@RequestParam(required = false) Integer category, ModelAndView modelAndView,
+	@RequestMapping(value = { "/products", "admin/products", "/" }, method = RequestMethod.GET)
+	public ModelAndView home(@RequestParam(required = false) Integer category, 
+			@RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size,
+			ModelAndView modelAndView,
 			HttpSession session) {
 		initializeSession(session);
 
@@ -64,7 +67,7 @@ public class AnonymousController extends ControllerUtil {
 		if (category != null && category != 0)
 			selectedCategory = shoppingCartService.getCategoryById(category);
 		
-		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory);
+		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory, page, size);
 
 		List<Category> categories = (List<Category>) shoppingCartService.getCategories();
 
