@@ -500,6 +500,10 @@ body {
                     display: block;
                     text-decoration: none;
                     color: #999999;
+                    &.active {
+                        background: #f1f1f1;
+                        color: #333;
+                    }
                     &:hover {
                         text-decoration: none;
                         color: #fff;

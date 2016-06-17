@@ -371,6 +371,9 @@ body {
           display: block;
           text-decoration: none;
           color: #999999; }
+          #admin_panel-sidebar-nav .sidebar-nav_item-link.active {
+            background: #f1f1f1;
+            color: #333; }
           #admin_panel-sidebar-nav .sidebar-nav_item-link:hover {
             text-decoration: none;
             color: #fff;

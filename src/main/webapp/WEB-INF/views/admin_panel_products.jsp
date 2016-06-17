@@ -13,7 +13,6 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
-                                    <h2>Products</h2>
                                     <div id="admin_panel-products">
                                         <table class="table">
                                             <thead>

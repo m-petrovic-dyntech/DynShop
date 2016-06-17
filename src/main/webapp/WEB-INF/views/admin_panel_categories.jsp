@@ -13,7 +13,6 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
-                                    <span>${requestScope['javax.servlet.forward.request_uri']} - URL</span>
                                     <div id="admin_panel-categories">
                                         <div class="col-sm-6" id="admin_panel-categories-items">
                                             <table>
@@ -27,7 +26,7 @@
                                             </table>
                                             <table class="table">
                                                 <tbody>
-                                                    <c:forEach items="${categories}" var="category" varStatus="loop">
+                                                    <c:forEach items="${categories.getPageList()}" var="category" varStatus="loop">
                                                         <form action="${pageContext.request.contextPath}/admin/panel/editCategory" method="GET" class="categories-item-form">
                                                             <tr class="categories-item ${!category.enabled ? 'categories-item-disabled' : ''}">
                                                                 <td class="vertical-middle">
@@ -56,7 +55,7 @@
                                         <div class="col-sm-6">
                                             <div class="col-sm-6">
                                                 <h4>Add Category</h4>
-                                                <form id="product" action="${pageContext.request.contextPath}/admin/panel/addCategory" method="POST" class="categories-item-form">
+                                                <form id="product" action="${pageContext.request.contextPath}/admin/panel/addCategory" method="GET" class="categories-item-form">
                                                     <div class="input-group">
                                                         <input type="hidden" value="true" name="enabled" />
                                                         <input type="text" name="name" class="form-control" placeholder="Category Name">
