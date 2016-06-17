@@ -1,5 +1,6 @@
 package com.ShoppingCart.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,6 +31,11 @@ public class Category {
 	 
 	@OneToMany(mappedBy="category")
 	private List<Product> products;
+	
+	public Category()
+	{
+		this.products = new ArrayList<Product>();
+	}
 
 	public Integer getId() {
 		return id;
