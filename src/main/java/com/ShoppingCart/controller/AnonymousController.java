@@ -56,8 +56,7 @@ public class AnonymousController extends ControllerUtil {
 
 	@RequestMapping(value = { "/products", "admin/products", "/" }, method = RequestMethod.GET)
 	public ModelAndView home(@RequestParam(required = false) Integer category, 
-			@RequestParam(required = false) Integer page, 
-			@RequestParam(required = false) Integer size,
+			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
 			ModelAndView modelAndView,
 			HttpSession session) {
 		initializeSession(session);
