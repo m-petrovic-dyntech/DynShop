@@ -34,13 +34,14 @@ public class AdminController extends ControllerUtil {
 	private ShoppingCartService shoppingCartService;
 		
 	@RequestMapping(value = { "/admin/cartLogs" }, method = RequestMethod.GET)
-	public ModelAndView deleteCart(ModelAndView modelAndView, HttpSession session) {
+	public ModelAndView deleteCart(ModelAndView modelAndView, HttpSession session,  @RequestParam(required = false) Integer page, 
+	@RequestParam(required = false) Integer size){
 		initializeSession(session);
 				
-		List<ShoppingCart> carts = shoppingCartService.getAllCarts();
+		List<ShoppingCart> carts = shoppingCartService.getAllCarts(page,size);
 		
 		for (ShoppingCart shoppingCart : carts) {
-			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart));
+			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
 		
 		modelAndView.addObject("carts", carts);
@@ -54,12 +55,11 @@ public class AdminController extends ControllerUtil {
 		@RequestParam(required = false) Integer size) {
 		initializeSession(session);
 		
-		//TODO doati page i size
 		if(categoryId == null || categoryId == 0)	
 			modelAndView.addObject("products", shoppingCartService.getProducts(null,page,size));
 		else modelAndView.addObject("products", shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
 		
-		modelAndView.addObject("categories", shoppingCartService.getCategories());
+		modelAndView.addObject("categories", shoppingCartService.getCategories(page,size));
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
 	}
@@ -79,9 +79,9 @@ public class AdminController extends ControllerUtil {
 			@RequestParam(required = false) Integer size) {
 		initializeSession(session);
 		
-		modelAndView.addObject("paginatedCategories", getPaginatedList(shoppingCartService.getCategories(),page, size));
+		modelAndView.addObject("paginatedCategories", getPaginatedList(shoppingCartService.getCategories(page, size),page, size));
 
-		modelAndView.addObject("categories", shoppingCartService.getCategories());
+		//modelAndView.addObject("categories", shoppingCartService.getCategories());
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
 	}
