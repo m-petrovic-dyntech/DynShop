@@ -69,7 +69,7 @@ public class AnonymousController extends ControllerUtil {
 		
 		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory, page, size);
 
-		List<Category> categories = (List<Category>) shoppingCartService.getCategories();
+		List<Category> categories = (List<Category>) shoppingCartService.getCategories(page, size);
 
 		modelAndView.setViewName("products");
 

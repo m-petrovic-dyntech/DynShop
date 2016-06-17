@@ -1,6 +1,5 @@
 package com.ShoppingCart.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ShoppingCart.entity.Category;
@@ -10,39 +9,37 @@ import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
 
 public interface ShoppingCartService {
-	
+
 	public Product getProduct(int id);
-	
+
 	public List<Product> getProducts(Category category, Integer page, Integer size);
-	
-	public ArrayList<Category> getCategories();
-	
+
+	public List<Category> getCategories(Integer page, Integer size);
+
 	public Category getCategoryById(Integer id);
-	
+
 	public void saveCart(ShoppingCart cart);
 
-	public List<Product> getProductsByCategory(Category category);
+	public List<ShoppingCart> getCartsByCustomer(Customer customer, Integer page, Integer size);
 
-	public List<ShoppingCart> getCartsByCustomer(Customer customer);
+	public List<ShoppingCart> getAllCarts(Integer page, Integer size);
 
-	public List<ShoppingCart> getAllCarts();
-	
-	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart);
-	
+	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart, Integer page, Integer size);
+
 	public void editCategory(Category category);
-	
-	public void addCategory(Category category);
-	
-	public void editProduct(Product product);
-	
-	public void addProduct(Product product);
-	
-	public List<Category> getEnabledCategories();
 
-	public List<Category> getDisabledCategories();
+	public void addCategory(Category category);
+
+	public void editProduct(Product product);
+
+	public void addProduct(Product product);
+
+	public List<Category> getEnabledCategories(Integer page, Integer size);
+
+	public List<Category> getDisabledCategories(Integer page, Integer size);
 
 	public List<Product> getEnabledProducts(Category category, Integer page, Integer size);
-	
-	public List<Product> getDisabledProducts();
+
+	public List<Product> getDisabledProducts(Integer page, Integer size);
 
 }

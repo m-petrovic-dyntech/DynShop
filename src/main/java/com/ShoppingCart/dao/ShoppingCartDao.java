@@ -1,6 +1,5 @@
 package com.ShoppingCart.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.ShoppingCart.entity.Category;
@@ -17,7 +16,9 @@ public interface ShoppingCartDao {
 
 	public Product getProduct(int id); 
 	
-	public ArrayList<Category> getCategories();
+	public List<Category> getCategories();
+	
+	public List<Category> getCategories(Integer page, Integer size);
 	
 	public Category getCategoryById(int id);
 	
@@ -29,9 +30,15 @@ public interface ShoppingCartDao {
 
 	public List<ShoppingCart> getCartsByCustomer(Customer customer);
 	
+	public List<ShoppingCart> getCartsByCustomer(Customer customer, int pageNum, int pageSize);
+	
 	public List<ShoppingCart> getAllCarts();
+	
+	public List<ShoppingCart> getAllCarts(int pageNum, int pageSize);
 
 	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart);
+	
+	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart, int pageNum, int pageSize);
 
 	public void editCategory(Category category);
 	
@@ -42,8 +49,12 @@ public interface ShoppingCartDao {
 	public void addProduct(Product product);
 
 	public List<Category> getEnabledCategories();
+	
+	public List<Category> getEnabledCategories(int pageNum, int pageSize);
 
 	public List<Category> getDisabledCategories();
+	
+	public List<Category> getDisabledCategories(int pageNum, int pageSize);
 
 	public List<Product> getEnabledProducts();
 	
@@ -54,6 +65,8 @@ public interface ShoppingCartDao {
 	public List<Product> getEnabledProductsByCategory(Category category, int pageNum, int pageSize);
 	
 	public List<Product> getDisabledProducts();
+	
+	public List<Product> getDisabledProducts(int pageNum, int pageSize);
 	
 
  }
