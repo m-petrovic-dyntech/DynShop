@@ -43,7 +43,15 @@ public class ControllerUtil {
 	{
 		PagedListHolder pagedListHolder = new PagedListHolder(results);
 		//pagedListHolder.setPage(page);
-		//pagedListHolder.setPageSize(pageSize);
+		if(pageSize == null)
+		{
+			pagedListHolder.setPageSize(20);
+			pagedListHolder.setPage(0);
+		}
+		else{
+			pagedListHolder.setPageSize(pageSize);
+			pagedListHolder.setPage(page);
+		}
 		return pagedListHolder;
 	}
 	
