@@ -11,7 +11,9 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 
 public interface ShoppingCartDao {
 
-	public ArrayList<Product> getProducts();
+	public List<Product> getProducts();
+	
+	public List<Product> getProducts(int pageNum, int pageSize);
 
 	public Product getProduct(int id); 
 	
@@ -22,6 +24,8 @@ public interface ShoppingCartDao {
 	public void saveCart(ShoppingCart cart);
 	
 	public List<Product> getProductsByCategory(Category category);
+	
+	public List<Product> getProductsByCategory(Category category, int pageNum, int pageSize);
 
 	public List<ShoppingCart> getCartsByCustomer(Customer customer);
 	
@@ -42,8 +46,12 @@ public interface ShoppingCartDao {
 	public List<Category> getDisabledCategories();
 
 	public List<Product> getEnabledProducts();
+	
+	public List<Product> getEnabledProducts(int pageNum, int pageSize);
 
 	public List<Product> getEnabledProductsByCategory(Category category);
+	
+	public List<Product> getEnabledProductsByCategory(Category category, int pageNum, int pageSize);
 	
 	public List<Product> getDisabledProducts();
 	

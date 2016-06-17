@@ -26,11 +26,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public List<Product> getProducts(Category category) {
-		if(category==null || category.getName() == null)
-			return shoppingCartDao.getProducts();
+	public List<Product> getProducts(Category category, Integer page, Integer size) {
+		if(category == null || category.getName() == null) 
+			if(page == null || size == null)
+				return shoppingCartDao.getProducts();
+			else
+				return shoppingCartDao.getProducts(page,  size);
 		else
-			return shoppingCartDao.getProductsByCategory(category);
+			if(page == null || size == null)
+				return shoppingCartDao.getProductsByCategory(category);
+			else 
+				return shoppingCartDao.getProductsByCategory(category, page, size);
 	}
 
 	@Override
@@ -110,13 +116,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public List<Product> getEnabledProducts(Category category) {
-		if(category==null || category.getName() == null)
-			return shoppingCartDao.getEnabledProducts();
+	public List<Product> getEnabledProducts(Category category, Integer page, Integer size) {
+		if(category == null || category.getName() == null)
+			if(page == null || size == null)
+				return shoppingCartDao.getEnabledProducts();
+			else
+				return shoppingCartDao.getEnabledProducts(page, size);
 		else
-			return shoppingCartDao.getEnabledProductsByCategory(category);
+			if(page == null || size == null)
+				return shoppingCartDao.getEnabledProductsByCategory(category);
+			else 
+				return shoppingCartDao.getEnabledProductsByCategory(category, page, size);
 	}
-
+	
 	@Override
 	public List<Product> getDisabledProducts() {
 		return shoppingCartDao.getDisabledProducts();
