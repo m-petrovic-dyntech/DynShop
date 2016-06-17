@@ -538,19 +538,63 @@ body {
     &-categories {
         .categories {
             &-col {
-                &-edit,
+                &-edit {
+                    width: 108px;
+                }
                 &-remove {
                     width: 59px;
                 }
             }
             &-item {
+                &-form {
+                    margin-bottom: 0;
+                }
                 &-name {
                     &-value {}
+                    &-input {
+                        width: 50%;
+                        display: none;
+                    }
+                }
+                &-edit-yes,
+                &-edit-no {
+                    display: none;
+                }
+                &-disabled {
+                    background: rgba(217, 83, 79, 0.08);
+                }
+                /*=====  Edit mode od category name  ======*/
+                &.categories-item-edit_button-edited {
+                    .categories-item {
+                        &-name {
+                            &-value {
+                                display: none;
+                            }
+                            &-input {
+                                display: block!important;
+                            }
+                        }
+                        &-edit_button {
+                            display: none;
+                        }
+                        &-edit-yes,
+                        &-edit-no {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+            &-add {
+                background: #f1f1f1;
+                border-top: 2px solid #c5c5c5;
+                #categories-add-button {
+                    top: 0;
                 }
             }
         }
-        tbody tr {
-            background: #f5f5f5;
+        &-items {
+            height: 100%;
+            overflow: auto;
         }
     }
 }

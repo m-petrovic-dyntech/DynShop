@@ -389,10 +389,37 @@ body {
     padding: 0 0px; }
   #admin_panel-products .admin_panel-product-disabled {
     background: rgba(217, 83, 79, 0.08); }
-  #admin_panel-categories .categories-col-edit, #admin_panel-categories .categories-col-remove {
+  #admin_panel-categories .categories-col-edit {
+    width: 108px; }
+  #admin_panel-categories .categories-col-remove {
     width: 59px; }
-  #admin_panel-categories tbody tr {
-    background: #f5f5f5; }
+  #admin_panel-categories .categories-item {
+    /*=====  Edit mode od category name  ======*/ }
+    #admin_panel-categories .categories-item-form {
+      margin-bottom: 0; }
+    #admin_panel-categories .categories-item-name-input {
+      width: 50%;
+      display: none; }
+    #admin_panel-categories .categories-item-edit-yes, #admin_panel-categories .categories-item-edit-no {
+      display: none; }
+    #admin_panel-categories .categories-item-disabled {
+      background: rgba(217, 83, 79, 0.08); }
+    #admin_panel-categories .categories-item.categories-item-edit_button-edited .categories-item-name-value {
+      display: none; }
+    #admin_panel-categories .categories-item.categories-item-edit_button-edited .categories-item-name-input {
+      display: block !important; }
+    #admin_panel-categories .categories-item.categories-item-edit_button-edited .categories-item-edit_button {
+      display: none; }
+    #admin_panel-categories .categories-item.categories-item-edit_button-edited .categories-item-edit-yes, #admin_panel-categories .categories-item.categories-item-edit_button-edited .categories-item-edit-no {
+      display: inline-block; }
+  #admin_panel-categories .categories-add {
+    background: #f1f1f1;
+    border-top: 2px solid #c5c5c5; }
+    #admin_panel-categories .categories-add #categories-add-button {
+      top: 0; }
+  #admin_panel-categories-items {
+    height: 100%;
+    overflow: auto; }
 
 /*=====  End of Admin panel  ======*/
 /*----------  General Classes  ----------*/

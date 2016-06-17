@@ -13,77 +13,73 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
-                                    <h2>Categories</h2>
+                                    <span>${requestScope['javax.servlet.forward.request_uri']} - URL</span>
                                     <div id="admin_panel-categories">
-                                        <div class="col-sm-7 row">
-                                            <table class="table">
+                                        <div class="col-sm-6" id="admin_panel-categories-items">
+                                            <table>
                                                 <thead>
                                                     <tr>
-                                                        <th>Category name</th>
+                                                        <th><span>Category name</span></th>
                                                         <th class="categories-col-edit"></th>
                                                         <th class="categories-col-remove"></th>
                                                     </tr>
                                                 </thead>
+                                            </table>
+                                            <table class="table">
                                                 <tbody>
                                                     <c:forEach items="${categories}" var="category" varStatus="loop">
-                                                        <tr>
-                                                            <td class="vertical-middle">
-                                                                <span class="categories-item-name-value">
-                                                                    ${category.name}
-                                                                </span>
-                                                                <form action="${pageContext.request.contextPath}/admin/panel/editCategory">
+                                                        <form action="${pageContext.request.contextPath}/admin/panel/editCategory" method="GET" class="categories-item-form">
+                                                            <tr class="categories-item ${!category.enabled ? 'categories-item-disabled' : ''}">
+                                                                <td class="vertical-middle">
+                                                                    <span class="categories-item-name-value">
+                                                                        ${category.name}
+                                                                    </span>
                                                                     <input type="hidden" value="${category.id}" name="id" />
                                                                     <input type="hidden" value="${category.enabled}" name="enabled" />
                                                                     <!-- **** -->
-                                                                    <input type="text" value="${category.name}" name="name" />
-                                                                </form>
-                                                            </td>
-                                                            <td>
-                                                                <a class="btn btn-primary"><span class="glyphicon glyphicon-pencil "></span></a>
-                                                            </td>
-                                                            <td>
-                                                                <a class="btn btn-danger"><span class="glyphicon glyphicon-trash "></span></a>
-                                                            </td>
-                                                        </tr>
+                                                                    <input type="text" class="form-control categories-item-name-input" value="${category.name}" name="name" />
+                                                                </td>
+                                                                <td class="text-right vertical-middle categories-col-edit">
+                                                                    <a class="btn btn-primary categories-item-edit_button"><span class="glyphicon glyphicon-pencil"></span></a>
+                                                                    <button type="submit" class="btn btn-success categories-item-edit-yes"><span class="glyphicon glyphicon-ok"></span></button>
+                                                                    <a class="btn btn-danger categories-item-edit-no"><span class="glyphicon glyphicon-remove"></span></a>
+                                                                </td>
+                                                                <td class="vertical-middle categories-col-remove">
+                                                                    <a class="btn btn-danger" href="${pageContext.request.contextPath}/admin/panel/deleteCategory/${category.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        </form>
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <!-- <div class="col-md-3 ">
-                                            <div class="admin_panel-categories-item clearfix ${!category.enabled ? 'removed' : ''} ">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <span class="admin_panel-categories-item-value ">${category.name}</span>
-                                                            <button class="btn btn-default dropdown-toggle " type="button " id="category_edit_input${loop.index} " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false "><span class="glyphicon glyphicon-pencil "></span></button>
-                                                            <div class="dropdown-menu products-item-cart-popup " aria-labelledby="category_edit_input${loop.index} ">
-                                                                <div class="input-group ">
-                                                                    <form action="${pageContext.request.contextPath}/admin/panel/editCategory " method="GET ">
-                                                                        <input type="text " class="form-control " placeholder="Quantity " value="${category.name} ">
-                                                                        <span class="input-group-btn ">
-                                                                        <button class="btn btn-success " type="submit "><span class="glyphicon glyphicon-ok "></span></button>
-                                                                        </span>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="admin_panel-categories-item-remove_icon ">
-                                                            <div class="admin_panel-categories-item-remove_icon-box ">
-                                                                <a class="btn btn-danger dropdown-toggle " type="button " id="dropdownMenu1 " data-toggle="dropdown " title="Edit " aria-haspopup="true " aria-expanded="false "><span class="glyphicon glyphicon-remove "></span></a>
-                                                                <div class="dropdown-menu categories-item-remove_icon-popup " aria-labelledby="dropdownMenu1 ">
-                                                                    <button class="btn btn-danger " class="categories-item-remove_icon-popup-close "><span class="glyphicon glyphicon-remove "></span></button>
-                                                                    <a href="${pageContext.request.contextPath}/admin/panel/deleteCategory/${category.id} " class="btn btn-success " type="button ">
-                                                                        <span class="glyphicon glyphicon-ok "></span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                        <div class="col-sm-6">
+                                            <div class="col-sm-6">
+                                                <h4>Add Category</h4>
+                                                <form id="product" action="${pageContext.request.contextPath}/admin/panel/addCategory" method="POST" class="categories-item-form">
+                                                    <div class="input-group">
+                                                        <input type="hidden" value="true" name="enabled" />
+                                                        <input type="text" name="name" class="form-control" placeholder="Category Name">
+                                                        <span class="input-group-btn">
+                                                        <button type="submit" class="btn btn-success glyphicon glyphicon-ok" id="categories-add-button"></button>
+                                                    </span>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <script type="text/javascript">
+                            $(document).ready(function() {
+                                $('.categories-item-edit_button').click(function() {
+                                    $('.categories-item-edit_button-edited').removeClass('categories-item-edit_button-edited');
+                                    $(this).closest('.categories-item').addClass('categories-item-edit_button-edited');
+                                });
+                                $('.categories-item-edit-no').click(function() {
+                                    $('.categories-item-edit_button-edited').removeClass('categories-item-edit_button-edited');
+                                });
+                            });
+                            </script>
                         </jsp:attribute>
                     </t:layout>
