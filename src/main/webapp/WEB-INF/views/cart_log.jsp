@@ -7,6 +7,23 @@
                         <!-- Content -->
                         <t:layout title="DynTech Shop | Products">
                             <jsp:attribute name="body_area">
-                               ${carts.get(0).getItems().get(0).getProduct().getName()}
+                                <div class="container page-main_box">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Total Cost</th>
+                                                <th>Purchase Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${carts}" var="cart">
+                                                <tr>
+                                                    <td>${cart.totalCost}</td>
+                                                    <td>${cart.shoppingDate}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </jsp:attribute>
                         </t:layout>
