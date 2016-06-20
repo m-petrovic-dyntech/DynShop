@@ -30,6 +30,11 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		else
 			return customerDao.getAllCustomers(page, size);
 	}
+	
+	@Override
+	public int getCustomerCount() {
+		return customerDao.getCustomerCount();
+	}
 
 	@Override
 	public Customer getCustomerById(int id) {
@@ -70,4 +75,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	public List<Customer> getDisabledCustomers() {
 		return customerDao.getDisabledCustomers();
 	}
+
+	
 }

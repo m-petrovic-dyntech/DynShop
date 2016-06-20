@@ -21,6 +21,7 @@ import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.ControllerUtil;
 
+
 @Controller
 public class AdminController extends ControllerUtil {
 
@@ -44,7 +45,8 @@ public class AdminController extends ControllerUtil {
 			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
 
-		modelAndView.addObject("carts", getPaginatedList(carts, page, size));
+		modelAndView.addObject("carts", carts);
+//		modelAndView.addObject("total", shoppingCartService.getCartsCount());
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
 	}
@@ -71,7 +73,10 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-		modelAndView.addObject("customers", getPaginatedList(customerService.getAllCustomers(page, size), page, size));
+		modelAndView.addObject("customers", customerService.getAllCustomers(page, size));
+		modelAndView.addObject("total", customerService.getCustomerCount());
+		
+		System.out.println("***************" +customerService.getCustomerCount());
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
 	}
@@ -80,12 +85,9 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminCategories(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-		int total = shoppingCartService.getCategoriesCount();
-		modelAndView.addObject("categories",
-				getPaginatedList(shoppingCartService.getCategories(page, size), page, size));
-		modelAndView.addObject("total", total);
+		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
+		modelAndView.addObject("total", shoppingCartService.getCategoriesCount());
 		modelAndView.setViewName("admin_panel_categories");
-		System.out.println("**************************************" + total);
 		return modelAndView;
 	}
 
