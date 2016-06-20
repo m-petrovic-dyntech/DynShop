@@ -14,7 +14,7 @@ public interface ShoppingCartDao {
 	
 	public List<Product> getProducts(int pageNum, int pageSize);
 
-	public Product getProduct(int id); 
+	public Product getProductById(int id); 
 	
 	public List<Category> getCategories();
 	

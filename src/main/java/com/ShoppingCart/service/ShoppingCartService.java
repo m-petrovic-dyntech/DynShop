@@ -10,7 +10,7 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 
 public interface ShoppingCartService {
 
-	public Product getProduct(int id);
+	public Product getProductById(int id);
 
 	public List<Product> getProducts(Category category, Integer page, Integer size);
 

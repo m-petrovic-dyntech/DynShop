@@ -15,7 +15,6 @@ import com.ShoppingCart.dao.CustomerDao;
 import com.ShoppingCart.dto.CustomUserDetails;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Role;
-import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.service.CustomerService;
 
 @Service
@@ -25,8 +24,11 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	private CustomerDao customerDao;
 
 	@Override
-	public List<Customer> getAllCustomers() {
-		return customerDao.getAllCustomers();
+	public List<Customer> getAllCustomers(Integer page, Integer size) {
+		if (page == null || size == null)
+			return customerDao.getAllCustomers();
+		else
+			return customerDao.getAllCustomers(page, size);
 	}
 
 	@Override

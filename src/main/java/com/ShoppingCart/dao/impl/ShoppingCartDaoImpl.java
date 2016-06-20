@@ -65,7 +65,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Override
 	@Transactional
-	public Product getProduct(int id) {
+	public Product getProductById(int id) {
 		Product product = (Product) getSession().createCriteria(Product.class).add(Restrictions.eq("id", id))
 				.uniqueResult();
 		return product;

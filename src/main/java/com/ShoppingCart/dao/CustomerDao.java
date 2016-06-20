@@ -7,6 +7,8 @@ import com.ShoppingCart.entity.Customer;
 public interface CustomerDao {
 
 	public List<Customer> getAllCustomers();
+	
+	public List<Customer> getAllCustomers(int pageNum, int pageSize);
 
 	public Customer getCustomerById(int id);
 	

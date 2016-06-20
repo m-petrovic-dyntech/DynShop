@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -48,6 +49,17 @@ public class CustomerDaoImpl implements CustomerDao {
 		return (ArrayList<Customer>) getSession().createCriteria(Customer.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Customer> getAllCustomers(int pageNum, int pageSize) {
+		Criteria results = getSession().createCriteria(Customer.class);
+		results.setFirstResult((pageNum - 1) * pageSize);
+		results.setMaxResults(pageSize);
+		return results.list();
+	}
+
+	
 	@Override
 	@Transactional
 	public Customer getCustomerById(int id) {

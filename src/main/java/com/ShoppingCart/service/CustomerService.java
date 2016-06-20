@@ -5,10 +5,11 @@ import java.util.List;
 import com.ShoppingCart.entity.Customer;
 
 public interface CustomerService {
-	public List<Customer> getAllCustomers();
+	
+	public List<Customer> getAllCustomers(Integer page, Integer size);
 
 	public Customer getCustomerById(int id);
-	
+
 	public void addCustomer(Customer customer);
 
 	public void editCustomer(Customer newCustomer);
@@ -18,5 +19,5 @@ public interface CustomerService {
 	public List<Customer> getEnabledCustomers();
 
 	public List<Customer> getDisabledCustomers();
-	
+
 }

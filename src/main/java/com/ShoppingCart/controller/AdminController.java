@@ -34,8 +34,8 @@ public class AdminController extends ControllerUtil {
 	private ShoppingCartService shoppingCartService;
 		
 	@RequestMapping(value = { "/admin/cartLogs" }, method = RequestMethod.GET)
-	public ModelAndView deleteCart(ModelAndView modelAndView, HttpSession session,  @RequestParam(required = false) Integer page, 
-	@RequestParam(required = false) Integer size){
+	public ModelAndView deleteCart(ModelAndView modelAndView,  @RequestParam(required = false) Integer page, 
+	@RequestParam(required = false) Integer size, HttpSession session){
 		initializeSession(session);
 				
 		List<ShoppingCart> carts = shoppingCartService.getAllCarts(page,size);
@@ -44,38 +44,38 @@ public class AdminController extends ControllerUtil {
 			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
 		
-		modelAndView.addObject("carts", carts);
+		modelAndView.addObject("carts", getPaginatedList(carts, page, size));
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/products" }, method = RequestMethod.GET)
-	public ModelAndView adminGetProductsByCategory(ModelAndView modelAndView, HttpSession session, 
+	public ModelAndView adminGetProductsByCategory(ModelAndView modelAndView, 
 		@RequestParam(required = false) Integer categoryId, @RequestParam(required = false) Integer page, 
-		@RequestParam(required = false) Integer size) {
+		@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
 		
 		if(categoryId == null || categoryId == 0)	
 			modelAndView.addObject("products", shoppingCartService.getProducts(null,page,size));
 		else modelAndView.addObject("products", shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
 		
-		modelAndView.addObject("categories", shoppingCartService.getCategories(page,size));
+		modelAndView.addObject("categories", getPaginatedList(shoppingCartService.getCategories(page,size), page, size));
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/users" }, method = RequestMethod.GET)
-	public ModelAndView adminGetUsers(ModelAndView modelAndView, HttpSession session) {
+	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-		
-		modelAndView.addObject("customers", customerService.getAllCustomers());
+		modelAndView.addObject("customers", getPaginatedList(customerService.getAllCustomers(page, size), size, page));
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
-	public ModelAndView adminCategories(ModelAndView modelAndView, HttpSession session,
-		@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+	public ModelAndView adminCategories(ModelAndView modelAndView,
+		@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
 		
 		modelAndView.addObject("categories", getPaginatedList(shoppingCartService.getCategories(page, size),page, size));
@@ -85,7 +85,8 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/deleteCustomer/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, @PathVariable (value = "id") int id, @RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
 		
 		Customer customer = (Customer)customerService.getCustomerById(id);
@@ -98,10 +99,10 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id, HttpSession session) {
 		initializeSession(session);
 		
-		Product product = (Product)shoppingCartService.getProduct(id);
+		Product product = (Product)shoppingCartService.getProductById(id);
 		product.setEnabled(Boolean.FALSE);
 		
 		shoppingCartService.editProduct(product);
@@ -111,7 +112,7 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, HttpSession session,  @PathVariable (value = "id") int id ) {
+	public ModelAndView adminDeleteCategory(ModelAndView modelAndView,  @PathVariable (value = "id") int id, HttpSession session) {
 		initializeSession(session);
 		
 		Category category = (Category)shoppingCartService.getCategoryById(id);
@@ -124,8 +125,8 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/editCategory" }, method = RequestMethod.GET)
-	public ModelAndView adminEditCategory(ModelAndView modelAndView, HttpSession session,  @RequestParam("id") int id, 
-			@RequestParam("name") String name, @RequestParam("enabled") Boolean enabled) {
+	public ModelAndView adminEditCategory(ModelAndView modelAndView, @RequestParam("id") int id, 
+			@RequestParam("name") String name, @RequestParam("enabled") Boolean enabled, HttpSession session) {
 		
 		Category category = (Category)shoppingCartService.getCategoryById(id);
 		category.setName(name);
@@ -138,7 +139,7 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/editProduct" }, method = RequestMethod.GET)
-	public ModelAndView adminEditProduct(ModelAndView modelAndView, HttpSession session, @ModelAttribute("productEditModel") Product product) {
+	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product, HttpSession session) {
 		
 		shoppingCartService.editProduct(product);
 		
@@ -147,7 +148,7 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/addProduct" }, method = RequestMethod.GET)
-	public ModelAndView adminAddProduct(ModelAndView modelAndView, HttpSession session, @ModelAttribute("product") Product product) {
+	public ModelAndView adminAddProduct(ModelAndView modelAndView, @ModelAttribute("productAddModel") Product product, HttpSession session) {
 		
 		shoppingCartService.addProduct(product);
 		modelAndView.setViewName("redirect:/admin/panel/product");
@@ -155,7 +156,7 @@ public class AdminController extends ControllerUtil {
 	}
 	
 	@RequestMapping(value = { "/admin/panel/addCategory" }, method = RequestMethod.GET)
-	public ModelAndView adminAddCategory(ModelAndView modelAndView, HttpSession session, @ModelAttribute("product") Category category) {
+	public ModelAndView adminAddCategory(ModelAndView modelAndView, @ModelAttribute("categoryAddModel") Category category, HttpSession session) {
 		
 		shoppingCartService.addCategory(category);		
 		modelAndView.setViewName("redirect:/admin/panel/categories");

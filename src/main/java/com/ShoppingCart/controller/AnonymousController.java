@@ -55,9 +55,8 @@ public class AnonymousController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/products", "admin/products", "/" }, method = RequestMethod.GET)
-	public ModelAndView home(@RequestParam(required = false) Integer category, 
+	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category, 
 			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
-			ModelAndView modelAndView,
 			HttpSession session) {
 		initializeSession(session);
 
@@ -72,7 +71,7 @@ public class AnonymousController extends ControllerUtil {
 
 		modelAndView.setViewName("products");
 
-		modelAndView.addObject("products", products);
+		modelAndView.addObject("products", getPaginatedList(products, page, size));
 		modelAndView.addObject("categories", categories);
 		modelAndView.addObject("category", selectedCategory);
 		modelAndView.addObject("cart", session.getAttribute("cart"));
@@ -84,7 +83,7 @@ public class AnonymousController extends ControllerUtil {
 	public ModelAndView getProduct(ModelAndView modelAndView, @PathVariable(value = "id") int id,
 			@RequestParam(required = true) Integer categoryId, HttpSession session) {
 		initializeSession(session);
-		Product product = shoppingCartService.getProduct(id);
+		Product product = shoppingCartService.getProductById(id);
 
 		// Testing
 		// System.out.println("******"+product.getName()+" u kategoriji
@@ -110,7 +109,7 @@ public class AnonymousController extends ControllerUtil {
 		// System.out.println("BEFORE ADDING "+cart.getTotalCost());
 
 		if (cart.findItemByProductId(id) == null) {
-			Product product = shoppingCartService.getProduct(id);
+			Product product = shoppingCartService.getProductById(id);
 			ShoppingCartItem item = new ShoppingCartItem();
 
 			item.setProduct(product);
