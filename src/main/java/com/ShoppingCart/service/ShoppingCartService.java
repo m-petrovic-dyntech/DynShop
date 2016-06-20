@@ -15,6 +15,8 @@ public interface ShoppingCartService {
 	public List<Product> getProducts(Category category, Integer page, Integer size);
 
 	public List<Category> getCategories(Integer page, Integer size);
+	
+	public int getCategoriesCount();
 
 	public Category getCategoryById(Integer id);
 

@@ -49,6 +49,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		else
 			return shoppingCartDao.getCategories(page, size);
 	}
+	
+	@Override
+	public int getCategoriesCount() {
+		return shoppingCartDao.getCategoriesCount();
+	}
 
 	@Override
 	public Category getCategoryById(Integer id) {
@@ -146,4 +151,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		else
 			return shoppingCartDao.getDisabledProducts(page, size);
 	}
+
+	
 }

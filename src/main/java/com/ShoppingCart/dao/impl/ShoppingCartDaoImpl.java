@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Criteria;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -78,6 +79,19 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public List<Category> getCategories() {
 		List<Category> results = (List<Category>) getSession().createCriteria(Category.class).list();
 		return results;
+	}
+
+	@Override
+	@Transactional
+	public int getCategoriesCount() {
+
+		Long result = (Long) getSession().createCriteria(Category.class).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return Integer.parseInt(result.toString());
+		// Number result = (Number) getSession().createSQLQuery("select count(*)
+		// from categories").uniqueResult();
+		// return Integer.parseInt(result.toString());
+
 	}
 
 	@SuppressWarnings("unchecked")
