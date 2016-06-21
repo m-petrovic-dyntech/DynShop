@@ -34,11 +34,11 @@ public class StatisticsController extends ControllerUtil{
 			HttpSession session) {
 		initializeSession(session);
 
-		List<ShoppingCart> carts = shoppingCartService.getAllCartsPurcashedByMonth(id);
+		List<Double> totals = shoppingCartService.getAllCartsPurcashedByMonth(id);
 		//ovde Vlada operira :) 
 
-		modelAndView.addObject("carts", carts);
-		modelAndView.setViewName("cart_log");
+		modelAndView.addObject("totals", totals);
+		modelAndView.setViewName("statistics");
 		return modelAndView;
 	}
 

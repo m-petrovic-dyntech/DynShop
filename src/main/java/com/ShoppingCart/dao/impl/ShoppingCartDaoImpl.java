@@ -2,6 +2,7 @@ package com.ShoppingCart.dao.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -377,7 +378,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<ShoppingCart> getAllCartsPurcashedByMonth(int month) {
+	public List<Double> getAllCartsPurcashedByMonth(int month) {
 		
 		GregorianCalendar gc = new GregorianCalendar(2016, month-1, 1);
 	    Date monthFirstDate = new java.util.Date(gc.getTime().getTime());
@@ -388,12 +389,16 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
         gc.add(Calendar.DATE, -1);  
         Date monthLastDate = gc.getTime();  
 
-	    System.out.println("**"+monthFirstDate);
-	    System.out.println("**"+monthLastDate);
-		
 		Criteria results = getSession().createCriteria(ShoppingCart.class);
 		results.add(Restrictions.between("shoppingDate", monthFirstDate, monthLastDate));
-		return results.list();
+		List<ShoppingCart> carts = results.list();
+
+		List<Double> totals = new ArrayList<Double>();
+		for (ShoppingCart shoppingCart : carts) {
+			totals.add(shoppingCart.getTotalCost());
+		}
+		
+		return totals;
 	}
 
 }

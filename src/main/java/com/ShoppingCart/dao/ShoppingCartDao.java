@@ -80,7 +80,7 @@ public interface ShoppingCartDao {
 	
 	public int getCountItemsInCart(int id);
 	
-	public List<ShoppingCart> getAllCartsPurcashedByMonth(int month);
+	public List<Double> getAllCartsPurcashedByMonth(int month);
 
 
 }

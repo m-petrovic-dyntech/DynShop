@@ -179,7 +179,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public List<ShoppingCart> getAllCartsPurcashedByMonth(int month) {
+	public List<Double> getAllCartsPurcashedByMonth(int month) {
 		return shoppingCartDao.getAllCartsPurcashedByMonth(month);
 	}
 
