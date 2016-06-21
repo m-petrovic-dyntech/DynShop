@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-        http://www.springframework.org/schema/mvc 
-   		http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        				http://www.springframework.org/schema/context
+        				http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        				http://www.springframework.org/schema/tx
+        				http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        				http://www.springframework.org/schema/mvc 
+   						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        				http://www.springframework.org/schema/data/jpa
+        				http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 
 	<context:component-scan base-package="com.ShoppingCart.dao" />
@@ -39,6 +46,7 @@
 	
 	<!-- Services -->
 	<bean name="shoppingCartService" class="com.ShoppingCart.service.impl.ShoppingCartServiceImpl"></bean>
+	<bean name="mailService" class="com.ShoppingCart.service.impl.MailServiceImpl"></bean>
 	<bean name="customerService" class="com.ShoppingCart.service.impl.CustomerServiceImpl"></bean>
 
 	<!-- DAO -->

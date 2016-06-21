@@ -8,6 +8,7 @@
 			classpath:/META-INF/config/ShoppingCart-context.xml,
 			classpath:/META-INF/config/ShoppingCart-context-persistence.xml,
 			classpath:/META-INF/config/ShoppingCart-security.xml
+			classpath:/META-INF/config/ShoppingCart-mail.xml
 		</param-value>
 	</context-param>
 	

@@ -21,146 +21,159 @@ import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.ControllerUtil;
 
+
 @Controller
 public class AdminController extends ControllerUtil {
-	
+
 	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private ShoppingCartService shoppingCartService;
-		
+
 	@RequestMapping(value = { "/admin/cartLogs" }, method = RequestMethod.GET)
-	public ModelAndView deleteCart(ModelAndView modelAndView,  @RequestParam(required = false) Integer page, 
-	@RequestParam(required = false) Integer size, HttpSession session){
+	public ModelAndView adminGetCartsLogs(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-				
-		List<ShoppingCart> carts = shoppingCartService.getAllCarts(page,size);
-		
+
+		List<ShoppingCart> carts = shoppingCartService.getAllCarts(page, size);
+
 		for (ShoppingCart shoppingCart : carts) {
 			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
-		
-		modelAndView.addObject("carts", getPaginatedList(carts, page, size));
+
+		modelAndView.addObject("carts", carts);
+//		modelAndView.addObject("total", shoppingCartService.getCartsCount());
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/products" }, method = RequestMethod.GET)
-	public ModelAndView adminGetProductsByCategory(ModelAndView modelAndView, 
-		@RequestParam(required = false) Integer categoryId, @RequestParam(required = false) Integer page, 
-		@RequestParam(required = false) Integer size, HttpSession session) {
+	public ModelAndView adminGetProductsByCategory(ModelAndView modelAndView,
+			@RequestParam(required = false) Integer categoryId, @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-		
-		if(categoryId == null || categoryId == 0)	
-			modelAndView.addObject("products", shoppingCartService.getProducts(null,page,size));
-		else modelAndView.addObject("products", shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
-		
-		modelAndView.addObject("categories", getPaginatedList(shoppingCartService.getCategories(page,size), page, size));
+
+		if (categoryId == null || categoryId == 0)
+			modelAndView.addObject("products", shoppingCartService.getProducts(null, page, size));
+		else
+			modelAndView.addObject("products",
+					shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
+
+		modelAndView.addObject("categories",
+				getPaginatedList(shoppingCartService.getCategories(page, size), page, size));
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/users" }, method = RequestMethod.GET)
-	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page, 
+	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-		modelAndView.addObject("customers", getPaginatedList(customerService.getAllCustomers(page, size), size, page));
+		modelAndView.addObject("customers", customerService.getAllCustomers(page, size));
+		modelAndView.addObject("total", customerService.getCustomerCount());
+		
+		System.out.println("***************" +customerService.getCustomerCount());
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
-	public ModelAndView adminCategories(ModelAndView modelAndView,
-		@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size, HttpSession session) {
-		initializeSession(session);
-		
-		modelAndView.addObject("categories", getPaginatedList(shoppingCartService.getCategories(page, size),page, size));
 
+	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
+	public ModelAndView adminCategories(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size, HttpSession session) {
+		initializeSession(session);
+		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
+		modelAndView.addObject("total", shoppingCartService.getCategoriesCount());
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/deleteCustomer/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, @PathVariable (value = "id") int id, @RequestParam(required = false) Integer page, 
-			@RequestParam(required = false) Integer size, HttpSession session) {
+	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, @PathVariable(value = "id") int id,
+			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
+			HttpSession session) {
 		initializeSession(session);
-		
-		Customer customer = (Customer)customerService.getCustomerById(id);
+
+		Customer customer = (Customer) customerService.getCustomerById(id);
 		customer.setEnabled(Boolean.FALSE);
-		
+
 		customerService.editCustomer(customer);
-		
+
 		modelAndView.setViewName("redirect:/admin_panel_users");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, @PathVariable (value = "id") int id, HttpSession session) {
+	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, @PathVariable(value = "id") int id,
+			HttpSession session) {
 		initializeSession(session);
-		
-		Product product = (Product)shoppingCartService.getProductById(id);
+
+		Product product = (Product) shoppingCartService.getProductById(id);
 		product.setEnabled(Boolean.FALSE);
-		
+
 		shoppingCartService.editProduct(product);
-		
+
 		modelAndView.setViewName("redirect:/admin/panel/products");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteCategory(ModelAndView modelAndView,  @PathVariable (value = "id") int id, HttpSession session) {
+	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, @PathVariable(value = "id") int id,
+			HttpSession session) {
 		initializeSession(session);
-		
-		Category category = (Category)shoppingCartService.getCategoryById(id);
+
+		Category category = (Category) shoppingCartService.getCategoryById(id);
 		category.setEnabled(Boolean.FALSE);
-		
+
 		shoppingCartService.editCategory(category);
-		
+
 		modelAndView.setViewName("redirect:/admin/panel/categories");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/editCategory" }, method = RequestMethod.GET)
-	public ModelAndView adminEditCategory(ModelAndView modelAndView, @RequestParam("id") int id, 
+	public ModelAndView adminEditCategory(ModelAndView modelAndView, @RequestParam("id") int id,
 			@RequestParam("name") String name, @RequestParam("enabled") Boolean enabled, HttpSession session) {
-		
-		Category category = (Category)shoppingCartService.getCategoryById(id);
+
+		Category category = (Category) shoppingCartService.getCategoryById(id);
 		category.setName(name);
 		category.setEnabled(enabled);
-		
+
 		shoppingCartService.editCategory(category);
-		
+
 		modelAndView.setViewName("redirect:/admin/panel/categories");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/editProduct" }, method = RequestMethod.GET)
-	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product, HttpSession session) {
-		
+	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product,
+			HttpSession session) {
+
 		shoppingCartService.editProduct(product);
-		
+
 		modelAndView.setViewName("redirect:/admin/panel/product");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/addProduct" }, method = RequestMethod.GET)
-	public ModelAndView adminAddProduct(ModelAndView modelAndView, @ModelAttribute("productAddModel") Product product, HttpSession session) {
-		
+	public ModelAndView adminAddProduct(ModelAndView modelAndView, @ModelAttribute("productAddModel") Product product,
+			HttpSession session) {
+
 		shoppingCartService.addProduct(product);
 		modelAndView.setViewName("redirect:/admin/panel/product");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/addCategory" }, method = RequestMethod.GET)
-	public ModelAndView adminAddCategory(ModelAndView modelAndView, @ModelAttribute("categoryAddModel") Category category, HttpSession session) {
-		
-		shoppingCartService.addCategory(category);		
+	public ModelAndView adminAddCategory(ModelAndView modelAndView,
+			@ModelAttribute("categoryAddModel") Category category, HttpSession session) {
+
+		shoppingCartService.addCategory(category);
 		modelAndView.setViewName("redirect:/admin/panel/categories");
 		return modelAndView;
 	}
- 	
+
 }

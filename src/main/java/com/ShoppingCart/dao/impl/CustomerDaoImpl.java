@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -49,6 +50,14 @@ public class CustomerDaoImpl implements CustomerDao {
 		return (ArrayList<Customer>) getSession().createCriteria(Customer.class).list();
 	}
 
+	@Override
+	@Transactional
+	public int getCustomerCount() {
+		Long result = (Long) getSession().createCriteria(Customer.class).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
@@ -98,5 +107,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	public List<Customer> getDisabledCustomers() {
 		return (List<Customer>) getSession().createCriteria(Customer.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
 	}
+
+	
 
 }
