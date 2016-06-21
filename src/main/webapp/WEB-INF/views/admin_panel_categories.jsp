@@ -66,6 +66,11 @@
                                                 </form>
                                             </div>
                                         </div>
+                                        <div id="categories-pagination">
+                                            <c:forEach begin="1" end="${categories.getPageCount()}" step="1" varStatus="loop">
+                                                ${loop.index}
+                                            </c:forEach>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
