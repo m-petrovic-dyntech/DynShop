@@ -1,5 +1,10 @@
 package com.ShoppingCart.dao.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -367,6 +372,28 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		Number result = (Number) getSession().createSQLQuery(hql)
 				.setInteger("id", id).uniqueResult();
 		return Integer.parseInt(result.toString());
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<ShoppingCart> getAllCartsPurcashedByMonth(int month) {
+		
+		GregorianCalendar gc = new GregorianCalendar(2016, month-1, 1);
+	    Date monthFirstDate = new java.util.Date(gc.getTime().getTime());
+	    
+	    gc.setTime(monthFirstDate);
+	    gc.add(Calendar.MONTH, 1);  
+        gc.set(Calendar.DAY_OF_MONTH, 1);  
+        gc.add(Calendar.DATE, -1);  
+        Date monthLastDate = gc.getTime();  
+
+	    System.out.println("**"+monthFirstDate);
+	    System.out.println("**"+monthLastDate);
+		
+		Criteria results = getSession().createCriteria(ShoppingCart.class);
+		results.add(Restrictions.between("shoppingDate", monthFirstDate, monthLastDate));
+		return results.list();
 	}
 
 }

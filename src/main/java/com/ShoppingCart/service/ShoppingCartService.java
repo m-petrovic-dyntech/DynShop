@@ -53,5 +53,7 @@ public interface ShoppingCartService {
 	public int getCountCartsInCustomer(Customer customer);
 	
 	public int getCountItemsInCart(int id);
+	
+	public List<ShoppingCart> getAllCartsPurcashedByMonth(int month);
 
 }

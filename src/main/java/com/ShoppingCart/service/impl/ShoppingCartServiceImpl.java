@@ -178,5 +178,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		return shoppingCartDao.getCountItemsInCart(id);
 	}
 
+	@Override
+	public List<ShoppingCart> getAllCartsPurcashedByMonth(int month) {
+		return shoppingCartDao.getAllCartsPurcashedByMonth(month);
+	}
+
 	
 }
