@@ -189,9 +189,9 @@ public class AdminController extends ControllerUtil {
 	 public ModelAndView sendMail(ModelAndView modelAndView, HttpSession session){
 	  initializeSession(session);
 	  
-	  mailService.sendMail("info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Testing123", "Testing only \n\n Hello Spring Email Sender");
+	  mailService.sendMail("info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Testing123", "Testing only \n\n Hello Spring Email Sender", "emailtemplate.vm");
 	        
-	        modelAndView.setViewName("cart_log");
+	  modelAndView.setViewName("cart_log");
 	  return modelAndView;
 	 }
 }
