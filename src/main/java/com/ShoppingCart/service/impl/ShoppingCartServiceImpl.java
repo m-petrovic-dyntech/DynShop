@@ -50,11 +50,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			return shoppingCartDao.getCategories(page, size);
 	}
 	
-	@Override
-	public int getCategoriesCount() {
-		return shoppingCartDao.getCategoriesCount();
-	}
-
+	
 	@Override
 	public Category getCategoryById(Integer id) {
 		if (id == null)
@@ -150,6 +146,36 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			return shoppingCartDao.getDisabledProducts();
 		else
 			return shoppingCartDao.getDisabledProducts(page, size);
+	}
+	
+	@Override
+	public int getCountCategories() {
+		return shoppingCartDao.getCountCategories();
+	}
+
+	@Override
+	public int getCountProducts() {
+		return shoppingCartDao.getCountProducts();
+	}
+
+	@Override
+	public int getCountProductsInCategory(int categoryId) {
+		return shoppingCartDao.getCountProductsInCategory(categoryId);
+	}
+
+	@Override
+	public int getCountCarts() {
+		return shoppingCartDao.getCountCarts();
+	}
+
+	@Override
+	public int getCountCartsInCustomer(Customer customer) {
+		return shoppingCartDao.getCountCartsInCustomer(customer);
+	}
+
+	@Override
+	public int getCountItemsInCart(int id) {
+		return shoppingCartDao.getCountItemsInCart(id);
 	}
 
 	

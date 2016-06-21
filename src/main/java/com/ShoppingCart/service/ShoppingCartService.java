@@ -16,8 +16,6 @@ public interface ShoppingCartService {
 
 	public List<Category> getCategories(Integer page, Integer size);
 	
-	public int getCategoriesCount();
-
 	public Category getCategoryById(Integer id);
 
 	public void saveCart(ShoppingCart cart);
@@ -25,7 +23,7 @@ public interface ShoppingCartService {
 	public List<ShoppingCart> getCartsByCustomer(Customer customer, Integer page, Integer size);
 
 	public List<ShoppingCart> getAllCarts(Integer page, Integer size);
-
+	
 	public List<ShoppingCartItem> getItemsByCart(ShoppingCart cart, Integer page, Integer size);
 
 	public void editCategory(Category category);
@@ -43,5 +41,17 @@ public interface ShoppingCartService {
 	public List<Product> getEnabledProducts(Category category, Integer page, Integer size);
 
 	public List<Product> getDisabledProducts(Integer page, Integer size);
+	
+	public int getCountCategories(); //proveri da li metode idu redom
+	
+	public int getCountProducts();
+	
+	public int getCountProductsInCategory(int categoryId);
+	
+	public int getCountCarts();
+	
+	public int getCountCartsInCustomer(Customer customer);
+	
+	public int getCountItemsInCart(int id);
 
 }

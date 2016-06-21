@@ -20,8 +20,6 @@ public interface ShoppingCartDao {
 
 	public List<Category> getCategories(Integer page, Integer size);
 
-	public int getCategoriesCount();
-
 	public Category getCategoryById(int id);
 
 	public void saveCart(ShoppingCart cart);
@@ -69,5 +67,18 @@ public interface ShoppingCartDao {
 	public List<Product> getDisabledProducts();
 
 	public List<Product> getDisabledProducts(int pageNum, int pageSize);
+	
+	public int getCountCategories();
+
+	public int getCountProducts();
+	
+	public int getCountProductsInCategory(int categoryId);
+	
+	public int getCountCarts();
+	
+	public int getCountCartsInCustomer(Customer customer);
+	
+	public int getCountItemsInCart(int id);
+
 
 }

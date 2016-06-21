@@ -6,7 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -79,19 +78,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public List<Category> getCategories() {
 		List<Category> results = (List<Category>) getSession().createCriteria(Category.class).list();
 		return results;
-	}
-
-	@Override
-	@Transactional
-	public int getCategoriesCount() {
-
-		Long result = (Long) getSession().createCriteria(Category.class).setProjection(Projections.rowCount())
-				.uniqueResult();
-		return Integer.parseInt(result.toString());
-		// Number result = (Number) getSession().createSQLQuery("select count(*)
-		// from categories").uniqueResult();
-		// return Integer.parseInt(result.toString());
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -324,6 +310,63 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		results.setFirstResult((pageNum - 1) * pageSize);
 		results.setMaxResults(pageSize);
 		return results.list();
+	}
+
+	@Override
+	@Transactional
+	public int getCountCategories()
+	{
+
+		Long result = (Long) getSession().createCriteria(Category.class).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return Integer.parseInt(result.toString());
+		// drugi takodje ispravan nacin
+		// Number result = (Number) getSession().createSQLQuery("select count(*)
+		// from categories").uniqueResult();
+		// return Integer.parseInt(result.toString());
+	}
+
+	@Override
+	@Transactional
+	public int getCountProducts() {
+		Number result = (Number) getSession().createSQLQuery("select count(*) from products").uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
+
+	@Override
+	@Transactional
+	public int getCountProductsInCategory(int categoryId) {
+
+		String hql = "select count(*) from products where category_id = :id";
+		Number result = (Number) getSession().createSQLQuery(hql).setInteger("id", categoryId).uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
+
+	@Override
+	@Transactional
+	public int getCountCarts() {
+		Number result = (Number) getSession().createSQLQuery("select count(*) from shoppingcarts").uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
+
+	@Override
+	@Transactional
+	public int getCountCartsInCustomer(Customer customer) {
+		
+		String hql = "select count(*) from shoppingcarts where customer_id = :id";
+		Number result = (Number) getSession().createSQLQuery(hql)
+				.setInteger("id", customer.getId()).uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
+
+	@Override
+	@Transactional
+	public int getCountItemsInCart(int id) {
+		
+		String hql = "select count(*) from shoppingcartitems where shoppingcart_id = :id";
+		Number result = (Number) getSession().createSQLQuery(hql)
+				.setInteger("id", id).uniqueResult();
+		return Integer.parseInt(result.toString());
 	}
 
 }

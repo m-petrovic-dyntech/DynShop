@@ -18,18 +18,16 @@ import com.ShoppingCart.dao.CustomerDao;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Role;
 
-
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 
-	
 	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
-	
+
 	private SessionFactory sessionFactory;
 	@SuppressWarnings("unused")
 	private Session session;
-	
+
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -40,7 +38,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	public Session getSession() {
-	  return sessionFactory.getCurrentSession();
+		return sessionFactory.getCurrentSession();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -50,14 +48,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		return (ArrayList<Customer>) getSession().createCriteria(Customer.class).list();
 	}
 
-	@Override
-	@Transactional
-	public int getCustomerCount() {
-		Long result = (Long) getSession().createCriteria(Customer.class).setProjection(Projections.rowCount())
-				.uniqueResult();
-		return Integer.parseInt(result.toString());
-	}
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
@@ -68,11 +58,10 @@ public class CustomerDaoImpl implements CustomerDao {
 		return results.list();
 	}
 
-	
 	@Override
 	@Transactional
 	public Customer getCustomerById(int id) {
-		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("id",id)).uniqueResult();
+		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
 	@Override
@@ -91,23 +80,32 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public Customer getCustomerByUsername(String username) {
-		Customer c = (Customer)getSession().createCriteria(Customer.class).add(Restrictions.eq("username", username)).uniqueResult();
-		c.setRoles((List<Role>)getSession().createCriteria(Role.class).add(Restrictions.eq("customer", c)).list());
+		Customer c = (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("username", username))
+				.uniqueResult();
+		c.setRoles((List<Role>) getSession().createCriteria(Role.class).add(Restrictions.eq("customer", c)).list());
 		return c;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customer> getEnabledCustomers() {
-		return (List<Customer>) getSession().createCriteria(Customer.class).add(Restrictions.eq("enabled", Boolean.TRUE)).list();
+		return (List<Customer>) getSession().createCriteria(Customer.class)
+				.add(Restrictions.eq("enabled", Boolean.TRUE)).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customer> getDisabledCustomers() {
-		return (List<Customer>) getSession().createCriteria(Customer.class).add(Restrictions.eq("enabled", Boolean.FALSE)).list();
+		return (List<Customer>) getSession().createCriteria(Customer.class)
+				.add(Restrictions.eq("enabled", Boolean.FALSE)).list();
 	}
 
-	
+	@Override
+	@Transactional
+	public int getCountCustomer() {
+		Long result = (Long) getSession().createCriteria(Customer.class).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
 
 }

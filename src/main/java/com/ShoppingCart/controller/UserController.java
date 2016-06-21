@@ -36,35 +36,42 @@ public class UserController extends ControllerUtil {
 		Customer customer = (Customer) customerService.getCustomerById(getAuthenticatedUser().getId());
 		List<ShoppingCart> carts = shoppingCartService.getCartsByCustomer(customer, page, size);
 
-		modelAndView.setViewName("history");
 		modelAndView.addObject("history", carts);
+		modelAndView.addObject("counter", shoppingCartService.getCountCartsInCustomer(customer));
+		modelAndView.setViewName("history");
+
+//		System.out.println("***************** " + shoppingCartService.getCountCartsInCustomer(customer));
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/history/{id}", method = RequestMethod.GET)
-	public ModelAndView getCartsByCustomerId(ModelAndView modelAndView, @PathVariable(value = "id") int id,
+	public ModelAndView getItemsByCartId(ModelAndView modelAndView, @PathVariable(value = "id") int id,
 			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
 			HttpSession session) {
 		initializeSession(session);
 
 		Customer customer = (Customer) customerService.getCustomerById(getAuthenticatedUser().getId());
 		List<ShoppingCart> carts = (List<ShoppingCart>) shoppingCartService.getCartsByCustomer(customer, page, size);
-		ShoppingCart target = null;
+		ShoppingCart cart = null;
 
 		for (ShoppingCart shoppingCart : carts) {
 			if (shoppingCart.getId() == id) {
-				target = shoppingCart;
+				cart = shoppingCart;
 				break;
 			}
 		}
-		if (target != null) {
-			List<ShoppingCartItem> items = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(target, page,
+		if (cart != null) {
+			List<ShoppingCartItem> items = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, page,
 					size);
-
-			modelAndView.setViewName("history");
+			
+			
 			modelAndView.addObject("history", items);
+			modelAndView.addObject("counter", shoppingCartService.getCountItemsInCart(id));
+			modelAndView.setViewName("history");
+			System.out.println("***************** " + shoppingCartService.getCountItemsInCart(id));
+
 			return modelAndView;
-		} else
+		} else 
 			return new ModelAndView("redirect:/products");
 
 	}

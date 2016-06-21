@@ -61,20 +61,26 @@ public class AnonymousController extends ControllerUtil {
 		initializeSession(session);
 
 		Category selectedCategory = new Category();
-
-		if (category != null && category != 0)
+		int counter;
+		
+		if (category != null && category != 0) {
 			selectedCategory = shoppingCartService.getCategoryById(category);
+			counter = shoppingCartService.getCountProductsInCategory(category);
+		}
+		else 
+			counter = shoppingCartService.getCountProducts();
 		
 		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory, page, size);
-
 		List<Category> categories = (List<Category>) shoppingCartService.getCategories(page, size);
 
 		modelAndView.setViewName("products");
-
 		modelAndView.addObject("products", getPaginatedList(products, page, size));
 		modelAndView.addObject("categories", categories);
 		modelAndView.addObject("category", selectedCategory);
 		modelAndView.addObject("cart", session.getAttribute("cart"));
+		modelAndView.addObject("counter", counter);
+//		Testing
+//		System.out.println("*************** " + counter);
 
 		return modelAndView;
 	}
@@ -129,7 +135,7 @@ public class AnonymousController extends ControllerUtil {
 		}
 
 		cart.setTotalCost(cart.getTotalCost() + cart.findItemByProductId(id).getTotal());
-		cart.setItems(items);
+		cart.setItems(items); 
 		session.setAttribute("cart", cart);
 
 		// Testing
