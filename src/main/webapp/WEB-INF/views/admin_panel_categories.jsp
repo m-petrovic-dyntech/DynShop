@@ -26,7 +26,7 @@
                                             </table>
                                             <table class="table">
                                                 <tbody>
-                                                    <c:forEach items="${categories.getPageList()}" var="category" varStatus="loop">
+                                                    <c:forEach items="${categories}" var="category" varStatus="loop">
                                                         <form action="${pageContext.request.contextPath}/admin/panel/editCategory" method="GET" class="categories-item-form">
                                                             <tr class="categories-item ${!category.enabled ? 'categories-item-disabled' : ''}">
                                                                 <td class="vertical-middle">
@@ -67,9 +67,6 @@
                                             </div>
                                         </div>
                                         <div id="categories-pagination">
-                                            <c:forEach begin="1" end="${categories.getPageCount()}" step="1" varStatus="loop">
-                                                ${loop.index}
-                                            </c:forEach>
                                         </div>
                                     </div>
                                 </div>

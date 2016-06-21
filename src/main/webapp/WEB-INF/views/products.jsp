@@ -18,7 +18,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <c:forEach items="${products.getPageList()}" var="product" varStatus="loop">
+                                    <c:forEach items="${products}" var="product" varStatus="loop">
                                         <div class="products-item col-sm-3 products-item-${loop.index} clearfix">
                                             <!-- <div class="clearfix products-item-head row"> -->
                                             <h4>${product.name}</h4>
