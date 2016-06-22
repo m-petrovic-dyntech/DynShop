@@ -213,19 +213,36 @@ public class AnonymousController extends ControllerUtil {
 		return new ModelAndView("redirect:/cart");
 	}
 
+	@RequestMapping(value = "/payStep1", method = RequestMethod.GET)
+	public ModelAndView payStep1(ModelAndView modelAndView, HttpSession session) {
+		initializeSession(session);
+		//odabir nacina placanja
+		if (!(getAuthentication() instanceof AnonymousAuthenticationToken)) {
+//			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+//			cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
+			
+			
+//			shoppingCartService.saveCart(cart);
+//			session.setAttribute("cart", new ShoppingCart());
+//			modelAndView.addObject("cart", cart);
+			modelAndView.setViewName("confirmPurchase");
+		} else
+			modelAndView.setViewName("redirect:login");
+
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "/cartSave", method = RequestMethod.GET)
-	public ModelAndView cartSave(ModelAndView modelAndView, HttpSession session) {
+	public ModelAndView confirmPurchase(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 
-		if (!(getAuthentication() instanceof AnonymousAuthenticationToken)) {
 			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 			cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
 			shoppingCartService.saveCart(cart);
 			session.setAttribute("cart", new ShoppingCart());
 			modelAndView.addObject("cart", cart);
 			modelAndView.setViewName("redirect:products");
-		} else
-			modelAndView.setViewName("redirect:login");
+		
 
 		return modelAndView;
 	}
