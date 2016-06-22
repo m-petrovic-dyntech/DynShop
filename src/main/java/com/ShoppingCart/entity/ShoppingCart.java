@@ -37,6 +37,12 @@ public class ShoppingCart {
 	@Column(name="enabled")
 	private Boolean enabled;
 	
+	@Column(name="paymentMethod")
+	private String paymentMethod;
+	
+	@Column(name="status")
+	private String status;
+	
 	@ManyToOne
 	@JoinColumn(name = "CUSTOMER_ID", referencedColumnName="ID")
 	private Customer customer;
@@ -82,6 +88,22 @@ public class ShoppingCart {
 		this.enabled = enabled;
 	}
 	
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Customer getCustomer() {
 		return customer;
 	}
