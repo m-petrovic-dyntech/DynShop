@@ -183,5 +183,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		return shoppingCartDao.getAllCartsPurcashedByMonth(month);
 	}
 
+	@Override
+	public List<ShoppingCart> getPendingCarts() {
+		return shoppingCartDao.getPendingCarts();
+	}
+
+	@Override
+	public ShoppingCart getCartById(Integer id) {
+		return shoppingCartDao.getCartById(id);
+	}
+
+	@Override
+	public void editCart(ShoppingCart cart) {
+		shoppingCartDao.editCart(cart);	
+	}
+
 	
 }

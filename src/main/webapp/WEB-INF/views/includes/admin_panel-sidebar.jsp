@@ -18,6 +18,9 @@
                     <a href="${pageContext.request.contextPath}/admin/panel/users" class="sidebar-nav_item-link ${pagePath[pagePathLength - 1] == 'users' ? 'active' : ''}">
                         <span class="glyphicon glyphicon-user"></span> Users
                     </a>
+                    <a href="${pageContext.request.contextPath}/admin/panel/pendingCarts" class="sidebar-nav_item-link ${pagePath[pagePathLength - 1] == 'pendingCarts' ? 'active' : ''}">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Pending Carts
+                    </a>
                 </li>
             </ul>
             <div id="admin_panel-sidebar-toggle">

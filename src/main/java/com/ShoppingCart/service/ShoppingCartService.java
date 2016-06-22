@@ -33,6 +33,8 @@ public interface ShoppingCartService {
 	public void editProduct(Product product);
 
 	public void addProduct(Product product);
+	
+	public void editCart(ShoppingCart cart);
 
 	public List<Category> getEnabledCategories(Integer page, Integer size);
 
@@ -55,5 +57,9 @@ public interface ShoppingCartService {
 	public int getCountItemsInCart(int id);
 	
 	public List<Double> getAllCartsPurcashedByMonth(int month);
+	
+	public List<ShoppingCart> getPendingCarts();
+	
+	public ShoppingCart getCartById(Integer id);
 
 }

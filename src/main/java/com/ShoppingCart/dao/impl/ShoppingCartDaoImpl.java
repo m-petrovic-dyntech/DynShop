@@ -401,4 +401,27 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		return totals;
 	}
 
+	@Transactional
+	@Override
+	public List<ShoppingCart> getPendingCarts() {
+		List<ShoppingCart> carts = (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("status", "pending")).list();
+		return carts;
+	}
+
+	@Transactional
+	@Override
+	public ShoppingCart getCartById(Integer id) {
+		ShoppingCart cart = (ShoppingCart) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("id", id))
+				.uniqueResult();
+		return cart;
+	}
+
+	@Transactional
+	@Override
+	public void editCart(ShoppingCart cart) {
+		getSession().saveOrUpdate(cart);
+	}
+
+	
+
 }

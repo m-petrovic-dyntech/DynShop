@@ -194,4 +194,28 @@ public class AdminController extends ControllerUtil {
 	  modelAndView.setViewName("cart_log");
 	  return modelAndView;
 	 }
+	
+	@RequestMapping(value = { "/admin/panel/pendingCarts" }, method = RequestMethod.GET)
+	 public ModelAndView viewPendingCarts(ModelAndView modelAndView, HttpSession session){
+	  initializeSession(session);
+	  
+	  modelAndView.addObject("carts",  shoppingCartService.getPendingCarts());
+	  modelAndView.setViewName("admin_panel_pending_carts");
+	  return modelAndView;
+	 }
+	
+	@RequestMapping(value = { "/admin/panel/changeCartStatus/{id}" }, method = RequestMethod.GET)
+	 public ModelAndView viewPendingCarts(ModelAndView modelAndView, HttpSession session, @PathVariable(value = "id") int id,
+			 @RequestParam(required = true) String status){
+	  initializeSession(session);
+	 	  
+	  ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
+	  cart.setStatus(status);
+      shoppingCartService.editCart(cart);
+	  
+	  modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
+	 	  return modelAndView;
+	 }
+	
+	
 }

@@ -47,6 +47,8 @@ public interface ShoppingCartDao {
 	public void editProduct(Product product);
 
 	public void addProduct(Product product);
+	
+	public void editCart(ShoppingCart cart);
 
 	public List<Category> getEnabledCategories();
 
@@ -82,5 +84,7 @@ public interface ShoppingCartDao {
 	
 	public List<Double> getAllCartsPurcashedByMonth(int month);
 
-
+	public List<ShoppingCart> getPendingCarts();
+	
+	public ShoppingCart getCartById(Integer id);
 }
