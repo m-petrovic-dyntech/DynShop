@@ -31,6 +31,9 @@ public class Product {
 	@Column(name="enabled")
 	private Boolean enabled;
 	
+	@Column(name="productType")
+	private Integer productType;
+	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID", referencedColumnName="ID")
 	private Category category;
@@ -81,6 +84,14 @@ public class Product {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	
+	public Integer getProductType() {
+		return productType;
+	}
+
+	public void setProductType(Integer productType) {
+		this.productType = productType;
 	}
 	
 }

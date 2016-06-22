@@ -73,12 +73,13 @@ public class AnonymousController extends ControllerUtil {
 		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory, page, size);
 		List<Category> categories = (List<Category>) shoppingCartService.getCategories(page, size);
 
-		modelAndView.setViewName("products");
-		modelAndView.addObject("products", getPaginatedList(products, page, size));
+		modelAndView.addObject("products", products);
 		modelAndView.addObject("categories", categories);
 		modelAndView.addObject("category", selectedCategory);
 		modelAndView.addObject("cart", session.getAttribute("cart"));
 		modelAndView.addObject("counter", counter);
+
+		modelAndView.setViewName("products");
 //		Testing
 //		System.out.println("*************** " + counter);
 
