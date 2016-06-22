@@ -56,7 +56,7 @@
                                             <a href="${pageContext.request.contextPath}/cart/deleteAll" id="cart-total_box-price-options-remove_all" class="btn btn-danger">
 	                                    	Poništi
 	                                    </a>
-                                            <a id="cart-total_box-price-options-confirm" class="btn btn-success" href="${pageContext.request.contextPath}/payStep1">
+                                            <a id="cart-total_box-price-options-confirm" class="btn btn-success" href="${pageContext.request.contextPath}/user/payStep1">
 	                                    	Potvrdi kupovinu
 	                                    </a>
                                         </div>

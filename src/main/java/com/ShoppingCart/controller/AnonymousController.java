@@ -55,21 +55,20 @@ public class AnonymousController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/products", "admin/products", "/" }, method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category, 
+	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category,
 			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
 			HttpSession session) {
 		initializeSession(session);
 
 		Category selectedCategory = new Category();
 		int counter;
-		
+
 		if (category != null && category != 0) {
 			selectedCategory = shoppingCartService.getCategoryById(category);
 			counter = shoppingCartService.getCountProductsInCategory(category);
-		}
-		else 
+		} else
 			counter = shoppingCartService.getCountProducts();
-		
+
 		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory, page, size);
 		List<Category> categories = (List<Category>) shoppingCartService.getCategories(page, size);
 
@@ -80,8 +79,8 @@ public class AnonymousController extends ControllerUtil {
 		modelAndView.addObject("counter", counter);
 
 		modelAndView.setViewName("products");
-//		Testing
-//		System.out.println("*************** " + counter);
+		// Testing
+		// System.out.println("*************** " + counter);
 
 		return modelAndView;
 	}
@@ -136,7 +135,7 @@ public class AnonymousController extends ControllerUtil {
 		}
 
 		cart.setTotalCost(cart.getTotalCost() + cart.findItemByProductId(id).getTotal());
-		cart.setItems(items); 
+		cart.setItems(items);
 		session.setAttribute("cart", cart);
 
 		// Testing
@@ -213,37 +212,30 @@ public class AnonymousController extends ControllerUtil {
 		return new ModelAndView("redirect:/cart");
 	}
 
-	@RequestMapping(value = "/payStep1", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/payStep1", method = RequestMethod.GET)
 	public ModelAndView payStep1(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
-		//odabir nacina placanja
-		if (!(getAuthentication() instanceof AnonymousAuthenticationToken)) {
-//			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-//			cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
-			
-			
-//			shoppingCartService.saveCart(cart);
-//			session.setAttribute("cart", new ShoppingCart());
-//			modelAndView.addObject("cart", cart);
-			modelAndView.setViewName("confirmPurchase");
-		} else
-			modelAndView.setViewName("redirect:login");
-
+		// odabir nacina placanja
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
+		modelAndView.setViewName("confirmPurchase");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value = "/cartSave", method = RequestMethod.GET)
-	public ModelAndView confirmPurchase(ModelAndView modelAndView, HttpSession session) {
+
+	@RequestMapping(value = "/user/confirmPurchase", method = RequestMethod.GET)
+	public ModelAndView confirmPurchase(ModelAndView modelAndView, @RequestParam(required = true) String paymentMethod,
+			HttpSession session) {
 		initializeSession(session);
 
-			ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-			cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
-			shoppingCartService.saveCart(cart);
-			session.setAttribute("cart", new ShoppingCart());
-			modelAndView.addObject("cart", cart);
-			modelAndView.setViewName("redirect:products");
-		
-
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+//		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
+		cart.setPaymentMethod(paymentMethod);
+		cart.setStatus("pending");
+		cart.setEnabled(true);
+		shoppingCartService.saveCart(cart);
+		session.setAttribute("cart", new ShoppingCart());
+		modelAndView.addObject("cart", cart);
+		modelAndView.setViewName("redirect:/products");
 		return modelAndView;
 	}
 }

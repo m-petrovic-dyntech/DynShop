@@ -8,39 +8,7 @@
                         <jsp:attribute name="body_area">
                             <div class="container-fluid page-main_box" id="cart-main_box">
                                 <div class="container">
-                                    <c:forEach items="${cart.getItems()}" var="cartItem" varStatus="loop">
-                                        <div class="container-fluid row cart-item">
-                                            <div class="col-sm-3">
-                                                <div class="cart-item-img" style="background-image: url(${pageContext.request.contextPath}/resources/images/picture.png)"></div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <h3 class="cart-item-heading">${cartItem.getProduct().getName()}</h3>
-                                                <div class="cart-item-desc">${cartItem.getProduct().getDescription()}</div>
-                                            </div>
-                                            <div class="cart-item-price">
-                                                <span class="cart-item-price-value"><fmt:formatNumber value="${cartItem.getProduct().getPrice()}" currencySymbol="" type="currency"/></span>
-                                                <div class="dropup cart-item-price-dropup">
-                                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        ${cartItem.getQuantity()}
-                                                    </button>
-                                                    <div class="dropdown-menu cart-item-price-popup" aria-labelledby="dropdownMenu2">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control cart-item-cart-edit_quantity-value" id="cart-item-price-product_quantity-${cartItem.getProduct().getId()}" placeholder="Quantity" value="${cartItem.getQuantity()}">
-                                                            <span class="input-group-btn">
-	                                                  				<button class="btn btn-success cart-item-cart-edit_quantity" type="button" item-id="${cartItem.getProduct().getId()}" item-cart-link="${pageContext.request.contextPath}/cart/edit/${cartItem.getProduct().getId()}/"><span class="glyphicon glyphicon-ok"></span></button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="cart-item-price_total">
-                                                    <fmt:formatNumber value="${cartItem.getProduct().getPrice()*cartItem.getQuantity()}" currencySymbol="" type="currency" />
-                                                </div>
-                                            </div>
-                                            <a class="cart-item-remove_button" href="${pageContext.request.contextPath}/cart/delete/${cartItem.getProduct().getId()}">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </a>
-                                        </div>
-                                    </c:forEach>
+                                  Ovde treba da se ubace ponudjeni nacini kupovine, sada je paymentmethod = card
                                     <c:if test="${cart.getItems().size() == 0}">
                                         <div class="alert alert-info">Korpa je prazna. Kako bi DynTech opstao kao firma, i radnici ne koristili novine kao toalet papir, molimo ubacite nešto u korpu. <b>Preporuka:</b> Vladine Usne</div>
                                     </c:if>
@@ -56,7 +24,7 @@
                                             <a href="${pageContext.request.contextPath}/cart/deleteAll" id="cart-total_box-price-options-remove_all" class="btn btn-danger">
 	                                    	Poništi
 	                                    </a>
-                                            <a id="cart-total_box-price-options-confirm" class="btn btn-success" href="${pageContext.request.contextPath}/cartSave">
+                                            <a id="cart-total_box-price-options-confirm" class="btn btn-success" href="${pageContext.request.contextPath}/user/confirmPurchase?paymentMethod=card">
 	                                    	Završi kupovinu
 	                                    </a>
                                         </div>
