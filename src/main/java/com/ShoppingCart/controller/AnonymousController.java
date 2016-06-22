@@ -46,6 +46,15 @@ public class AnonymousController extends ControllerUtil {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/denied", method = RequestMethod.GET)
+	public ModelAndView accesssDenied(ModelAndView modelAndView, HttpSession session) {
+
+		modelAndView.addObject("user", getAuthenticatedUser().getUsername());
+		modelAndView.setViewName("denied");
+		return modelAndView;
+
+	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView userRegister(ModelAndView modelAndView, HttpSession session) {
