@@ -13,7 +13,23 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
-                                    Users
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>
+                                                <th>Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${customers}" var="customer">
+                                                <tr>
+                                                    <td>${customer.username}</td>
+                                                    <td>${customer.roles.get(0).role}</td>
+                                                </tr>
+                                            </c:forEach>
+                                            
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </jsp:attribute>
