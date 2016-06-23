@@ -14,27 +14,42 @@ import javax.persistence.Table;
 import com.ShoppingCart.util.PasswordUtil;
 
 @Entity
-@Table(name="customers")
+@Table(name = "customers")
 public class Customer {
 	@Id
-	@SequenceGenerator(name="user_gen", sequenceName="user_seq", allocationSize=1, initialValue=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_gen")
-	@Column(name="id")
+	@SequenceGenerator(name = "user_gen", sequenceName = "user_seq", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
+	@Column(name = "id")
 	private Integer id;
-	
-	@Column(name="username")
+
+	@Column(name = "username")
 	private String username;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
 	private String password;
-	
-	@Column(name="enabled")
+
+	@Column(name = "firstName")
+	private String firstName;
+
+	@Column(name = "lastName")
+	private String lastName;
+
+	@Column(name = "phone")
+	private String phone;
+
+	@Column(name = "address")
+	private String address;
+
+	@Column(name = "city")
+	private String city;
+
+	@Column(name = "enabled")
 	private Boolean enabled;
 
-	@OneToMany(mappedBy="customer")
+	@OneToMany(mappedBy = "customer")
 	private List<ShoppingCart> shoppingCarts;
-	
-	@OneToMany(mappedBy="customer")
+
+	@OneToMany(mappedBy = "customer")
 	private List<Role> roles;
 
 	public Integer getId() {
@@ -60,7 +75,47 @@ public class Customer {
 	public void setPassword(String password) {
 		this.password = PasswordUtil.getMD5(password);
 	}
-	
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public Boolean getEnabled() {
 		return enabled;
 	}

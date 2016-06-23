@@ -24,7 +24,6 @@ import com.ShoppingCart.service.MailService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.ControllerUtil;
 
-
 @Controller
 public class AdminController extends ControllerUtil {
 
@@ -36,7 +35,7 @@ public class AdminController extends ControllerUtil {
 
 	@Autowired
 	private ShoppingCartService shoppingCartService;
-	
+
 	@Autowired
 	private MailService mailService;
 
@@ -53,7 +52,8 @@ public class AdminController extends ControllerUtil {
 
 		modelAndView.addObject("carts", carts);
 		modelAndView.addObject("counter", shoppingCartService.getCountCarts());
-//		System.out.println("************** " + shoppingCartService.getCartsCount());   //proveri da li radi
+		// System.out.println("************** " +
+		// shoppingCartService.getCartsCount()); //proveri da li radi
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
 	}
@@ -67,16 +67,18 @@ public class AdminController extends ControllerUtil {
 		if (categoryId == null || categoryId == 0) {
 			modelAndView.addObject("products", shoppingCartService.getProducts(null, page, size));
 			modelAndView.addObject("counter", shoppingCartService.getCountProducts());
-//			System.out.println("****************  " + shoppingCartService.getCountProducts());
+			// System.out.println("**************** " +
+			// shoppingCartService.getCountProducts());
 
-		}
-		else {
+		} else {
 			modelAndView.addObject("products",
 					shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
-			modelAndView.addObject("counter", shoppingCartService.getCountProductsInCategory(categoryId));	//napravi metodu
-//			System.out.println("****************  " + shoppingCartService.getCountProductsByCategory(categoryId));
+			modelAndView.addObject("counter", shoppingCartService.getCountProductsInCategory(categoryId)); // napravi
+																											// metodu
+			// System.out.println("**************** " +
+			// shoppingCartService.getCountProductsByCategory(categoryId));
 		}
-		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size)); 
+		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
 		modelAndView.setViewName("admin_panel_products");
 		return modelAndView;
 	}
@@ -86,8 +88,9 @@ public class AdminController extends ControllerUtil {
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
 		modelAndView.addObject("customers", customerService.getAllCustomers(page, size));
-		modelAndView.addObject("counter", customerService.getCountCustomer());	
-//		System.out.println("*************** " + customerService.getCountCustomer());
+		modelAndView.addObject("counter", customerService.getCountCustomer());
+		// System.out.println("*************** " +
+		// customerService.getCountCustomer());
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
 	}
@@ -98,7 +101,8 @@ public class AdminController extends ControllerUtil {
 		initializeSession(session);
 		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
 		modelAndView.addObject("counter", shoppingCartService.getCountCategories());
-//		System.out.println("*************** " + shoppingCartService.getCountCategories());
+		// System.out.println("*************** " +
+		// shoppingCartService.getCountCategories());
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
 	}
@@ -119,7 +123,7 @@ public class AdminController extends ControllerUtil {
 
 	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, @PathVariable(value = "id") int id,
-			HttpSession session) {	
+			HttpSession session) {
 		initializeSession(session);
 
 		Product product = (Product) shoppingCartService.getProductById(id);
@@ -188,37 +192,40 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/pendingCarts" }, method = RequestMethod.GET)
-	 public ModelAndView viewPendingCarts(ModelAndView modelAndView, HttpSession session){
-	  initializeSession(session);
-	  
-	  modelAndView.addObject("carts",  shoppingCartService.getPendingCarts());
-	  modelAndView.setViewName("admin_panel_pending_carts");
-	  return modelAndView;
-	 }
-	
+	public ModelAndView viewPendingCarts(ModelAndView modelAndView, HttpSession session) {
+		initializeSession(session);
+
+		modelAndView.addObject("carts", shoppingCartService.getPendingCarts());
+		modelAndView.setViewName("admin_panel_pending_carts");
+		return modelAndView;
+	}
+
 	@RequestMapping(value = { "/admin/panel/changeCartStatus/{id}" }, method = RequestMethod.GET)
-	 public ModelAndView changeCartStatus(ModelAndView modelAndView, HttpSession session, @PathVariable(value = "id") int id,
-			 @RequestParam(required = true) String status){
-	  initializeSession(session);
-	 	  
-	  ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
-	  List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null, null);
-	 
-	  cart.setStatus(status);
-      shoppingCartService.editCart(cart);
-          
-      List<String> downloadLinks = new ArrayList<String>();
-      
-	  for (ShoppingCartItem item : cartItems) {
-	    	  if ((shoppingCartService.getProductById(item.getProduct().getId()).getProductType()).equals(0));
-	    		  downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
-	  }
-     
-      mailService.sendConfirmShoppingMail(customerService.getCustomerById(getAuthenticatedUser().getId()), "info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks, "confirmShoppingTemplate.vm");
-	  
-	  modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
-	 	  return modelAndView;
-	 }
-	
-	
+	public ModelAndView changeCartStatus(ModelAndView modelAndView, HttpSession session,
+			@PathVariable(value = "id") int id, @RequestParam(required = true) String status) {
+		initializeSession(session);
+
+		ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
+		List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null,
+				null);
+
+		cart.setStatus(status);
+		shoppingCartService.editCart(cart);
+
+		List<String> downloadLinks = new ArrayList<String>();
+
+		for (ShoppingCartItem item : cartItems) {
+			if ((shoppingCartService.getProductById(item.getProduct().getId()).getProductType()).equals(0))
+				;
+			downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
+		}
+
+		mailService.sendConfirmShoppingMail(customerService.getCustomerById(getAuthenticatedUser().getId()),
+				"info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks,
+				"confirmShoppingTemplate.vm");
+
+		modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
+		return modelAndView;
+	}
+
 }

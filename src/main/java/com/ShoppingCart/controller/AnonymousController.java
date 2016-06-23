@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +45,7 @@ public class AnonymousController extends ControllerUtil {
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/denied", method = RequestMethod.GET)
 	public ModelAndView accesssDenied(ModelAndView modelAndView, HttpSession session) {
 
@@ -237,7 +236,7 @@ public class AnonymousController extends ControllerUtil {
 		initializeSession(session);
 
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-//		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
+		// cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
 		cart.setPaymentMethod(paymentMethod);
 		cart.setStatus("pending");
 		cart.setEnabled(true);
