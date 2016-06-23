@@ -25,7 +25,7 @@
                                             <!-- <span class="products-item-category">${product.category}</span> -->
                                             <!-- </div> -->
                                             <div class="products-item-text_img">
-                                                <img class="products-item-img" src="${pageContext.request.contextPath}/resources/images/picture.png" alt="karadzica">
+                                                <img class="products-item-img" src="${pageContext.request.contextPath}/resources/images/maci.jpg" alt="karadzica">
                                                 <div class="products-item-desc">
                                                     ${product.description}
                                                 </div>

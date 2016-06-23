@@ -9,7 +9,7 @@
                             <div class="container">
                                 <div class="product_container">
                                     <h1>${product.name}</h1>
-                                    <img class="products-item-img" src="${pageContext.request.contextPath}/resources/images/picture.png" alt="karadzica">
+                                    <img class="products-item-img" src="${pageContext.request.contextPath}/resources/images/maci_mlad.jpg" alt="karadzica">
                                     <div class="product-item-desc">
                                         ${product.description}
                                     </div>
