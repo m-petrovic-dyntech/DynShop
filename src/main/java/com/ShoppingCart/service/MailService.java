@@ -8,7 +8,7 @@ public interface MailService {
 	
 	public void sendAlertMail(String alert);
 
-	public void sendConfirmShoppingMail(String string, String string2, String string3, List<String> downloadLinks,
+	public void sendConfirmShoppingMail(Integer custoimerId, String string, String string2, String string3, List<String> downloadLinks,
 			String string4);
 	
 

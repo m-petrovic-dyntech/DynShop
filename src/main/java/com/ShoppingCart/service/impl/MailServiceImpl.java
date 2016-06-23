@@ -11,6 +11,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.MailService;
 
@@ -51,7 +52,7 @@ public class MailServiceImpl implements MailService {
 		
 	}
 	
-	public void sendConfirmShoppingMail(String from, String to, String subject, List<String> cartItems, String templatePath) {
+	public void sendConfirmShoppingMail(Customer customer, String from, String to, String subject, List<String> cartItems, String templatePath) {
 
 		SimpleMailMessage message = new SimpleMailMessage();
 
@@ -62,8 +63,8 @@ public class MailServiceImpl implements MailService {
 		Template template = velocityEngine.getTemplate("./templates/" + templatePath);
 		
 		VelocityContext velocityContext = new VelocityContext();
-		velocityContext.put("firstName", "Natalija");
-		velocityContext.put("lastName", "Kitanoska");
+		velocityContext.put("firstName", customer.getFirstName());
+		velocityContext.put("lastName", customer.getLastName());
 		
 		if(!cartItems.isEmpty())
 			velocityContext.put("downloadLinks", cartItems);

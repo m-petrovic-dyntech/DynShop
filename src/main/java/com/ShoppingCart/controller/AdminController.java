@@ -206,7 +206,7 @@ public class AdminController extends ControllerUtil {
 	 
 	  cart.setStatus(status);
       shoppingCartService.editCart(cart);
-      
+          
       List<String> downloadLinks = new ArrayList<String>();
       
 	  for (ShoppingCartItem item : cartItems) {
@@ -214,7 +214,7 @@ public class AdminController extends ControllerUtil {
 	    		  downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
 	  }
      
-      mailService.sendConfirmShoppingMail("info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks, "confirmShoppingTemplate.vm");
+      mailService.sendConfirmShoppingMail(customerService.getCustomerById(getAuthenticatedUser().getId()), "info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks, "confirmShoppingTemplate.vm");
 	  
 	  modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
 	 	  return modelAndView;
