@@ -2,6 +2,8 @@ package com.ShoppingCart.service;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import com.ShoppingCart.entity.Customer;
 
 public interface MailService {
@@ -12,5 +14,7 @@ public interface MailService {
 
 	public void sendConfirmShoppingMail(Customer customer, String string, String string2, String string3,
 			List<String> downloadLinks, String string4);
-
+	
+	public void sendPaymentOrder(Customer customer, String string, String string2, String string3, String templatePath) throws MessagingException;
+	
 }

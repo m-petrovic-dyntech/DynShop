@@ -1,14 +1,23 @@
 package com.ShoppingCart.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.entity.Customer;
@@ -18,7 +27,7 @@ import com.ShoppingCart.service.MailService;
 public class MailServiceImpl implements MailService {
 
 	@Autowired
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
 	@Autowired
 	private SimpleMailMessage alertMailMessage;
 	@Autowired
@@ -82,4 +91,43 @@ public class MailServiceImpl implements MailService {
 
 	}
 
+	public void sendPaymentOrder(Customer customer, String from, String to, String subject, String templatePath)
+			throws MessagingException {
+
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		helper.setFrom(from);
+		helper.setTo(to);
+		helper.setSubject(subject);
+
+		Multipart multipart = new MimeMultipart();
+		// MimeBodyPart messageBodyPart = new MimeBodyPart();
+		// String message1 = "probamo nesto";
+		// messageBodyPart.setText(message1, "utf-8", "html");
+		// multipart.addBodyPart(messageBodyPart);
+
+		MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+		try {
+			attachmentBodyPart.attachFile(new File("C:\\uplatnica\\uplatnica.pdf"), "application/pdf", null);
+			multipart.addBodyPart(attachmentBodyPart);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		MimeBodyPart contentMail = new MimeBodyPart();
+		Template template = velocityEngine.getTemplate("./templates/" + templatePath);
+
+		VelocityContext velocityContext = new VelocityContext();
+		velocityContext.put("firstName", customer.getFirstName());
+		velocityContext.put("lastName", customer.getLastName());
+
+		StringWriter stringWriter = new StringWriter();
+		template.merge(velocityContext, stringWriter);
+		contentMail.setText(stringWriter.toString());
+
+		multipart.addBodyPart(contentMail);
+
+		message.setContent(multipart);
+		mailSender.send(message);
+	}
 }

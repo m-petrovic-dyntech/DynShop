@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -22,6 +23,7 @@ import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
+import com.ShoppingCart.service.MailService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.ControllerUtil;
 
@@ -36,6 +38,9 @@ public class AnonymousController extends ControllerUtil {
 
 	@Autowired
 	private CustomerService customerService;
+	
+	@Autowired
+	private MailService mailService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView userLogin(ModelAndView modelAndView, HttpSession session) {
@@ -232,15 +237,20 @@ public class AnonymousController extends ControllerUtil {
 
 	@RequestMapping(value = "/user/confirmPurchase", method = RequestMethod.GET)
 	public ModelAndView confirmPurchase(ModelAndView modelAndView, @RequestParam(required = true) String paymentMethod,
-			HttpSession session) {
+			HttpSession session) throws MessagingException {
 		initializeSession(session);
 
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-		// cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
 		cart.setPaymentMethod(paymentMethod);
 		cart.setStatus("pending");
 		cart.setEnabled(true);
 		shoppingCartService.saveCart(cart);
+		
+		if(paymentMethod.equals("cash")) 
+			mailService.sendPaymentOrder(customerService.getCustomerById(getAuthenticatedUser().getId()),
+					"info@dyntechshop.com", "j.dumeljic@dyntechdoo.com", "Your payment order from DynTechShop",
+					"paymentOrderTemplate.vm");
+					
 		session.setAttribute("cart", new ShoppingCart());
 		modelAndView.addObject("cart", cart);
 		modelAndView.setViewName("redirect:/products");
