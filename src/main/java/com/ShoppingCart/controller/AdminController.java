@@ -1,5 +1,6 @@
 package com.ShoppingCart.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
@@ -17,6 +18,7 @@ import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.MailService;
 import com.ShoppingCart.service.ShoppingCartService;
@@ -185,16 +187,6 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/mail" }, method = RequestMethod.GET)
-	 public ModelAndView sendMail(ModelAndView modelAndView, HttpSession session){
-	  initializeSession(session);
-	  
-	  mailService.sendMail("info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Testing123", "Testing only \n\n Hello Spring Email Sender", "emailtemplate.vm");
-	        
-	  modelAndView.setViewName("cart_log");
-	  return modelAndView;
-	 }
-	
 	@RequestMapping(value = { "/admin/panel/pendingCarts" }, method = RequestMethod.GET)
 	 public ModelAndView viewPendingCarts(ModelAndView modelAndView, HttpSession session){
 	  initializeSession(session);
@@ -205,13 +197,24 @@ public class AdminController extends ControllerUtil {
 	 }
 	
 	@RequestMapping(value = { "/admin/panel/changeCartStatus/{id}" }, method = RequestMethod.GET)
-	 public ModelAndView viewPendingCarts(ModelAndView modelAndView, HttpSession session, @PathVariable(value = "id") int id,
+	 public ModelAndView changeCartStatus(ModelAndView modelAndView, HttpSession session, @PathVariable(value = "id") int id,
 			 @RequestParam(required = true) String status){
 	  initializeSession(session);
 	 	  
 	  ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
+	  List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null, null);
+	 
 	  cart.setStatus(status);
       shoppingCartService.editCart(cart);
+      
+      List<String> downloadLinks = new ArrayList<String>();
+      
+	  for (ShoppingCartItem item : cartItems) {
+	    	  if ((shoppingCartService.getProductById(item.getProduct().getId()).getProductType()).equals(0));
+	    		  downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
+	  }
+     
+      mailService.sendConfirmShoppingMail("info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks, "confirmShoppingTemplate.vm");
 	  
 	  modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
 	 	  return modelAndView;

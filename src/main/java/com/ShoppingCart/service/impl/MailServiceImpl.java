@@ -1,6 +1,7 @@
 package com.ShoppingCart.service.impl;
 
 import java.io.StringWriter;
+import java.util.List;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -10,6 +11,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.MailService;
 
 @Service
@@ -39,7 +41,32 @@ public class MailServiceImpl implements MailService {
 		VelocityContext velocityContext = new VelocityContext();
 		velocityContext.put("firstName", "Natalija");
 		velocityContext.put("lastName", "Kitanoska");
-		velocityContext.put("location", "Palilula");
+		velocityContext.put("downloadLink", body);
+		
+		StringWriter stringWriter = new StringWriter();
+		template.merge(velocityContext, stringWriter);
+		message.setText(stringWriter.toString());
+		
+		mailSender.send(message);
+		
+	}
+	
+	public void sendConfirmShoppingMail(String from, String to, String subject, List<String> cartItems, String templatePath) {
+
+		SimpleMailMessage message = new SimpleMailMessage();
+
+		message.setFrom(from);
+		message.setTo(to);
+		message.setSubject(subject);
+		
+		Template template = velocityEngine.getTemplate("./templates/" + templatePath);
+		
+		VelocityContext velocityContext = new VelocityContext();
+		velocityContext.put("firstName", "Natalija");
+		velocityContext.put("lastName", "Kitanoska");
+		
+		if(!cartItems.isEmpty())
+			velocityContext.put("downloadLinks", cartItems);
 		
 		StringWriter stringWriter = new StringWriter();
 		template.merge(velocityContext, stringWriter);

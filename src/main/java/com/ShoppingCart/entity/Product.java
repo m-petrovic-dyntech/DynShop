@@ -34,6 +34,9 @@ public class Product {
 	@Column(name="productType")
 	private Integer productType;
 	
+	@Column(name="downloadLink")
+	private String downloadLink;
+	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID", referencedColumnName="ID")
 	private Category category;
@@ -93,5 +96,14 @@ public class Product {
 	public void setProductType(Integer productType) {
 		this.productType = productType;
 	}
+
+	public String getDownloadLink() {
+		return downloadLink;
+	}
+
+	public void setDownloadLink(String downloadLink) {
+		this.downloadLink = downloadLink;
+	}
+
 	
 }
