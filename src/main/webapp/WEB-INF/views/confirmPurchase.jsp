@@ -9,9 +9,15 @@
                             <div class="container-fluid page-main_box" id="cart-main_box">
                                 <div class="container">
                                   Ovde treba da se ubace ponudjeni nacini kupovine, sada je paymentmethod = card
-                                    <c:if test="${cart.getItems().size() == 0}">
-                                        <div class="alert alert-info">Korpa je prazna. Kako bi DynTech opstao kao firma, i radnici ne koristili novine kao toalet papir, molimo ubacite nešto u korpu. <b>Preporuka:</b> Vladine Usne</div>
-                                    </c:if>
+                                 
+                                 		<br>
+							            <input TYPE="radio" NAME="radios" VALUE="card" CHECKED>
+							             Pay with card
+							            <br>
+							            <input TYPE="radio" NAME="radios" VALUE="cash">
+							             Pay with cash
+							            <br>
+							          
                                 </div>
                             </div>
                             <c:if test="${cart.getItems().size() > 0}">
@@ -24,7 +30,7 @@
                                             <a href="${pageContext.request.contextPath}/cart/deleteAll" id="cart-total_box-price-options-remove_all" class="btn btn-danger">
 	                                    	Poništi
 	                                    </a>
-                                            <a id="cart-total_box-price-options-confirm" class="btn btn-success" href="${pageContext.request.contextPath}/user/confirmPurchase?paymentMethod=card">
+                                            <a id="cart-total_box-price-options-confirm" class="btn btn-success" href="${pageContext.request.contextPath}/user/confirmPurchase?paymentMethod=">
 	                                    	Završi kupovinu
 	                                    </a>
                                         </div>
@@ -41,6 +47,12 @@
                                     if (tempQuantity != 0 && tempQuantity) {
                                         window.location.href = tempLink + '?value=' + tempQuantity;
                                     }
+                                });
+                                
+                                $("input[name='radios']").on("change", function() {
+                                	//console.log($(this).val());
+                                	var url = "/ShoppingCart/user/confirmPurchase?paymentMethod="+$(this).val();
+                                	$("#cart-total_box-price-options-confirm").attr("href", url);
                                 });
                             });
                             </script>

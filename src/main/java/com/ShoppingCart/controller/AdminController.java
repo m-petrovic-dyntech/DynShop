@@ -216,8 +216,7 @@ public class AdminController extends ControllerUtil {
 
 		for (ShoppingCartItem item : cartItems) {
 			if ((shoppingCartService.getProductById(item.getProduct().getId()).getProductType()).equals(0))
-				;
-			downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
+				downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
 		}
 
 		mailService.sendConfirmShoppingMail(customerService.getCustomerById(getAuthenticatedUser().getId()),
