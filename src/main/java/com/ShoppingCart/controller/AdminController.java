@@ -50,14 +50,10 @@ public class AdminController extends ControllerUtil {
 		for (ShoppingCart shoppingCart : carts) {
 			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
-
-		JtoPagination patgination = new JtoPagination();
-		patgination.setCurrentPage(page);
-		patgination.setPageSize(size);
-		patgination.setNumberOfItems(shoppingCartService.getCountCarts());
-
+		
+		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCarts());
 		modelAndView.addObject("carts", carts);
-		modelAndView.addObject("patgination", patgination);
+		modelAndView.addObject("pagination", pagination);
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
 	}

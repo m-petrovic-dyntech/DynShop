@@ -15,13 +15,8 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.MailParseException;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +28,7 @@ public class MailServiceImpl implements MailService {
 
 	@Autowired
 	private JavaMailSender  mailSender;
-	@Autowired
-	private SimpleMailMessage alertMailMessage;
+
 	@Autowired
 	private VelocityEngine velocityEngine;
 
