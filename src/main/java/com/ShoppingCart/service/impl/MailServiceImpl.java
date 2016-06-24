@@ -87,47 +87,6 @@ public class MailServiceImpl implements MailService {
 		mailSender.send(message);
 
 	}
-
-	public void sendTestMail(String from, String to, String dear, String content) {
-
-		
-		  MimeMessage message = mailSender.createMimeMessage();
-		  Template template = velocityEngine.getTemplate("./templates/confirmShoppingTemplate.vm");
-		  
-		  VelocityContext velocityContext = new VelocityContext();
-		  velocityContext.put("firstName","Nata");
-		  velocityContext.put("lastName", "Kitanoska");
-		 	
-		  try{
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-				
-			helper.setFrom(from);
-			helper.setTo(to);
-			helper.setSubject("Test");
-			
-			StringWriter stringWriter = new StringWriter();
-			template.merge(velocityContext, stringWriter);
-			helper.setText(stringWriter.toString());	
-			//stringWriter.close();
-			FileSystemResource file = new FileSystemResource("C:\\mapping.jpg");
-			helper.addAttachment(file.getFilename(), file);
-
-		     }
-		  
-		   catch (MessagingException e) {
-			throw new MailParseException(e);
-		   }
-		  
-		  /*
-		  try {
-			message.setText(stringWriter.toString());
-			} catch (MessagingException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-		  }*/
-		     mailSender.send(message); 
-		    
-	}
 	
 	public void sendPaymentOrder(Customer customer, String from, String to, String subject, String templatePath)
 			throws MessagingException {

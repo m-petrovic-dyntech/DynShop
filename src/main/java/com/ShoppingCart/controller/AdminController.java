@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
@@ -43,18 +44,23 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminGetCartsLogs(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-
-		mailService.sendTestMail("info@dyntechshop.com", "n.kitanoska@dyntechdoo.com","xxx","yyy");
 		
 		List<ShoppingCart> carts = shoppingCartService.getAllCarts(page, size);
 
 		for (ShoppingCart shoppingCart : carts) {
 			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
+		
+//		JtoPagination retValue = new JtoPagination();
+//		retValue.setCurrentPage(page);
+//		retValue.setPageSize(size);
+//		retValue.setNumberOfItems(shoppingCartService.getCountCarts());
 
 		modelAndView.addObject("carts", carts);
-		modelAndView.addObject("counter", shoppingCartService.getCountCarts());
-		// System.out.println("************** " +
+//		modelAndView.addObject("retValue", retValue);
+//		System.out.println("**********************  " + retValue.getNumberOfItems());
+//		modelAndView.addObject("counter", shoppingCartService.getCountCarts());
+//		 System.out.println("************** " +
 		// shoppingCartService.getCartsCount()); //proveri da li radi
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
