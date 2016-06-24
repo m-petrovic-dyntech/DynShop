@@ -14,7 +14,7 @@
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
                                     <div id="admin_panel-categories">
-                                        <div class="col-sm-6" id="admin_panel-categories-items">
+                                        <div class="col-sm-8 pagination_content-height" id="admin_panel-categories-items">
                                             <table>
                                                 <thead>
                                                     <tr>
@@ -52,8 +52,8 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="col-sm-6">
+                                        <div class="col-sm-4">
+                                            <div class="col-sm-10">
                                                 <h4>Add Category</h4>
                                                 <form id="product" action="${pageContext.request.contextPath}/admin/panel/addCategory" method="GET" class="categories-item-form">
                                                     <div class="input-group">
@@ -66,7 +66,22 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <div id="categories-pagination">
+                                        <div class="container-fluid row pagination-height clear">
+                                            <ul class="pagination col-sm-8">
+                                                <li>
+                                                    <a href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                                <c:forEach begin="0" end="${counter/param.size}" varStatus="i">
+                                                    <li><a href="#">${i.index + 1}</a></li>
+                                                </c:forEach>
+                                                <li>
+                                                    <a href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

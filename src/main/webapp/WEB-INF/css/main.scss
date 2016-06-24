@@ -548,6 +548,9 @@ body {
     }
     /*----------  Categories  ----------*/
     &-categories {
+        &-main_box {
+            overflow: hidden;
+        }
         .categories {
             &-col {
                 &-edit {
@@ -605,7 +608,9 @@ body {
             }
         }
         &-items {
+            overflow: auto;
             height: 100%;
+            border-bottom: 1px solid #c1c1c1;
         }
     }
 }
@@ -627,4 +632,29 @@ body {
 
 .vertical-middle {
     vertical-align: middle!important;
+}
+
+.clear {
+    clear: both;
+}
+
+
+/*==================================
+=            Pagination            =
+==================================*/
+
+.pagination {
+    height: 100%;
+    margin: 0;
+    padding: 17px 0 0;
+    /**********/
+    &-height {
+        height: 6%!important;
+    }
+    &_content-height {
+        height: 94%!important;
+    }
+    &-item {
+        height: 34px;
+    }
 }

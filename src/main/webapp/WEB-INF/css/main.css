@@ -414,6 +414,8 @@ body {
     padding: 0 0px; }
   #admin_panel-products .admin_panel-product-disabled {
     background: rgba(217, 83, 79, 0.08); }
+  #admin_panel-categories-main_box {
+    overflow: hidden; }
   #admin_panel-categories .categories-col-edit {
     width: 108px; }
   #admin_panel-categories .categories-col-remove {
@@ -443,7 +445,9 @@ body {
     #admin_panel-categories .categories-add #categories-add-button {
       top: 0; }
   #admin_panel-categories-items {
-    height: 100%; }
+    overflow: auto;
+    height: 100%;
+    border-bottom: 1px solid #c1c1c1; }
 
 /*=====  End of Admin panel  ======*/
 /*----------  General Classes  ----------*/
@@ -455,5 +459,23 @@ body {
 /*----------  Utility classes  ----------*/
 .vertical-middle {
   vertical-align: middle !important; }
+
+.clear {
+  clear: both; }
+
+/*==================================
+=            Pagination            =
+==================================*/
+.pagination {
+  height: 100%;
+  margin: 0;
+  padding: 17px 0 0;
+  /**********/ }
+  .pagination-height {
+    height: 6% !important; }
+  .pagination_content-height {
+    height: 94% !important; }
+  .pagination-item {
+    height: 34px; }
 
 /*# sourceMappingURL=main.css.map */
