@@ -108,7 +108,7 @@ public class MailServiceImpl implements MailService {
 
 		MimeBodyPart attachmentBodyPart = new MimeBodyPart();
 		try {
-			attachmentBodyPart.attachFile(new File("C:\\uplatnica\\uplatnica.pdf"), "application/pdf", null);
+			attachmentBodyPart.attachFile(new File("C:\\Work\\Projects\\DynTechShop\\uplatnica.pdf"), "application/pdf", null);
 			multipart.addBodyPart(attachmentBodyPart);
 		} catch (IOException e) {
 			e.printStackTrace();
