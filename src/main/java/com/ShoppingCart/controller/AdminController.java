@@ -44,24 +44,20 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminGetCartsLogs(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-		
+
 		List<ShoppingCart> carts = shoppingCartService.getAllCarts(page, size);
 
 		for (ShoppingCart shoppingCart : carts) {
 			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
-		
-//		JtoPagination retValue = new JtoPagination();
-//		retValue.setCurrentPage(page);
-//		retValue.setPageSize(size);
-//		retValue.setNumberOfItems(shoppingCartService.getCountCarts());
+
+		JtoPagination patgination = new JtoPagination();
+		patgination.setCurrentPage(page);
+		patgination.setPageSize(size);
+		patgination.setNumberOfItems(shoppingCartService.getCountCarts());
 
 		modelAndView.addObject("carts", carts);
-//		modelAndView.addObject("retValue", retValue);
-//		System.out.println("**********************  " + retValue.getNumberOfItems());
-//		modelAndView.addObject("counter", shoppingCartService.getCountCarts());
-//		 System.out.println("************** " +
-		// shoppingCartService.getCartsCount()); //proveri da li radi
+		modelAndView.addObject("patgination", patgination);
 		modelAndView.setViewName("cart_log");
 		return modelAndView;
 	}
@@ -231,9 +227,8 @@ public class AdminController extends ControllerUtil {
 				"info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks,
 				"confirmShoppingTemplate.vm");
 
-		
-		//TODO add to delivery table servis.saveDelivery(Delivery)
-		
+		// TODO add to delivery table servis.saveDelivery(Delivery)
+
 		modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
 		return modelAndView;
 	}
