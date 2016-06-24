@@ -229,6 +229,8 @@ public class AnonymousController extends ControllerUtil {
 	public ModelAndView payStep1(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 		// odabir nacina placanja
+		//rezervisu se prozvodi iz korpe
+		//promeniti naziv metode
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
 		modelAndView.setViewName("confirmPurchase");

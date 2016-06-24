@@ -225,7 +225,8 @@ public class AdminController extends ControllerUtil {
 				"info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks,
 				"confirmShoppingTemplate.vm");
 
-		//TODO add to delivery table
+		
+		//TODO add to delivery table servis.saveDelivery(Delivery)
 		
 		modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
 		return modelAndView;

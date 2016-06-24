@@ -47,6 +47,12 @@ public class Customer {
 
 	@Column(name = "enabled")
 	private Boolean enabled;
+	
+	@Column(name = "quantity")
+	private Integer quantity;
+	
+	@Column(name = "reserved")
+	private Integer reserved;
 
 	@OneToMany(mappedBy = "customer")
 	private List<ShoppingCart> shoppingCarts;
@@ -128,6 +134,22 @@ public class Customer {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public Integer getReserved() {
+		return reserved;
+	}
+
+	public void setReserved(Integer reserved) {
+		this.reserved = reserved;
 	}
 
 	public List<ShoppingCart> getShoppingCarts() {

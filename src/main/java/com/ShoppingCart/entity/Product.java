@@ -41,10 +41,6 @@ public class Product {
 	@JoinColumn(name = "CATEGORY_ID", referencedColumnName="ID")
 	private Category category;
 	
-	@ManyToOne
-	@JoinColumn(name = "DELIVERY_ID", referencedColumnName="ID")
-	private Delivery delivery;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -108,14 +104,5 @@ public class Product {
 	public void setDownloadLink(String downloadLink) {
 		this.downloadLink = downloadLink;
 	}
-
-	public Delivery getDelivery() {
-		return delivery;
-	}
-
-	public void setDelivery(Delivery delivery) {
-		this.delivery = delivery;
-	}
-
 	
 }

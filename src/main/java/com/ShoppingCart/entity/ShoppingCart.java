@@ -47,6 +47,10 @@ public class ShoppingCart {
 	@JoinColumn(name = "CUSTOMER_ID", referencedColumnName="ID")
 	private Customer customer;
 	
+	@ManyToOne
+	@JoinColumn(name = "DELIVERY_ID", referencedColumnName="ID")
+	private Delivery delivery;
+	
 	@OneToMany(mappedBy="shoppingCart", cascade=CascadeType.ALL)
 	private List<ShoppingCartItem> items;
 
@@ -127,5 +131,13 @@ public class ShoppingCart {
 		}
 		
 		return null;
+	}
+
+	public Delivery getDelivery() {
+		return delivery;
+	}
+
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
 	}
 }
