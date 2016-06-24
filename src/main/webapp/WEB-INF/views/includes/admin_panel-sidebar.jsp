@@ -21,6 +21,9 @@
                     <a href="${pageContext.request.contextPath}/admin/panel/pendingCarts" class="sidebar-nav_item-link ${pagePath[pagePathLength - 1] == 'pendingCarts' ? 'active' : ''}">
                         <span class="glyphicon glyphicon-shopping-cart"></span> Pending Carts
                     </a>
+                    <a href="${pageContext.request.contextPath}/admin/panel/deliveries" class="sidebar-nav_item-link ${pagePath[pagePathLength - 1] == 'deliveries' ? 'active' : ''}">
+                        <span class="glyphicon glyphicon-arrow-right"></span> Deliveries
+                    </a>
                 </li>
             </ul>
             <div id="admin_panel-sidebar-toggle">
