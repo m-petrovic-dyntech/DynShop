@@ -3,12 +3,21 @@ package com.ShoppingCart.service.impl;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailParseException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.entity.Customer;
@@ -18,7 +27,7 @@ import com.ShoppingCart.service.MailService;
 public class MailServiceImpl implements MailService {
 
 	@Autowired
-	private MailSender mailSender;
+	private JavaMailSender  mailSender;
 	@Autowired
 	private SimpleMailMessage alertMailMessage;
 	@Autowired
@@ -74,12 +83,53 @@ public class MailServiceImpl implements MailService {
 
 	}
 
+	public void sendTestMail(String from, String to, String dear, String content) {
+
+		
+		  MimeMessage message = mailSender.createMimeMessage();
+		  Template template = velocityEngine.getTemplate("./templates/confirmShoppingTemplate.vm");
+		  
+		  VelocityContext velocityContext = new VelocityContext();
+		  velocityContext.put("firstName","Nata");
+		  velocityContext.put("lastName", "Kitanoska");
+		 	
+		  try{
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+				
+			helper.setFrom(from);
+			helper.setTo(to);
+			helper.setSubject("Test");
+			
+			StringWriter stringWriter = new StringWriter();
+			template.merge(velocityContext, stringWriter);
+			helper.setText(stringWriter.toString());	
+			//stringWriter.close();
+			FileSystemResource file = new FileSystemResource("C:\\mapping.jpg");
+			helper.addAttachment(file.getFilename(), file);
+
+		     }
+		  
+		   catch (MessagingException e) {
+			throw new MailParseException(e);
+		   }
+		  
+		  /*
+		  try {
+			message.setText(stringWriter.toString());
+			} catch (MessagingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+		  }*/
+		     mailSender.send(message); 
+		    
+	}
+	
+
+	@Override
 	public void sendAlertMail(String alert) {
-
-		SimpleMailMessage mailMessage = new SimpleMailMessage(alertMailMessage);
-		mailMessage.setText(alert);
-		mailSender.send(mailMessage);
-
+		// TODO Auto-generated method stub
+		
 	}
 
+	
 }

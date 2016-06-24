@@ -44,6 +44,8 @@ public class AdminController extends ControllerUtil {
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
 
+		mailService.sendTestMail("info@dyntechshop.com", "n.kitanoska@dyntechdoo.com","xxx","yyy");
+		
 		List<ShoppingCart> carts = shoppingCartService.getAllCarts(page, size);
 
 		for (ShoppingCart shoppingCart : carts) {
@@ -223,6 +225,8 @@ public class AdminController extends ControllerUtil {
 				"info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks,
 				"confirmShoppingTemplate.vm");
 
+		//TODO add to delivery table
+		
 		modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
 		return modelAndView;
 	}

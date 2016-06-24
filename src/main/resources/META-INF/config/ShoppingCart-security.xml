@@ -22,6 +22,7 @@
 		use-expressions="true">
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/user/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" />
+		<intercept-url pattern="/delivery/**" access="hasRole('ROLE_DELIVERY')" />
 		<form-login login-page="/login" authentication-failure-url="/login?error=true"
 			username-parameter="username" password-parameter="password"
 			default-target-url="/products" login-processing-url="/j_spring_security_check" />
