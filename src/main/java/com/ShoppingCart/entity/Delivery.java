@@ -26,14 +26,18 @@ public class Delivery {
 	private List<Customer> customers;
 	
 	@OneToMany(mappedBy="delivery")
-	private List<Product> products;
+	private List<ShoppingCart> carts;  //promeniti na carts
 	
 	@Column(name="status")
 	private String status;
 	
+	@Column(name="note")
+	private String note;
+	
+	
 	public Delivery()
 	{
-		this.products = new ArrayList<Product>();
+		this.carts = new ArrayList<ShoppingCart>();
 		this.customers = new ArrayList<Customer>();
 	}
 
@@ -53,12 +57,12 @@ public class Delivery {
 		this.customers = customers;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<ShoppingCart> getProducts() {
+		return carts;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setProducts(List<ShoppingCart> carts) {
+		this.carts = carts;
 	}
 
 	public String getStatus() {
@@ -67,5 +71,13 @@ public class Delivery {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 }
