@@ -59,6 +59,10 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div id="admin_panel-pagination">
+                                        <br>page ${param.page}
+                                        <br>size ${param.size}
+                                    </div>
                                 </div>
                             </div>
                             <!-- JS -->

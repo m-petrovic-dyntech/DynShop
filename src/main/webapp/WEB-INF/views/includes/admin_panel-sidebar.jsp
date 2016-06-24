@@ -4,7 +4,6 @@
             <!-- Path  -->
             <c:set var="pagePath" value="${fn:split(requestScope['javax.servlet.forward.request_uri'], '/')}" />
             <c:set var="pagePathLength" value="${fn:length(pagePath)}" />
-            <span>${pagePath[pagePathLength - 1]} - adadasd</span>
             <!-- Page content -->
             <h4 id="admin_panel-sidebar-header">Admin Control Panel</h4>
             <ul id="admin_panel-sidebar-nav">

@@ -4,7 +4,7 @@
             <%@ page contentType="text/html; charset=UTF-8" %>
                 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
                     <!-- Content -->
-                    <t:layout title="DynTech Shop | Storage Management Carts">
+                    <t:layout title="DynTech Shop | Storage Management Orders">
                         <jsp:attribute name="body_area">
                             <div class="container-fluid page-main_box stor_manager-wrapper" id="stor_manager-categories-main_box">
                                 <!-- Sidebar -->
@@ -13,7 +13,7 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="stor_manager-content_box">
-                                    Store manager Carts
+                                    Store manager Orders
                                 </div>
                             </div>
                         </jsp:attribute>
