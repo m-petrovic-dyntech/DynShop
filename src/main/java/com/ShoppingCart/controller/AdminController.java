@@ -52,6 +52,7 @@ public class AdminController extends ControllerUtil {
 		}
 		
 		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCarts());
+		
 		modelAndView.addObject("carts", carts);
 		modelAndView.addObject("pagination", pagination);
 		modelAndView.setViewName("cart_log");
@@ -65,18 +66,17 @@ public class AdminController extends ControllerUtil {
 		initializeSession(session);
 
 		if (categoryId == null || categoryId == 0) {
+			JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountProducts());
 			modelAndView.addObject("products", shoppingCartService.getProducts(null, page, size));
-			modelAndView.addObject("counter", shoppingCartService.getCountProducts());
-			// System.out.println("**************** " +
-			// shoppingCartService.getCountProducts());
-
+			modelAndView.addObject("pagination", pagination);
+//			System.out.println("************  " + pagination.toString());
 		} else {
+			JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountProductsInCategory(categoryId));
 			modelAndView.addObject("products",
 					shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
-			modelAndView.addObject("counter", shoppingCartService.getCountProductsInCategory(categoryId)); // napravi
-																											// metodu
-			// System.out.println("**************** " +
-			// shoppingCartService.getCountProductsByCategory(categoryId));
+			modelAndView.addObject("pagination", pagination); 
+//			System.out.println("************  " + pagination.toString());
+
 		}
 		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
 		modelAndView.setViewName("admin_panel_products");
@@ -87,10 +87,11 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
+		JtoPagination pagination = new JtoPagination(page, size, customerService.getCountCustomer());
 		modelAndView.addObject("customers", customerService.getAllCustomers(page, size));
-		modelAndView.addObject("counter", customerService.getCountCustomer());
+		modelAndView.addObject("pagination", pagination);
 		// System.out.println("*************** " +
-		// customerService.getCountCustomer());
+		// pagination);
 		modelAndView.setViewName("admin_panel_users");
 		return modelAndView;
 	}
@@ -99,10 +100,12 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminCategories(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
+		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCategories());
 		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
-		modelAndView.addObject("counter", shoppingCartService.getCountCategories());
+		modelAndView.addObject("pagination", pagination);
 		// System.out.println("*************** " +
-		// shoppingCartService.getCountCategories());
+		// pagination);
+	
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
 	}
@@ -192,10 +195,15 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/pendingCarts" }, method = RequestMethod.GET)
-	public ModelAndView viewPendingCarts(ModelAndView modelAndView, HttpSession session) {
+	public ModelAndView viewPendingCarts(ModelAndView modelAndView,  @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-
-		modelAndView.addObject("carts", shoppingCartService.getPendingCarts());
+		
+		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountPandingCarts());
+		modelAndView.addObject("carts", shoppingCartService.getPendingCarts(page, size));
+		modelAndView.addObject("pagination", pagination);
+		 System.out.println("*************** " +
+				 pagination.toString());
 		modelAndView.setViewName("admin_panel_pending_carts");
 		return modelAndView;
 	}

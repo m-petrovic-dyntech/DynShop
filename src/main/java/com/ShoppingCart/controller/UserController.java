@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
@@ -35,12 +36,13 @@ public class UserController extends ControllerUtil {
 
 		Customer customer = (Customer) customerService.getCustomerById(getAuthenticatedUser().getId());
 		List<ShoppingCart> carts = shoppingCartService.getCartsByCustomer(customer, page, size);
+		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCartsInCustomer(customer));
 
 		modelAndView.addObject("history", carts);
-		modelAndView.addObject("counter", shoppingCartService.getCountCartsInCustomer(customer));
+		modelAndView.addObject("pagination", pagination);
 		modelAndView.setViewName("history");
 
-//		System.out.println("***************** " + shoppingCartService.getCountCartsInCustomer(customer));
+//		System.out.println("***************** " + pagination.toString());
 		return modelAndView;
 	}
 
@@ -64,11 +66,12 @@ public class UserController extends ControllerUtil {
 			List<ShoppingCartItem> items = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, page,
 					size);
 			
-			
+			JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountItemsInCart(id));
+
 			modelAndView.addObject("history", items);
-			modelAndView.addObject("counter", shoppingCartService.getCountItemsInCart(id));
+			modelAndView.addObject("pagination", pagination);
 			modelAndView.setViewName("history");
-			System.out.println("***************** " + shoppingCartService.getCountItemsInCart(id));
+//			System.out.println("***************** " + shoppingCartService.getCountItemsInCart(id));
 
 			return modelAndView;
 		} else 

@@ -184,8 +184,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	}
 
 	@Override
-	public List<ShoppingCart> getPendingCarts() {
-		return shoppingCartDao.getPendingCarts();
+	public List<ShoppingCart> getPendingCarts(Integer page, Integer size) {
+		return shoppingCartDao.getPendingCarts(page, size);
 	}
 
 	@Override
@@ -196,6 +196,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public void editCart(ShoppingCart cart) {
 		shoppingCartDao.editCart(cart);	
+	}
+	
+	@Override
+	public int getCountPandingCarts() {
+		return shoppingCartDao.getCountPandingCarts();
 	}
 
 	

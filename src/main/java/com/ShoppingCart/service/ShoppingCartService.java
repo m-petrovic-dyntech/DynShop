@@ -58,8 +58,10 @@ public interface ShoppingCartService {
 	
 	public List<Double> getAllCartsPurcashedByMonth(int month);
 	
-	public List<ShoppingCart> getPendingCarts();
+	public List<ShoppingCart> getPendingCarts(Integer page, Integer size);
 	
 	public ShoppingCart getCartById(Integer id);
+	
+	public int getCountPandingCarts();
 
 }

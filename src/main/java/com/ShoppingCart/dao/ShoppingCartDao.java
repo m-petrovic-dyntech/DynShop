@@ -84,7 +84,9 @@ public interface ShoppingCartDao {
 	
 	public List<Double> getAllCartsPurcashedByMonth(int month);
 
-	public List<ShoppingCart> getPendingCarts();
+	public List<ShoppingCart> getPendingCarts(int pageNum, int pageSize);
 	
 	public ShoppingCart getCartById(Integer id);
+	
+	public int getCountPandingCarts();
 }

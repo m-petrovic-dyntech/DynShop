@@ -1,7 +1,5 @@
 package com.ShoppingCart.dao.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -401,11 +399,16 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		return totals;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
-	public List<ShoppingCart> getPendingCarts() {
-		List<ShoppingCart> carts = (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("status", "pending")).list();
-		return carts;
+	public List<ShoppingCart> getPendingCarts(int pageNum, int pageSize) {
+		
+		Criteria results = getSession().createCriteria(ShoppingCart.class);
+//		results.add(Restrictions.like("status", "pending"));
+		results.setFirstResult((pageNum - 1) * pageSize);
+		results.setMaxResults(pageSize);
+		return results.list();
 	}
 
 	@Transactional
@@ -422,6 +425,13 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		getSession().saveOrUpdate(cart);
 	}
 
-	
+	@Transactional
+	@Override
+	public int getCountPandingCarts() {
+		
+		Long result = (Long) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("status", "pending")).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
 
 }

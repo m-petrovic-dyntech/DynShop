@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
@@ -74,13 +75,15 @@ public class AnonymousController extends ControllerUtil {
 		initializeSession(session);
 
 		Category selectedCategory = new Category();
-		int counter;
+		JtoPagination pagination;   //proveri sa natalijom dal je ovo ok
 
 		if (category != null && category != 0) {
 			selectedCategory = shoppingCartService.getCategoryById(category);
-			counter = shoppingCartService.getCountProductsInCategory(category);
+			pagination = new JtoPagination(page, size, shoppingCartService.getCountProductsInCategory(category));
+
 		} else
-			counter = shoppingCartService.getCountProducts();
+			pagination = new JtoPagination(page, size, shoppingCartService.getCountProducts());
+
 
 		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory, page, size);
 		List<Category> categories = (List<Category>) shoppingCartService.getCategories(page, size);
@@ -89,11 +92,11 @@ public class AnonymousController extends ControllerUtil {
 		modelAndView.addObject("categories", categories);
 		modelAndView.addObject("category", selectedCategory);
 		modelAndView.addObject("cart", session.getAttribute("cart"));
-		modelAndView.addObject("counter", counter);
+		modelAndView.addObject("pagination", pagination);
 
 		modelAndView.setViewName("products");
 		// Testing
-		// System.out.println("*************** " + counter);
+		// System.out.println("*************** " + pagination.toString();
 
 		return modelAndView;
 	}
@@ -225,10 +228,9 @@ public class AnonymousController extends ControllerUtil {
 		return new ModelAndView("redirect:/cart");
 	}
 
-	@RequestMapping(value = "/user/payStep1", method = RequestMethod.GET)
-	public ModelAndView payStep1(ModelAndView modelAndView, HttpSession session) {
+	@RequestMapping(value = "/user/checkOut", method = RequestMethod.GET)
+	public ModelAndView checkOut(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
-		// odabir nacina placanja
 		//rezervisu se prozvodi iz korpe
 		//promeniti naziv metode
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");

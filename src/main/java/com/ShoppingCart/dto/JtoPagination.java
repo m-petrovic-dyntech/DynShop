@@ -5,13 +5,7 @@ public class JtoPagination {
 	private Integer numberOfItems;
 	private Integer pageSize;
 	private Integer currentPage;
-
-//	public JtoPagination() {
-//		this.numberOfItems = numberOfItems;
-//		this.pageSize = pageSize;
-//		this.currentPage = currentPage;
-//	}
-//	
+	
 	public JtoPagination(Integer currentPage, Integer pageSize, Integer numberOfItems) {
 		this.numberOfItems = numberOfItems;
 		this.pageSize = pageSize;
