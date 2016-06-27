@@ -11,10 +11,47 @@
                                 <div id="stor_manager-sidebar">
                                     <%@include file="/WEB-INF/views/includes/storage_manager-sidebar.jsp"%>
                                 </div>
-                                <!-- Panel content -->
-                                <div id="stor_manager-content_box">
-                                    Store manager Orders
-                                </div>
+                               
+                                 <!-- Panel content -->
+                                    <divid="stor_manager-content_box">
+                                        <div id="admin_panel-categories">
+                                            <div class="col-sm-8" id="admin_panel-categories-items">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th><span>Date</span></th>
+                                                            <th><span>Total Cost</span></th>
+                                                            <th><span>Customer Name</span></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${deliveries}" var="order" varStatus="loop">
+                                                            <form action="${pageContext.request.contextPath}/storage_management/pendingOrders" method="GET" class="categories-item-form">
+                                                                <tr class="categories-item">
+                                                                    <td class="vertical-middle">
+                                                                        ${order.getCustomer().getFirstName()} ${order.getCustomer().getLastName()} 
+                                                                    </td>
+                                                                    <td class="vertical-middle">
+                                                                        <fmt:formatNumber value="${order.getCart().getTotal()} " currencySymbol="" type="currency" /> din
+                                                                    </td>
+                                                                    <td>
+                                                                        ${order.getCart().getShoppingDate()}
+                                                                    </td>
+                                                                    <td class="text-right vertical-middle categories-col-edit">
+                                                                        <a class="btn btn-primary categories-item-edit_button" href="${pageContext.request.contextPath}/storage_management/sentOrder/${cart.id}?status=finished"><span class="glyphicon glyphicon-ok"></span></a>
+                                                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/storage_management/sentOrder//${order.id}?status=canceled"><span class="glyphicon glyphicon-remove"></span></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </form>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="categories-pagination">
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </jsp:attribute>
                     </t:layout>

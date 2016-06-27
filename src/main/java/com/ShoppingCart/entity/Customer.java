@@ -60,10 +60,6 @@ public class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<Role> roles;
 	
-	@ManyToOne
-	@JoinColumn(name = "DELIVERY_ID", referencedColumnName="ID")
-	private Delivery delivery;
-
 	public Integer getId() {
 		return id;
 	}
@@ -166,14 +162,6 @@ public class Customer {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
-	}
-
-	public Delivery getDelivery() {
-		return delivery;
-	}
-
-	public void setDelivery(Delivery delivery) {
-		this.delivery = delivery;
 	}
 
 	@Override

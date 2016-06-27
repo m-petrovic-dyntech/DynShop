@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.ShoppingCart.dao.StorageDao;
+import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Delivery;
+import com.ShoppingCart.entity.ShoppingCart;
 
 @Repository
 public class StorageDaoImpl implements StorageDao {
@@ -53,6 +55,18 @@ public class StorageDaoImpl implements StorageDao {
 	public Delivery getOrderById(int id) {
 		
 		return (Delivery) getSession().createCriteria(Delivery.class).add(Restrictions.eq("status", "pending")).uniqueResult();
+	}
+
+	@Override
+	@Transactional
+	public Customer getCustomerByDeliveryId(Integer id) {
+		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("DELIVERY_ID", id)).uniqueResult();
+	}
+
+	@Override
+	@Transactional
+	public ShoppingCart getCartByDeliveryId(Integer id) {
+		return (ShoppingCart) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("DELIVERY_ID", id)).uniqueResult();
 	}
 
 }
