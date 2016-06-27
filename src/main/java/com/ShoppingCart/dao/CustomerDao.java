@@ -26,5 +26,15 @@ public interface CustomerDao {
 	public int getCountCustomer();
 	
 	public List<Role> getRolesByCustomer(Customer customer);
+		
+	public void addRole(Role role);
+	
+	public void editRole(Role role);
+	
+	public void addRoleToCustomer(Role role, Customer customer);
+
+	public void removeRole(Role role);
+	
+	public Role getRoleById(int id);
 
 }
