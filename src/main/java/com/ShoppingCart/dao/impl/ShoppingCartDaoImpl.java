@@ -402,10 +402,19 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
+	public List<ShoppingCart> getPendingCarts() {
+		
+		return (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class)
+				.add(Restrictions.eq("status", "pending")).list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
 	public List<ShoppingCart> getPendingCarts(int pageNum, int pageSize) {
 		
 		Criteria results = getSession().createCriteria(ShoppingCart.class);
-//		results.add(Restrictions.like("status", "pending"));
+		results.add(Restrictions.like("status", "pending"));
 		results.setFirstResult((pageNum - 1) * pageSize);
 		results.setMaxResults(pageSize);
 		return results.list();

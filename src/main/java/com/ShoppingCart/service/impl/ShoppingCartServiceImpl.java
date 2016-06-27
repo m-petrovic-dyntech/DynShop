@@ -185,7 +185,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public List<ShoppingCart> getPendingCarts(Integer page, Integer size) {
-		return shoppingCartDao.getPendingCarts(page, size);
+		if (page == null || size == null)
+			return shoppingCartDao.getPendingCarts();
+		else
+			return shoppingCartDao.getPendingCarts(page, size);
 	}
 
 	@Override

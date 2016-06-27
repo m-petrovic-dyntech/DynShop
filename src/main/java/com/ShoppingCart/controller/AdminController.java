@@ -103,8 +103,8 @@ public class AdminController extends ControllerUtil {
 		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCategories());
 		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
 		modelAndView.addObject("pagination", pagination);
-		// System.out.println("*************** " +
-		// pagination);
+		 System.out.println("*************** " +
+		 pagination.toString());
 	
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
@@ -200,10 +200,11 @@ public class AdminController extends ControllerUtil {
 		initializeSession(session);
 		
 		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountPandingCarts());
+//		 System.out.println("*************** " +
+//				 pagination.toString());
 		modelAndView.addObject("carts", shoppingCartService.getPendingCarts(page, size));
 		modelAndView.addObject("pagination", pagination);
-		 System.out.println("*************** " +
-				 pagination.toString());
+	
 		modelAndView.setViewName("admin_panel_pending_carts");
 		return modelAndView;
 	}
