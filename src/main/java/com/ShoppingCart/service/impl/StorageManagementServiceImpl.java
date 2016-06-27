@@ -38,8 +38,8 @@ public class StorageManagementServiceImpl implements StorageManagementService{
 	}
 
 	@Override
-	public ShoppingCart getCartByDeliveryId(Integer id) {
-		return storageDao.getCartByDeliveryId(id);
+	public ShoppingCart getCartByDeliveryId(Delivery delivery) {
+		return storageDao.getCartByDeliveryId(delivery);
 	}
 
 }

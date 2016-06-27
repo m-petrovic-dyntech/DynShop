@@ -19,9 +19,9 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th><span>Date</span></th>
-                                                            <th><span>Total Cost</span></th>
                                                             <th><span>Customer Name</span></th>
+                                                            <th><span>Total Cost</span></th>
+                                                            <th><span>Date</span></th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -33,14 +33,15 @@
                                                                         ${order.getCustomer().getFirstName()} ${order.getCustomer().getLastName()} 
                                                                     </td>
                                                                     <td class="vertical-middle">
-                                                                        <fmt:formatNumber value="${order.getCart().getTotal()} " currencySymbol="" type="currency" /> din
+                                                                        <fmt:formatNumber value="${order.getCart().getTotalCost()}" currencySymbol="" type="currency" /> din
+                                                                        ${order.getCart().getTotalCost()}
                                                                     </td>
                                                                     <td>
                                                                         ${order.getCart().getShoppingDate()}
                                                                     </td>
                                                                     <td class="text-right vertical-middle categories-col-edit">
-                                                                        <a class="btn btn-primary categories-item-edit_button" href="${pageContext.request.contextPath}/storage_management/sentOrder/${cart.id}?status=finished"><span class="glyphicon glyphicon-ok"></span></a>
-                                                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/storage_management/sentOrder//${order.id}?status=canceled"><span class="glyphicon glyphicon-remove"></span></a>
+                                                                        <a class="btn btn-primary categories-item-edit_button" href="${pageContext.request.contextPath}/storage_management/sentOrder/${order.getDelivery().getId()}?status=finished"><span class="glyphicon glyphicon-ok"></span></a>
+                                                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/storage_management/sentOrder/${order.getDelivery().getId()}?status=canceled"><span class="glyphicon glyphicon-remove"></span></a>
                                                                     </td>
                                                                 </tr>
                                                             </form>

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ShoppingCart.dao.StorageDao;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Delivery;
+import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.ShoppingCart;
 
 @Repository
@@ -54,19 +55,19 @@ public class StorageDaoImpl implements StorageDao {
 	@Transactional
 	public Delivery getOrderById(int id) {
 		
-		return (Delivery) getSession().createCriteria(Delivery.class).add(Restrictions.eq("status", "pending")).uniqueResult();
+		return (Delivery) getSession().createCriteria(Delivery.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
 	@Override
 	@Transactional
 	public Customer getCustomerByDeliveryId(Integer id) {
-		return (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("DELIVERY_ID", id)).uniqueResult();
+		return null;
 	}
 
 	@Override
 	@Transactional
-	public ShoppingCart getCartByDeliveryId(Integer id) {
-		return (ShoppingCart) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("DELIVERY_ID", id)).uniqueResult();
+	public ShoppingCart getCartByDeliveryId(Delivery delivery) {
+		return (ShoppingCart) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("delivery", delivery)).uniqueResult();
 	}
 
 }

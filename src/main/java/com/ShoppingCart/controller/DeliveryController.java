@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.dto.JtoDelivery;
 import com.ShoppingCart.entity.Delivery;
+import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.service.StorageManagementService;
@@ -30,10 +32,10 @@ public class DeliveryController  extends ControllerUtil{
 	
 	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
-//	
-//	@Autowired
-//	
-//	private ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	
+	private ShoppingCartService shoppingCartService;
 //
 //	@Autowired
 //	private CustomerService customerService;
@@ -51,12 +53,13 @@ public class DeliveryController  extends ControllerUtil{
 		
 		for (Delivery order : orders) {
 			JtoDelivery delivery = new JtoDelivery();
-			delivery.setCustomer(storageManagementService.getCustomerByDeliveryId(order.getId()));
-			delivery.setCart(storageManagementService.getCartByDeliveryId(order.getId()));
+			ShoppingCart cart = storageManagementService.getCartByDeliveryId(order);
+			delivery.setCart(cart);
+			delivery.setDelivery(order);
+			delivery.setCustomer(cart.getCustomer());
 			deliveries.add(delivery);
 		} 
 
-		modelAndView.addObject("orders", storageManagementService.getPendingOrders());
 	    modelAndView.addObject("deliveries",deliveries);
 		modelAndView.setViewName("storage_management_orders");
 		return modelAndView;
@@ -73,9 +76,15 @@ public class DeliveryController  extends ControllerUtil{
 		delivery.setStatus("sent");
 		storageManagementService.changeDeliveryStatus(delivery);
 
+		ShoppingCart cart = storageManagementService.getCartByDeliveryId(delivery);
+		List<ShoppingCartItem> items = shoppingCartService.getItemsByCart(cart, null, null);
+		
+		for (ShoppingCartItem item : items) {
+			Product product = shoppingCartService.getProductById(item.getId());
+			product.setQuantityInStock(product.getQuantityInStock() - product.getReservedQuantity());
+			product.setReservedQuantity(0);
+		}
 		//sent mail to user
-		//smanjujemo kolicnu prozvoda za rezervisano
-		//reservisano umanjiti za broj prodatih
 		modelAndView.setViewName("redirect:/storage_management/pendingOrders");
 		return modelAndView;
 	}
@@ -84,7 +93,6 @@ public class DeliveryController  extends ControllerUtil{
 	public ModelAndView sentOrder(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 		//TODO change status of delivery to "canceled"
-		//sent mail to user
 		//vratiti quantity prozvoda tj povecati 
 		//reservisano umanjiti za broj cancelovanih
 		modelAndView.setViewName("redirect:/storage_management/pendingOrders");

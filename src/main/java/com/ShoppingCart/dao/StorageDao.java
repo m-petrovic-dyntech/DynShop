@@ -16,6 +16,6 @@ public interface StorageDao {
 
 	public Customer getCustomerByDeliveryId(Integer id);
 
-	public ShoppingCart getCartByDeliveryId(Integer id);
+	public ShoppingCart getCartByDeliveryId(Delivery delivery);
 	
 }
