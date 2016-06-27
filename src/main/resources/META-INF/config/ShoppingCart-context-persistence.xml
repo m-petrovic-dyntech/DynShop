@@ -48,6 +48,7 @@
 	<bean name="shoppingCartService" class="com.ShoppingCart.service.impl.ShoppingCartServiceImpl"></bean>
 	<bean name="mailService" class="com.ShoppingCart.service.impl.MailServiceImpl"></bean>
 	<bean name="customerService" class="com.ShoppingCart.service.impl.CustomerServiceImpl"></bean>
+	<bean name="storageManagementService" class="com.ShoppingCart.service.impl.StorageManagementServiceImpl"></bean>
 
 	<!-- DAO -->
 	<bean name="shoppingCartDao" class="com.ShoppingCart.dao.impl.ShoppingCartDaoImpl">
@@ -55,6 +56,10 @@
 	</bean>
 	
 	<bean name="customerDao" class="com.ShoppingCart.dao.impl.CustomerDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean name="storageDao" class="com.ShoppingCart.dao.impl.StorageDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
