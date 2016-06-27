@@ -37,6 +37,12 @@ public class Product {
 	@Column(name="downloadLink")
 	private String downloadLink;
 	
+	@Column(name="quantityInStock")
+	private Integer quantityInStock;
+	
+	@Column(name="reservedQuantity")  //  nullable = false, columnDefinition = “int default 0"
+	private Integer reservedQuantity; // = 0;
+	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID", referencedColumnName="ID")
 	private Category category;
@@ -103,6 +109,22 @@ public class Product {
 
 	public void setDownloadLink(String downloadLink) {
 		this.downloadLink = downloadLink;
+	}
+
+	public Integer getQuantityInStock() {
+		return quantityInStock;
+	}
+
+	public void setQuantityInStock(Integer quantityInStock) {
+		this.quantityInStock = quantityInStock;
+	}
+
+	public Integer getReservedQuantity() {
+		return reservedQuantity;
+	}
+
+	public void setReservedQuantity(Integer reservedQuantity) {
+		this.reservedQuantity = reservedQuantity;
 	}
 	
 }
