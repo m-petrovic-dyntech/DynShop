@@ -2,6 +2,7 @@ package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Delivery;
 import com.ShoppingCart.entity.Product;
+import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
@@ -50,9 +53,9 @@ public class AdminController extends ControllerUtil {
 		for (ShoppingCart shoppingCart : carts) {
 			shoppingCart.setItems(shoppingCartService.getItemsByCart(shoppingCart, page, size));
 		}
-		
+
 		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCarts());
-		
+
 		modelAndView.addObject("carts", carts);
 		modelAndView.addObject("pagination", pagination);
 		modelAndView.setViewName("cart_log");
@@ -69,13 +72,14 @@ public class AdminController extends ControllerUtil {
 			JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountProducts());
 			modelAndView.addObject("products", shoppingCartService.getProducts(null, page, size));
 			modelAndView.addObject("pagination", pagination);
-//			System.out.println("************  " + pagination.toString());
+			// System.out.println("************ " + pagination.toString());
 		} else {
-			JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountProductsInCategory(categoryId));
+			JtoPagination pagination = new JtoPagination(page, size,
+					shoppingCartService.getCountProductsInCategory(categoryId));
 			modelAndView.addObject("products",
 					shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
-			modelAndView.addObject("pagination", pagination); 
-//			System.out.println("************  " + pagination.toString());
+			modelAndView.addObject("pagination", pagination);
+			// System.out.println("************ " + pagination.toString());
 
 		}
 		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
@@ -86,9 +90,22 @@ public class AdminController extends ControllerUtil {
 	@RequestMapping(value = { "/admin/panel/users" }, method = RequestMethod.GET)
 	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
+
 		initializeSession(session);
 		JtoPagination pagination = new JtoPagination(page, size, customerService.getCountCustomer());
-		modelAndView.addObject("customers", customerService.getAllCustomers(page, size));
+		List<Customer> customers = customerService.getAllCustomers(page, size);
+		for (Customer customer : customers) {
+			System.out.println("**************************************************");
+			List<Role> roles = customerService.getRolesByCustomer(customer);
+			for (Role role : roles) {
+				System.out.println(customer.toString());
+				System.out.println(role.toString());
+			}
+			System.out.println("*********************************************&&&");
+			customer.setRoles(customerService.getRolesByCustomer(customer));
+
+		}
+		modelAndView.addObject("customers", customers);
 		modelAndView.addObject("pagination", pagination);
 		// System.out.println("*************** " +
 		// pagination);
@@ -103,9 +120,8 @@ public class AdminController extends ControllerUtil {
 		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCategories());
 		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
 		modelAndView.addObject("pagination", pagination);
-		 System.out.println("*************** " +
-		 pagination.toString());
-	
+		System.out.println("*************** " + pagination.toString());
+
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
 	}
@@ -195,16 +211,14 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/pendingCarts" }, method = RequestMethod.GET)
-	public ModelAndView viewPendingCarts(ModelAndView modelAndView,  @RequestParam(required = false) Integer page,
+	public ModelAndView viewPendingCarts(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
-		
+
 		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountPandingCarts());
-//		 System.out.println("*************** " +
-//				 pagination.toString());
 		modelAndView.addObject("carts", shoppingCartService.getPendingCarts(page, size));
 		modelAndView.addObject("pagination", pagination);
-	
+
 		modelAndView.setViewName("admin_panel_pending_carts");
 		return modelAndView;
 	}
@@ -213,14 +227,20 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView changeCartStatus(ModelAndView modelAndView, HttpSession session,
 			@PathVariable(value = "id") int id, @RequestParam(required = true) String status) {
 		initializeSession(session);
-
 		ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
+		Delivery delivery = new Delivery();
+
+		if (status.equals("finished")) {
+			delivery.setStatus("pending");
+			delivery.setNote("administrator je odobrio porudzbinu");
+			shoppingCartService.addDelivery(delivery);
+			cart.setDelivery(delivery);
+		}
 		List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null,
 				null);
-
 		cart.setStatus(status);
-		shoppingCartService.editCart(cart);
 
+		shoppingCartService.editCart(cart);
 		List<String> downloadLinks = new ArrayList<String>();
 
 		for (ShoppingCartItem item : cartItems) {
@@ -228,11 +248,13 @@ public class AdminController extends ControllerUtil {
 				downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
 		}
 
+		String template = "confirmShoppingOnlyDownloadTemplate.vm";
+		if (cartItems.size() > downloadLinks.size()) {
+			template = "confirmShoppingTemplate.vm";
+		}
 		mailService.sendConfirmShoppingMail(customerService.getCustomerById(getAuthenticatedUser().getId()),
-				"info@dyntechshop.com", "n.kitanoska@dyntechdoo.com", "Your shopping was succesfull", downloadLinks,
-				"confirmShoppingTemplate.vm");
-
-		// TODO add to delivery table servis.saveDelivery(Delivery)
+				"info@dyntechshop.com", "j.dumeljic@dyntechdoo.com", "Vasa kupovina je uspesno obavljena",
+				downloadLinks, template);
 
 		modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
 		return modelAndView;

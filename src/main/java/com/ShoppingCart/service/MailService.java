@@ -12,10 +12,9 @@ public interface MailService {
 	
 	public void sendAlertMail(String alert);
 
-	public void sendConfirmShoppingMail(Customer customer, String string, String string2, String string3, List<String> downloadLinks,
-			String string4);
+	public void sendConfirmShoppingMail(Customer customer, String from, String to, String subject, List<String> downloadLinks,
+			String templatePath);
 
 	public void sendPaymentOrder(Customer customerById, String string, String string2, String string3, String string4) throws MessagingException;
 	
-
 }
