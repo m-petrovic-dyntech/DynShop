@@ -3,6 +3,7 @@ package com.ShoppingCart.dao;
 import java.util.List;
 
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Role;
 
 public interface CustomerDao {
 
@@ -23,5 +24,7 @@ public interface CustomerDao {
 	public List<Customer> getDisabledCustomers();
 
 	public int getCountCustomer();
+	
+	public List<Role> getRolesByCustomer(Customer customer);
 
 }

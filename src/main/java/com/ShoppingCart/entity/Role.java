@@ -60,4 +60,11 @@ public class Role {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	@Override
+	public String toString() {
+		return "Role [role=" + role + "]";
+	}
+	
+	
 }

@@ -76,4 +76,9 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		return customerDao.getCountCustomer();
 	}
 
+	@Override
+	public List<Role> getRolesByCustomer(Customer customer) {
+		return customerDao.getRolesByCustomer(customer);
+	}
+
 }

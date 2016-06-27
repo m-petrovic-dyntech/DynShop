@@ -108,4 +108,11 @@ public class CustomerDaoImpl implements CustomerDao {
 		return Integer.parseInt(result.toString());
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Role> getRolesByCustomer(Customer customer) {
+		return (List<Role>) getSession().createCriteria(Role.class).add(Restrictions.eq("customer", customer)).list();
+	}
+
 }
