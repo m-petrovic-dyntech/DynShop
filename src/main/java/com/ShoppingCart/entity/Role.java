@@ -22,6 +22,9 @@ public class Role {
 	@Column(name="role")
 	private String role;
 	
+	@Column(name="title")
+	private String roleTitle;
+	
 	@Column(name="enabled")
 	private Boolean enabled;
 	
@@ -61,9 +64,17 @@ public class Role {
 		this.customer = customer;
 	}
 
+	public String getRoleTitle() {
+		return roleTitle;
+	}
+
+	public void setRoleTitle(String roleTitle) {
+		this.roleTitle = roleTitle;
+	}
+
 	@Override
 	public String toString() {
-		return "Role role=" + role + "]";
+		return roleTitle;
 	}
 	
 	
