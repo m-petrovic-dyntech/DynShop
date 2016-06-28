@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,23 @@ public class AnonymousController extends ControllerUtil {
 	@Autowired
 	private MailService mailService;
 
+	//redirection based on role
+	@RequestMapping(value = "/init", method = RequestMethod.GET)
+	public ModelAndView init(ModelAndView modelAndView, HttpSession session) {
+		initializeSession(session);
+		
+		if (ifUserHasRole("ROLE_ADMIN"))
+			modelAndView.setViewName("redirect:/admin/panel/products");	
+		else if (ifUserHasRole("ROLE_STORAGE"))
+				modelAndView.setViewName("redirect:/storage_management/pendingOrders");	
+			else if (ifUserHasRole("ROLE_USER"))
+				modelAndView.setViewName("redirect:/products");	
+		
+			
+		modelAndView.addObject("customer", new Customer());
+		return modelAndView;
+	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView userLogin(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
