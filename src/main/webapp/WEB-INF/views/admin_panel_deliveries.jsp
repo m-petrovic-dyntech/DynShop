@@ -13,13 +13,14 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
-                                    <c:forEach items="carts" var="cart">
+                                    <c:forEach items="${carts}" var="cart">
                                         <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Date</th>
                                                     <th>Customer</th>
                                                     <th>Total cost</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -30,6 +31,9 @@
                                                     </td>
                                                     <td>
                                                         ${cart.getCustomer().getUsername()}
+                                                    </td>
+                                                    <td>
+                                                        ${cart.status}
                                                     </td>
                                                 </tr>
                                             </tbody>
