@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.dao.StorageDao;
+import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Delivery;
+import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.service.StorageManagementService;
 
 @Service
@@ -28,6 +30,16 @@ public class StorageManagementServiceImpl implements StorageManagementService{
 	@Override
 	public Delivery getOrderById(int id) {
 		return storageDao.getOrderById(id);
+	}
+
+	@Override
+	public Customer getCustomerByDeliveryId(Integer id) {
+		return storageDao.getCustomerByDeliveryId(id);
+	}
+
+	@Override
+	public ShoppingCart getCartByDeliveryId(Delivery delivery) {
+		return storageDao.getCartByDeliveryId(delivery);
 	}
 
 }

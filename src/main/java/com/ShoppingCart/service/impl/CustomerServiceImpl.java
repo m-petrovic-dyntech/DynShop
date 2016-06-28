@@ -76,4 +76,35 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		return customerDao.getCountCustomer();
 	}
 
+	@Override
+	public List<Role> getRolesByCustomer(Customer customer) {
+		return customerDao.getRolesByCustomer(customer);
+	}
+
+	@Override
+	public void addRole(Role role) {
+		customerDao.addRole(role);	
+	}
+
+	@Override
+	public void editRole(Role role) {
+		customerDao.editRole(role);
+		
+	}
+
+	@Override
+	public void addRoleToCustomer(Role role, Customer customer) {
+		customerDao.addRoleToCustomer(role, customer);
+	}
+
+	@Override
+	public void removeRole(Role role) {
+		customerDao.removeRole(role);
+	}
+
+	@Override
+	public Role getRoleById(int id) {
+		return customerDao.getRoleById(id);
+	}
+
 }

@@ -235,6 +235,16 @@ public class AnonymousController extends ControllerUtil {
 		//promeniti naziv metode
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
+		
+		//proveriti pamcenje customera i korpe
+		
+		List<ShoppingCartItem> items = shoppingCartService.getItemsByCart(cart, null, null);
+		for (ShoppingCartItem shoppingCartItem : items) {
+			Product product = shoppingCartService.getProductById(shoppingCartItem.getProduct().getId());
+			product.setReservedQuantity(product.getReservedQuantity() + shoppingCartItem.getQuantity()); 
+			shoppingCartService.editProduct(product);
+		}
+		
 		modelAndView.setViewName("confirmPurchase");
 		return modelAndView;
 	}

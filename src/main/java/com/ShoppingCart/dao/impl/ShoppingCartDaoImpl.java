@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Delivery;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
@@ -442,5 +443,14 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 				.uniqueResult();
 		return Integer.parseInt(result.toString());
 	}
+
+	@Transactional
+	@Override
+	public void addDelivery(Delivery delivery) {
+		getSession().save(delivery);
+	}
+
+
+	
 
 }

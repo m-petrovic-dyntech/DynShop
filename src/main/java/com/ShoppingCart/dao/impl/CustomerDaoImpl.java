@@ -108,4 +108,42 @@ public class CustomerDaoImpl implements CustomerDao {
 		return Integer.parseInt(result.toString());
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Role> getRolesByCustomer(Customer customer) {
+		return (List<Role>) getSession().createCriteria(Role.class).add(Restrictions.eq("customer", customer)).list();
+	}
+
+	@Override
+	@Transactional
+	public void addRole(Role role) {
+		getSession().save(role);
+	}
+
+	@Override
+	@Transactional
+	public void editRole(Role role) {
+		getSession().saveOrUpdate(role);
+	}
+
+	@Override
+	@Transactional
+	public void addRoleToCustomer(Role role, Customer customer) {
+		role.setCustomer(customer);
+		getSession().save(role);
+	}
+	
+	@Override
+	@Transactional
+	public void removeRole(Role role) {
+		getSession().delete(role);
+	}
+
+	@Override
+	@Transactional
+	public Role getRoleById(int id) {
+		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("id", id)).uniqueResult();
+	}
+
 }

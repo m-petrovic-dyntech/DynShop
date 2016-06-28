@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ShoppingCart.dao.ShoppingCartDao;
 import com.ShoppingCart.entity.Category;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Delivery;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
@@ -205,6 +206,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	public int getCountPandingCarts() {
 		return shoppingCartDao.getCountPandingCarts();
 	}
+
+	@Override
+	public void addDelivery(Delivery delivery) {
+		shoppingCartDao.addDelivery(delivery);
+	}
+
 
 	
 }
