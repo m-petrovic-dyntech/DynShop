@@ -24,6 +24,7 @@ public class ControllerUtil {
 
 	public CustomUserDetails getAuthenticatedUser() {
 		CustomUserDetails cud = (CustomUserDetails) getAuthentication().getPrincipal();
+		
 		return cud;
 	}
 	

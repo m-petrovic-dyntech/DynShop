@@ -83,8 +83,8 @@ public class DeliveryController  extends ControllerUtil{
 			Product product = shoppingCartService.getProductById(item.getId());
 			product.setQuantityInStock(product.getQuantityInStock() - product.getReservedQuantity());
 			product.setReservedQuantity(0);
+			shoppingCartService.editProduct(product);
 		}
-		//sent mail to user
 		modelAndView.setViewName("redirect:/storage_management/pendingOrders");
 		return modelAndView;
 	}
