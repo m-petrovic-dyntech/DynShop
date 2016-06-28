@@ -78,5 +78,14 @@ public class AdminUserController extends ControllerUtil{
 		modelAndView.setViewName("redirect:/admin_panel_users");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.GET)
+	public ModelAndView adminEditCustomer(ModelAndView modelAndView, @ModelAttribute("customerEditModel") Customer customer,
+			HttpSession session) {
+
+		customerService.editCustomer(customer);
+		modelAndView.setViewName("redirect:/admin_panel_users");
+		return modelAndView;
+	}
 
 }
