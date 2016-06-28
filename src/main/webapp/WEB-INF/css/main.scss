@@ -410,6 +410,7 @@ body {
 =            Admin panel            =
 ===================================*/
 
+$tableRowColor: #f5f5f5;
 .admin_panel,
 .stor_manager {
     &-wrapper {
@@ -454,7 +455,6 @@ body {
     &-content_box {
         width: 100%;
         height: 100%;
-        padding: 20px;
         h2 {
             margin-top: 0;
             margin-bottom: 20px;
@@ -525,10 +525,21 @@ body {
 }
 
 #admin_panel {
+    &-content_box {
+        &.content_box-admin_panel_products {
+            padding-bottom: 6px
+        }
+        #categories {
+            &-add-button {
+                top: 0;
+            }
+        }
+    }
     /*----------  Products  ----------*/
     &-products {
+        padding: 13px 20px 0;
         tbody tr {
-            background: #f5f5f5;
+            background: $tableRowColor;
         }
         .admin_panel-products-col {
             &-desc {
@@ -548,16 +559,24 @@ body {
     }
     /*----------  Categories  ----------*/
     &-categories {
-        &-main_box {
-            overflow: hidden;
+        height: 100%;
+        padding: 10px 6px;
+        tbody tr {
+            background: $tableRowColor;
+        }
+        &-page_size_option {
+            width: 67px;
+            float: right;
         }
         .categories {
             &-col {
                 &-edit {
                     width: 108px;
+                    text-align: right;
                 }
                 &-remove {
                     width: 59px;
+                    text-align: right;
                 }
             }
             &-item {
@@ -608,9 +627,40 @@ body {
             }
         }
         &-items {
-            overflow: auto;
             height: 100%;
-            border-bottom: 1px solid #c1c1c1;
+        }
+    }
+    /*----------  Customers  ----------*/
+    &-customers {
+        padding: 13px 20px 0;
+        &-page_size_option {
+            width: 70px;
+            float: right;
+        }
+        tbody tr {
+            background: $tableRowColor;
+            td {
+                vertical-align: middle;
+            }
+        }
+        .customers {
+            &-role_name {
+                text-transform: capitalize;
+                &:last-child:after {
+                    content: '';
+                }
+                &:after {
+                    content: ', ';
+                }
+            }
+            &-column {
+                &-edit {
+                    width: 154px;
+                }
+                &-delete {
+                    width: 57px;
+                }
+            }
         }
     }
 }
@@ -623,8 +673,10 @@ body {
 
 .page-main_box {
     height: 100%;
-    overflow: auto;
     padding-top: 20px;
+    @media (max-width: 768px) {
+        overflow: auto;
+    }
 }
 
 
@@ -638,6 +690,14 @@ body {
     clear: both;
 }
 
+.overflow-auto {
+    overflow: auto;
+}
+
+.height-100 {
+    height: 100%;
+}
+
 
 /*==================================
 =            Pagination            =
@@ -646,15 +706,23 @@ body {
 .pagination {
     height: 100%;
     margin: 0;
-    padding: 17px 0 0;
+    padding: 9px 0 0;
     /**********/
     &-height {
-        height: 6%!important;
+        height: 5%!important;
     }
     &_content-height {
-        height: 94%!important;
+        height: 95%!important;
     }
     &-item {
         height: 34px;
+    }
+    &-separator {
+        float: left;
+        padding: 1px 4px;
+        visibility: hidden;
+    }
+    &-set {
+        padding-bottom: 6px;
     }
 }

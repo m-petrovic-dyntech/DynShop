@@ -7,23 +7,25 @@
                         <!-- Content -->
                         <t:layout title="DynTech Shop | Products">
                             <jsp:attribute name="body_area">
-                                <div class="container page-main_box">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Total Cost</th>
-                                                <th>Purchase Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach items="${carts}" var="cart">
+                                <div class="container-fluid height-100 overflow-auto">
+                                    <div class="container page-main_box">
+                                        <table class="table table-striped">
+                                            <thead>
                                                 <tr>
-                                                    <td>${cart.totalCost}</td>
-                                                    <td>${cart.shoppingDate}</td>
+                                                    <th>Total Cost</th>
+                                                    <th>Purchase Date</th>
                                                 </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${carts}" var="cart">
+                                                    <tr>
+                                                        <td>${cart.totalCost}</td>
+                                                        <td>${cart.shoppingDate}</td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </jsp:attribute>
                         </t:layout>
