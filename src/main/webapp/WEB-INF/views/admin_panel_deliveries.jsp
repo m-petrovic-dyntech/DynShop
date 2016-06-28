@@ -13,7 +13,28 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
-                                    delivery log
+                                    <c:forEach items="carts" var="cart">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Customer</th>
+                                                    <th>Total cost</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>${cart.shoppingDate}</td>
+                                                    <td>
+                                                        <fmt:formatNumber value="${cart.totalCost} " currencySymbol="" type="currency" />
+                                                    </td>
+                                                    <td>
+                                                        ${cart.getCustomer().getUsername()}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </jsp:attribute>
