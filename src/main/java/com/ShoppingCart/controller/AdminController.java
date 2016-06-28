@@ -87,32 +87,6 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/users" }, method = RequestMethod.GET)
-	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
-			@RequestParam(required = false) Integer size, HttpSession session) {
-
-		initializeSession(session);
-		JtoPagination pagination = new JtoPagination(page, size, customerService.getCountCustomer());
-		List<Customer> customers = customerService.getAllCustomers(page, size);
-		for (Customer customer : customers) {
-			System.out.println("**************************************************");
-			List<Role> roles = customerService.getRolesByCustomer(customer);
-			for (Role role : roles) {
-				System.out.println(customer.toString());
-				System.out.println(role.toString());
-			}
-			System.out.println("*********************************************&&&");
-			customer.setRoles(customerService.getRolesByCustomer(customer));
-
-		}
-		modelAndView.addObject("customers", customers);
-		modelAndView.addObject("pagination", pagination);
-		// System.out.println("*************** " +
-		// pagination);
-		modelAndView.setViewName("admin_panel_users");
-		return modelAndView;
-	}
-
 	@RequestMapping(value = { "/admin/panel/categories" }, method = RequestMethod.GET)
 	public ModelAndView adminCategories(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
@@ -123,20 +97,6 @@ public class AdminController extends ControllerUtil {
 		System.out.println("*************** " + pagination.toString());
 
 		modelAndView.setViewName("admin_panel_categories");
-		return modelAndView;
-	}
-
-	@RequestMapping(value = { "/admin/panel/deleteCustomer/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, @PathVariable(value = "id") int id,
-			HttpSession session) {
-		initializeSession(session);
-
-		Customer customer = (Customer) customerService.getCustomerById(id);
-		customer.setEnabled(Boolean.FALSE);
-
-		customerService.editCustomer(customer);
-
-		modelAndView.setViewName("redirect:/admin_panel_users");
 		return modelAndView;
 	}
 
