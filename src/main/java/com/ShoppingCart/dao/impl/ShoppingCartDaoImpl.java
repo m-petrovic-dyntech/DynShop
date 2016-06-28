@@ -449,8 +449,63 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public void addDelivery(Delivery delivery) {
 		getSession().save(delivery);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<ShoppingCart> getDeliveryCarts() {
+		return (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class)
+				.add(Restrictions.not(Restrictions.eq("status", "pending")))
+				.list();
+	}
 
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<ShoppingCart> getDeliveryCarts(int pageNum, int pageSize) {
+		//paginacija za sve statuse osim pendinga
+		Criteria results = getSession().createCriteria(ShoppingCart.class);
+		results.add(Restrictions.not(Restrictions.eq("status", "pending")));
+		results.setFirstResult((pageNum - 1) * pageSize);
+		results.setMaxResults(pageSize);
+		return results.list();
+	}
 
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<ShoppingCart> getDeliveryCarts(String status) {
+		return (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class)
+		.add(Restrictions.eq("status", status)).list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<ShoppingCart> getDeliveryCarts(String status, int pageNum, int pageSize) {
+		
+		Criteria results = getSession().createCriteria(ShoppingCart.class);
+		results.add(Restrictions.eq("status", status));
+		results.setFirstResult((pageNum - 1) * pageSize);
+		results.setMaxResults(pageSize);
+		return results.list();
+	}
+
+	@Transactional
+	@Override
+	public int getCountDeliveryCarts() {
+		Number result = (Number) getSession().createCriteria(ShoppingCart.class).add(Restrictions.not(Restrictions.eq("status", "pending"))).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
+
+	@Transactional
+	@Override
+	public int getCountDeliveryCarts(String status) {
+		Number result = (Number) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("status", status)).setProjection(Projections.rowCount())
+				.uniqueResult();
+		return Integer.parseInt(result.toString());
+	}
 	
 
 }
