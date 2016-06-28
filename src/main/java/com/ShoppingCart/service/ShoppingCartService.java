@@ -67,4 +67,10 @@ public interface ShoppingCartService {
 	
 	public void addDelivery(Delivery delivery);
 	
+	public List<ShoppingCart> getDeliveryCarts(String status, Integer page,Integer size);
+	
+	public int getCountDeliveryCarts();
+	
+	public int getCountDeliveryCarts(String status);
+	
 }

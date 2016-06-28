@@ -95,6 +95,18 @@ public interface ShoppingCartDao {
 	
 	public void addDelivery(Delivery delivery);
 	
+	public List<ShoppingCart> getDeliveryCarts();
+	
+	public List<ShoppingCart> getDeliveryCarts(String status);
+	
+	public List<ShoppingCart> getDeliveryCarts(int pageNum, int pageSize);
+	
+	public List<ShoppingCart> getDeliveryCarts(String status, int pageNum, int pageSize);
+	
+	public int getCountDeliveryCarts();
+	
+	public int getCountDeliveryCarts(String status);
+
 
 
 }

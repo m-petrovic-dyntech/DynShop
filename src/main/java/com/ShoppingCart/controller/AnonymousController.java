@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -249,15 +248,10 @@ public class AnonymousController extends ControllerUtil {
 	@RequestMapping(value = "/user/checkOut", method = RequestMethod.GET)
 	public ModelAndView checkOut(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
-		//rezervisu se prozvodi iz korpe
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
-		
-		//proveriti pamcenje customera 
 		List<ShoppingCartItem> items = (List<ShoppingCartItem>) cart.getItems();
-//		List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null,
-//				null);
-//	
+	
 		for (ShoppingCartItem shoppingCartItem : items) {
 			Product product = shoppingCartService.getProductById(shoppingCartItem.getProduct().getId());
 			product.setReservedQuantity(product.getReservedQuantity() + shoppingCartItem.getQuantity()); 

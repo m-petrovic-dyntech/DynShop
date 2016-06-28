@@ -17,10 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Category;
-import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Delivery;
 import com.ShoppingCart.entity.Product;
-import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
@@ -171,7 +169,7 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/pendingCarts" }, method = RequestMethod.GET)
-	public ModelAndView viewPendingCarts(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
+	public ModelAndView adminPendingCarts(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
 		initializeSession(session);
 
@@ -184,23 +182,21 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/changeCartStatus/{id}" }, method = RequestMethod.GET)
-	public ModelAndView changeCartStatus(ModelAndView modelAndView, HttpSession session,
+	public ModelAndView adminChangeCartStatus(ModelAndView modelAndView, HttpSession session,
 			@PathVariable(value = "id") int id, @RequestParam(required = true) String status) {
 		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
 		Delivery delivery = new Delivery();
 
-		if (status.equals("finished")) {
+		if (status.equals("pending_delivery")) {
 			delivery.setStatus("pending");
 			delivery.setNote("administrator je odobrio porudzbinu");
 			shoppingCartService.addDelivery(delivery);
 			cart.setDelivery(delivery);
 		}
-
 		List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null,
 				null);
 		cart.setStatus(status);
-
 		shoppingCartService.editCart(cart);
 		List<String> downloadLinks = new ArrayList<String>();
 
@@ -208,7 +204,6 @@ public class AdminController extends ControllerUtil {
 			if ((shoppingCartService.getProductById(item.getProduct().getId()).getProductType()).equals(0))
 				downloadLinks.add(shoppingCartService.getProductById(item.getProduct().getId()).getDownloadLink());
 		}
-
 		String template = "confirmShoppingOnlyDownloadTemplate.vm";
 		if (cartItems.size() > downloadLinks.size()) {
 			template = "confirmShoppingTemplate.vm";
@@ -221,4 +216,23 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 
+	@RequestMapping(value = { "/admin/panel/deliveries" }, method = RequestMethod.GET)
+	public ModelAndView adminDelivery(ModelAndView modelAndView, @RequestParam(required = false) String status, @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size, HttpSession session) {
+		initializeSession(session);
+		JtoPagination pagination;
+		
+		if(status == null)
+			pagination = new JtoPagination(page, size, shoppingCartService.getCountDeliveryCarts());
+		else 
+			pagination = new JtoPagination(page, size, shoppingCartService.getCountDeliveryCarts(status));
+		
+		System.out.println("*****************   " + pagination);
+
+		modelAndView.addObject("carts", shoppingCartService.getDeliveryCarts(status, page, size));
+		modelAndView.addObject("pagination", pagination);
+		modelAndView.setViewName("admin_panel_deliveries");
+		return modelAndView;
+	}
+	
 }

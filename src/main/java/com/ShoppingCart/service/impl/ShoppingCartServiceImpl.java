@@ -212,4 +212,29 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		shoppingCartDao.addDelivery(delivery);
 	}
 
+	@Override
+	public List<ShoppingCart> getDeliveryCarts(String status, Integer page, Integer size) {
+		if(status == null)
+			if(page == null || size == null)
+				return shoppingCartDao.getDeliveryCarts();
+			else
+				return shoppingCartDao.getDeliveryCarts(page, size);
+		else
+			if(page == null || size == null)
+				return shoppingCartDao.getDeliveryCarts(status);
+			else
+				return shoppingCartDao.getDeliveryCarts(status, page, size);
+	}
+
+	@Override
+	public int getCountDeliveryCarts() {
+		return shoppingCartDao.getCountDeliveryCarts();
+	}
+	
+	@Override 
+	public int getCountDeliveryCarts(String status) {
+		return shoppingCartDao.getCountDeliveryCarts(status);
+	}
+	
+	
 }
