@@ -67,6 +67,4 @@ public interface ShoppingCartService {
 	
 	public void addDelivery(Delivery delivery);
 	
-//	public void editCustomer(Customer customer);
-
 }

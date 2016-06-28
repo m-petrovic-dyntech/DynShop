@@ -232,13 +232,14 @@ public class AnonymousController extends ControllerUtil {
 	public ModelAndView checkOut(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
 		//rezervisu se prozvodi iz korpe
-		//promeniti naziv metode
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
 		
-		//proveriti pamcenje customera i korpe
-		
-		List<ShoppingCartItem> items = shoppingCartService.getItemsByCart(cart, null, null);
+		//proveriti pamcenje customera 
+		List<ShoppingCartItem> items = (List<ShoppingCartItem>) cart.getItems();
+//		List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null,
+//				null);
+//	
 		for (ShoppingCartItem shoppingCartItem : items) {
 			Product product = shoppingCartService.getProductById(shoppingCartItem.getProduct().getId());
 			product.setReservedQuantity(product.getReservedQuantity() + shoppingCartItem.getQuantity()); 

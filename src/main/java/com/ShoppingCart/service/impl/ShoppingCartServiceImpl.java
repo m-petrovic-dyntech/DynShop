@@ -212,6 +212,4 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		shoppingCartDao.addDelivery(delivery);
 	}
 
-
-	
 }

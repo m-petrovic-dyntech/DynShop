@@ -26,7 +26,7 @@ public class ShoppingCartItem {
 	public Double total;
 	
 	@Column(name="enabled")
-	private Boolean enabled;
+	private Boolean enabled = Boolean.TRUE;
 	
 	@ManyToOne
 	@JoinColumn(name = "PRODUCT_ID", referencedColumnName="ID")

@@ -236,6 +236,7 @@ public class AdminController extends ControllerUtil {
 			shoppingCartService.addDelivery(delivery);
 			cart.setDelivery(delivery);
 		}
+
 		List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null,
 				null);
 		cart.setStatus(status);
