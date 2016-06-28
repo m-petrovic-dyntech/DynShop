@@ -13,17 +13,17 @@
                                 </div>
                                 <!-- Panel content -->
                                 <div id="admin_panel-content_box">
-                                    <c:forEach items="${carts}" var="cart">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th>Customer</th>
-                                                    <th>Total cost</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Customer</th>
+                                                <th>Total cost</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${carts}" var="cart">
                                                 <tr>
                                                     <td>${cart.shoppingDate}</td>
                                                     <td>
@@ -36,9 +36,9 @@
                                                         ${cart.status}
                                                     </td>
                                                 </tr>
-                                            </tbody>
-                                        </table>
-                                    </c:forEach>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </jsp:attribute>
