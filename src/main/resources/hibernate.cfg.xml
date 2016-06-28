@@ -6,7 +6,7 @@
 	<session-factory>
 		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
 		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>  
-		<property name="hibernate.connection.url">jdbc:oracle:thin:@192.168.60.16:1521:xe</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@192.168.60.65:1521:xe</property>
 		<property name="hibernate.connection.username">DYNTECH_SHOP</property>
 		<property name="hibernate.connection.password">dyntech</property>
 		<property name="hibernate.hbm2ddl.auto">update</property>
