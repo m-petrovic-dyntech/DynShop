@@ -68,33 +68,41 @@ public class DeliveryController  extends ControllerUtil{
 	//TODO REST poziv za get item iz korpe sa id_cart
 	
 	@RequestMapping(value = "/storage_management/sentOrder/{id}", method = RequestMethod.GET)
-	public ModelAndView sentProduct(ModelAndView modelAndView, HttpSession session,@PathVariable(value = "id") int id,
-			@RequestParam (required = true) String status) {
+	public ModelAndView sentProduct(ModelAndView modelAndView, HttpSession session,@PathVariable(value = "id") int id) {
 		initializeSession(session);
-		
+	
 		Delivery delivery = storageManagementService.getOrderById(id);
 		delivery.setStatus("sent");
 		storageManagementService.changeDeliveryStatus(delivery);
 
 		ShoppingCart cart = storageManagementService.getCartByDeliveryId(delivery);
-		List<ShoppingCartItem> items = shoppingCartService.getItemsByCart(cart, null, null);
+		cart.setStatus("finished");
+		shoppingCartService.editCart(cart);
 		
+		List<ShoppingCartItem> items = shoppingCartService.getItemsByCart(cart, null, null);	
 		for (ShoppingCartItem item : items) {
-			Product product = shoppingCartService.getProductById(item.getId());
+			Product product = shoppingCartService.getProductById(item.getProduct().getId());
 			product.setQuantityInStock(product.getQuantityInStock() - product.getReservedQuantity());
 			product.setReservedQuantity(0);
 			shoppingCartService.editProduct(product);
 		}
+		
 		modelAndView.setViewName("redirect:/storage_management/pendingOrders");
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/storage_management/cancelOrder", method = RequestMethod.GET)
-	public ModelAndView sentOrder(ModelAndView modelAndView, HttpSession session) {
+	@RequestMapping(value = "/storage_management/cancelOrder/{id}", method = RequestMethod.GET)
+	public ModelAndView sentOrder(ModelAndView modelAndView, HttpSession session, @PathVariable(value = "id") int id) {
 		initializeSession(session);
-		//TODO change status of delivery to "canceled"
-		//vratiti quantity prozvoda tj povecati 
-		//reservisano umanjiti za broj cancelovanih
+		
+		Delivery delivery = storageManagementService.getOrderById(id);
+		delivery.setStatus("canceled");
+		storageManagementService.changeDeliveryStatus(delivery);
+		
+		ShoppingCart cart = storageManagementService.getCartByDeliveryId(delivery);
+		cart.setStatus("denied_delivery");
+		shoppingCartService.editCart(cart);
+		
 		modelAndView.setViewName("redirect:/storage_management/pendingOrders");
 		return modelAndView;
 	}
