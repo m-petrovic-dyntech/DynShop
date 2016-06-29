@@ -46,6 +46,9 @@ public class Customer {
 
 	@Column(name = "city")
 	private String city;
+	
+	@Column(name = "email")
+	private String email;
 
 	@Column(name = "enabled")
 	private Boolean enabled;
@@ -143,6 +146,15 @@ public class Customer {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

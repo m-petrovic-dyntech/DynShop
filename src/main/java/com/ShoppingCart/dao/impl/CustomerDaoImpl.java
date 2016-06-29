@@ -1,6 +1,7 @@
 package com.ShoppingCart.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -82,7 +83,8 @@ public class CustomerDaoImpl implements CustomerDao {
 	public Customer getCustomerByUsername(String username) {
 		Customer c = (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("username", username))
 				.uniqueResult();
-		c.setRoles((List<Role>) getSession().createCriteria(Role.class).add(Restrictions.eq("customer", c)).list());
+		//c.setRoles((List<Role>) getSession().createCriteria(Role.class).add(Restrictions.eq("customers", c)).list());
+		System.out.println(Arrays.toString(c.getRoles().toArray()));
 		return c;
 	}
 
@@ -143,6 +145,12 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Transactional
 	public Role getRoleById(int id) {
 		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("id", id)).uniqueResult();
+	}
+
+	@Override
+	public boolean emailExist(String email) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -2,6 +2,10 @@ package com.ShoppingCart.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.User;
+
+import com.ShoppingCart.dto.CustomUserDetails;
+import com.ShoppingCart.dto.UserDto;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Role;
 
@@ -34,4 +38,6 @@ public interface CustomerService {
 	public void removeRole(Role role);
 	
 	public Role getRoleById(int id);
+
+	public Customer registerNewUserAccount(UserDto userDto) throws Exception;
 }
