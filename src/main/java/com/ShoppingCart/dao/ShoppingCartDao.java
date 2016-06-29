@@ -48,7 +48,7 @@ public interface ShoppingCartDao {
 	public void editProduct(Product product);
 
 	public void addProduct(Product product);
-	
+
 	public void editCart(ShoppingCart cart);
 
 	public List<Category> getEnabledCategories();
@@ -70,43 +70,41 @@ public interface ShoppingCartDao {
 	public List<Product> getDisabledProducts();
 
 	public List<Product> getDisabledProducts(int pageNum, int pageSize);
-	
+
 	public int getCountCategories();
 
 	public int getCountProducts();
-	
+
 	public int getCountProductsInCategory(int categoryId);
-	
+
 	public int getCountCarts();
-	
+
 	public int getCountCartsInCustomer(Customer customer);
-	
+
 	public int getCountItemsInCart(int id);
-	
+
 	public List<Double> getAllCartsPurcashedByMonth(int month);
-	
+
 	public List<ShoppingCart> getPendingCarts();
 
 	public List<ShoppingCart> getPendingCarts(int pageNum, int pageSize);
-	
+
 	public ShoppingCart getCartById(Integer id);
-	
+
 	public int getCountPandingCarts();
-	
+
 	public void addDelivery(Delivery delivery);
-	
+
 	public List<ShoppingCart> getDeliveryCarts();
-	
+
 	public List<ShoppingCart> getDeliveryCarts(String status);
-	
+
 	public List<ShoppingCart> getDeliveryCarts(int pageNum, int pageSize);
-	
+
 	public List<ShoppingCart> getDeliveryCarts(String status, int pageNum, int pageSize);
-	
+
 	public int getCountDeliveryCarts();
-	
+
 	public int getCountDeliveryCarts(String status);
-
-
 
 }
