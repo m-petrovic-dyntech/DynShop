@@ -36,6 +36,10 @@ public interface CustomerDao {
 	public void removeRole(Role role);
 	
 	public Role getRoleById(int id);
+	
+	public Role getRoleByTitle(String title);
+	
+	public List<Role> getRoles();
 
 	public boolean emailExist(String email);
 

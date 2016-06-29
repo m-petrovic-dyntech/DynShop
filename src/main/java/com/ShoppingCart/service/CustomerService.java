@@ -40,4 +40,9 @@ public interface CustomerService {
 	public Role getRoleById(int id);
 
 	public Customer registerNewUserAccount(UserDto userDto) throws Exception;
+
+	public Role getRoleByTitle(String title);
+	
+	public List<Role> getRoles();
+
 }

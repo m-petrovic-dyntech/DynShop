@@ -137,5 +137,14 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		
 		return null;
 	}
+	
+	public Role getRoleByTitle(String title) {
+		return customerDao.getRoleByTitle(title);
+	}
+
+	@Override
+	public List<Role> getRoles() {
+		return customerDao.getRoles();
+	}
 
 }

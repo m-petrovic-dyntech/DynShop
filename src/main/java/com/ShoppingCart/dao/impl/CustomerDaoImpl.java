@@ -153,4 +153,15 @@ public class CustomerDaoImpl implements CustomerDao {
 		return false;
 	}
 
+	@Transactional
+	public Role getRoleByTitle(String title) {
+		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("roleTitle", title)).uniqueResult();
+	}
+
+	@Override
+	@Transactional
+	public List<Role> getRoles() {
+		return getSession().createCriteria(Role.class).list();
+	}
+
 }
