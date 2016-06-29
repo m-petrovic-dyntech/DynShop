@@ -15,6 +15,7 @@ import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Delivery;
 import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.ShoppingCart;
+import com.ShoppingCart.util.DeliveryStatus;
 
 @Repository
 public class StorageDaoImpl implements StorageDao {
@@ -39,10 +40,12 @@ public class StorageDaoImpl implements StorageDao {
 		return sessionFactory.getCurrentSession();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Delivery> getPendingOrders() {
-		return (List<Delivery>) getSession().createCriteria(Delivery.class).add(Restrictions.eq("status", "pending")).list();
+	
+		return (List<Delivery>) getSession().createCriteria(Delivery.class).add(Restrictions.eq("status", DeliveryStatus.PENDING)).list();
 	}
 
 	@Override

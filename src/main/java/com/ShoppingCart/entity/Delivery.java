@@ -5,12 +5,16 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.ShoppingCart.util.DeliveryStatus;
 
 @Entity
 @Table(name="delivery")
@@ -26,8 +30,9 @@ public class Delivery {
 	private List<ShoppingCart> carts;  
 	
 	@Column(name="status")
-	private String status;
-	
+	@Enumerated(EnumType.STRING)
+	private DeliveryStatus status;
+		
 	@Column(name="note")
 	private String note;
 	
@@ -53,11 +58,11 @@ public class Delivery {
 		this.carts = carts;
 	}
 
-	public String getStatus() {
+	public DeliveryStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(DeliveryStatus status) {
 		this.status = status;
 	}
 

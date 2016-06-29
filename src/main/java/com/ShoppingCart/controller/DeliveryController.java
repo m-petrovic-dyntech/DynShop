@@ -23,7 +23,9 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.service.StorageManagementService;
+import com.ShoppingCart.util.CartStatus;
 import com.ShoppingCart.util.ControllerUtil;
+import com.ShoppingCart.util.DeliveryStatus;
 import com.fasterxml.jackson.annotation.JsonFormat.Value;
 
 @Controller
@@ -72,11 +74,11 @@ public class DeliveryController  extends ControllerUtil{
 		initializeSession(session);
 	
 		Delivery delivery = storageManagementService.getOrderById(id);
-		delivery.setStatus("sent");
+		delivery.setStatus(DeliveryStatus.SENT);
 		storageManagementService.changeDeliveryStatus(delivery);
 
 		ShoppingCart cart = storageManagementService.getCartByDeliveryId(delivery);
-		cart.setStatus("finished");
+		cart.setStatus(CartStatus.FINISHED.toString());
 		shoppingCartService.editCart(cart);
 		
 		List<ShoppingCartItem> items = shoppingCartService.getItemsByCart(cart, null, null);	
@@ -96,11 +98,11 @@ public class DeliveryController  extends ControllerUtil{
 		initializeSession(session);
 		
 		Delivery delivery = storageManagementService.getOrderById(id);
-		delivery.setStatus("canceled");
+		delivery.setStatus(DeliveryStatus.CANCELED);
 		storageManagementService.changeDeliveryStatus(delivery);
 		
 		ShoppingCart cart = storageManagementService.getCartByDeliveryId(delivery);
-		cart.setStatus("denied_delivery");
+		cart.setStatus(CartStatus.DENIED_DELIVERY.toString());
 		shoppingCartService.editCart(cart);
 		
 		modelAndView.setViewName("redirect:/storage_management/pendingOrders");
