@@ -1,11 +1,14 @@
 package com.ShoppingCart.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -27,6 +30,17 @@ public class Role {
 	
 	@Column(name="enabled")
 	private Boolean enabled;
+	
+	@ManyToMany(mappedBy = "roles")
+	private List<Customer> customers;
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
 
 	public Integer getId() {
 		return id;

@@ -130,7 +130,6 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public void addRoleToCustomer(Role role, Customer customer) {
-		role.setCustomer(customer);
 		getSession().save(role);
 	}
 	

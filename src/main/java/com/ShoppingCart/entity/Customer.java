@@ -53,8 +53,8 @@ public class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<ShoppingCart> shoppingCarts;
 
-	@ManyToMany  
-    @JoinTable(name="roles_allocation", joinColumns=@JoinColumn(name="id"), inverseJoinColumns=@JoinColumn(name="id"))
+	@ManyToMany
+    @JoinTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 	
 	public Integer getId() {
