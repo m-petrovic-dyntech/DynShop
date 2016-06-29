@@ -52,8 +52,8 @@
                                                                         ${cart.getCustomer().getUsername()}
                                                                     </td>
                                                                     <td class="text-right vertical-middle categories-col-edit">
-                                                                        <a class="btn btn-primary categories-item-edit_button" href="${pageContext.request.contextPath}/admin/panel/changeCartStatus/${cart.id}?status=pending_delivery"><span class="glyphicon glyphicon-ok"></span></a>
-                                                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/admin/panel/changeCartStatus/${cart.id}?status=canceled"><span class="glyphicon glyphicon-remove"></span></a>
+                                                                        <a class="btn btn-primary categories-item-edit_button" href="${pageContext.request.contextPath}/admin/panel/changeCartStatus/${cart.id}?status=PENDING_DELIVERY"><span class="glyphicon glyphicon-ok"></span></a>
+                                                                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/admin/panel/changeCartStatus/${cart.id}?status=FAILED"><span class="glyphicon glyphicon-remove"></span></a>
                                                                     </td>
                                                                 </tr>
                                                             </form>
