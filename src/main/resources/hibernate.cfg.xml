@@ -10,6 +10,7 @@
 		<property name="hibernate.connection.username">DYNTECH_SHOP_REGISTRATION</property>
 		<property name="hibernate.connection.password">dyntechshop</property>
 		<property name="hibernate.hbm2ddl.auto">create-drop</property>
+		<property name="hibernate.default_schema">DYNTECH_SHOP_REGISTRATION</property>
 		<property name="show_sql">true</property>
 	</session-factory>
 </hibernate-configuration>

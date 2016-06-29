@@ -11,7 +11,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="products", schema="DYNTECH_SHOP_REGISTRATION")
+@Table(name="products")
 public class Product {
 	@Id
 	@SequenceGenerator(name="product_gen", sequenceName="product_seq", allocationSize=1, initialValue=1)
