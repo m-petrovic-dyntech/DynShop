@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.ShoppingCart.util.PasswordUtil;
 
 @Entity
-@Table(name = "customers", schema="DYNTECH_SHOP")
+@Table(name = "customers")
 public class Customer {
 	@Id
 	@SequenceGenerator(name = "user_gen", sequenceName = "user_seq", allocationSize = 1, initialValue = 1)

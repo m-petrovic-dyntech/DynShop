@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="delivery", schema="DYNTECH_SHOP")
+@Table(name="delivery")
 public class Delivery {
 
 	@Id

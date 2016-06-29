@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="shoppingcarts", schema="DYNTECH_SHOP")
+@Table(name="shoppingcarts")
 public class ShoppingCart {
 	@Id
 	@SequenceGenerator(name="shoppingcart_gen", sequenceName="shoppingcart_seq", allocationSize=1, initialValue=1)
