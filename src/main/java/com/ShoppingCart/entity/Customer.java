@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -51,7 +53,8 @@ public class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<ShoppingCart> shoppingCarts;
 
-	@OneToMany(mappedBy = "customer")
+	@ManyToMany  
+    @JoinTable(name="roles_allocation", joinColumns=@JoinColumn(name="id"), inverseJoinColumns=@JoinColumn(name="id"))
 	private List<Role> roles;
 	
 	public Integer getId() {

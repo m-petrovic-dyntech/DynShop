@@ -27,10 +27,6 @@ public class Role {
 	
 	@Column(name="enabled")
 	private Boolean enabled;
-	
-	@ManyToOne
-	@JoinColumn(name="CUSTOMER_ID", referencedColumnName="ID")
-	private Customer customer;
 
 	public Integer getId() {
 		return id;
@@ -56,14 +52,6 @@ public class Role {
 		this.enabled = enabled;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public String getRoleTitle() {
 		return roleTitle;
 	}
@@ -76,6 +64,4 @@ public class Role {
 	public String toString() {
 		return roleTitle;
 	}
-	
-	
 }
