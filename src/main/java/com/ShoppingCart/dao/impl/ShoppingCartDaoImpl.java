@@ -24,6 +24,7 @@ import com.ShoppingCart.entity.Delivery;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
+import com.ShoppingCart.util.CartStatus;
 
 @Repository
 
@@ -319,8 +320,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
 	@Override
 	@Transactional
-	public int getCountCategories()
-	{
+	public int getCountCategories() {
 
 		Long result = (Long) getSession().createCriteria(Category.class).setProjection(Projections.rowCount())
 				.uniqueResult();
@@ -357,20 +357,18 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Override
 	@Transactional
 	public int getCountCartsInCustomer(Customer customer) {
-		
+
 		String hql = "select count(*) from shoppingcarts where customer_id = :id";
-		Number result = (Number) getSession().createSQLQuery(hql)
-				.setInteger("id", customer.getId()).uniqueResult();
+		Number result = (Number) getSession().createSQLQuery(hql).setInteger("id", customer.getId()).uniqueResult();
 		return Integer.parseInt(result.toString());
 	}
 
 	@Override
 	@Transactional
 	public int getCountItemsInCart(int id) {
-		
+
 		String hql = "select count(*) from shoppingcartitems where shoppingcart_id = :id";
-		Number result = (Number) getSession().createSQLQuery(hql)
-				.setInteger("id", id).uniqueResult();
+		Number result = (Number) getSession().createSQLQuery(hql).setInteger("id", id).uniqueResult();
 		return Integer.parseInt(result.toString());
 	}
 
@@ -378,15 +376,15 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	@Override
 	public List<Double> getAllCartsPurcashedByMonth(int month) {
-		
-		GregorianCalendar gc = new GregorianCalendar(2016, month-1, 1);
-	    Date monthFirstDate = new java.util.Date(gc.getTime().getTime());
-	    
-	    gc.setTime(monthFirstDate);
-	    gc.add(Calendar.MONTH, 1);  
-        gc.set(Calendar.DAY_OF_MONTH, 1);  
-        gc.add(Calendar.DATE, -1);  
-        Date monthLastDate = gc.getTime();  
+
+		GregorianCalendar gc = new GregorianCalendar(2016, month - 1, 1);
+		Date monthFirstDate = new java.util.Date(gc.getTime().getTime());
+
+		gc.setTime(monthFirstDate);
+		gc.add(Calendar.MONTH, 1);
+		gc.set(Calendar.DAY_OF_MONTH, 1);
+		gc.add(Calendar.DATE, -1);
+		Date monthLastDate = gc.getTime();
 
 		Criteria results = getSession().createCriteria(ShoppingCart.class);
 		results.add(Restrictions.between("shoppingDate", monthFirstDate, monthLastDate));
@@ -396,7 +394,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		for (ShoppingCart shoppingCart : carts) {
 			totals.add(shoppingCart.getTotalCost());
 		}
-		
+
 		return totals;
 	}
 
@@ -404,18 +402,18 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	@Override
 	public List<ShoppingCart> getPendingCarts() {
-		
+
 		return (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class)
-				.add(Restrictions.eq("status", "pending")).list();
+				.add(Restrictions.eq("status", CartStatus.PENDING)).list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public List<ShoppingCart> getPendingCarts(int pageNum, int pageSize) {
-		
+
 		Criteria results = getSession().createCriteria(ShoppingCart.class);
-		results.add(Restrictions.like("status", "pending"));
+		results.add(Restrictions.eq("status", CartStatus.PENDING));
 		results.setFirstResult((pageNum - 1) * pageSize);
 		results.setMaxResults(pageSize);
 		return results.list();
@@ -424,8 +422,8 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	@Override
 	public ShoppingCart getCartById(Integer id) {
-		ShoppingCart cart = (ShoppingCart) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("id", id))
-				.uniqueResult();
+		ShoppingCart cart = (ShoppingCart) getSession().createCriteria(ShoppingCart.class)
+				.add(Restrictions.eq("id", id)).uniqueResult();
 		return cart;
 	}
 
@@ -438,8 +436,9 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	@Override
 	public int getCountPandingCarts() {
-		
-		Long result = (Long) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("status", "pending")).setProjection(Projections.rowCount())
+
+		Long result = (Long) getSession().createCriteria(ShoppingCart.class)
+				.add(Restrictions.eq("status", CartStatus.PENDING)).setProjection(Projections.rowCount())
 				.uniqueResult();
 		return Integer.parseInt(result.toString());
 	}
@@ -449,23 +448,22 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public void addDelivery(Delivery delivery) {
 		getSession().save(delivery);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public List<ShoppingCart> getDeliveryCarts() {
 		return (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class)
-				.add(Restrictions.not(Restrictions.eq("status", "pending")))
-				.list();
+				.add(Restrictions.not(Restrictions.eq("status", CartStatus.PENDING))).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public List<ShoppingCart> getDeliveryCarts(int pageNum, int pageSize) {
-		//paginacija za sve statuse osim pendinga
+
 		Criteria results = getSession().createCriteria(ShoppingCart.class);
-		results.add(Restrictions.not(Restrictions.eq("status", "pending")));
+		results.add(Restrictions.not(Restrictions.eq("status", CartStatus.PENDING)));
 		results.setFirstResult((pageNum - 1) * pageSize);
 		results.setMaxResults(pageSize);
 		return results.list();
@@ -476,16 +474,16 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Override
 	public List<ShoppingCart> getDeliveryCarts(String status) {
 		return (List<ShoppingCart>) getSession().createCriteria(ShoppingCart.class)
-		.add(Restrictions.eq("status", status)).list();
+				.add(Restrictions.eq("status", CartStatus.valueOf(status))).list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Transactional
 	@Override
 	public List<ShoppingCart> getDeliveryCarts(String status, int pageNum, int pageSize) {
-		
+
 		Criteria results = getSession().createCriteria(ShoppingCart.class);
-		results.add(Restrictions.eq("status", status));
+		results.add(Restrictions.eq("status", CartStatus.valueOf(status)));
 		results.setFirstResult((pageNum - 1) * pageSize);
 		results.setMaxResults(pageSize);
 		return results.list();
@@ -494,18 +492,19 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	@Transactional
 	@Override
 	public int getCountDeliveryCarts() {
-		Number result = (Number) getSession().createCriteria(ShoppingCart.class).add(Restrictions.not(Restrictions.eq("status", "pending"))).setProjection(Projections.rowCount())
-				.uniqueResult();
+		Number result = (Number) getSession().createCriteria(ShoppingCart.class)
+				.add(Restrictions.not(Restrictions.eq("status", CartStatus.PENDING)))
+				.setProjection(Projections.rowCount()).uniqueResult();
 		return Integer.parseInt(result.toString());
 	}
 
 	@Transactional
 	@Override
 	public int getCountDeliveryCarts(String status) {
-		Number result = (Number) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("status", status)).setProjection(Projections.rowCount())
+		Number result = (Number) getSession().createCriteria(ShoppingCart.class)
+				.add(Restrictions.eq("status", CartStatus.valueOf(status))).setProjection(Projections.rowCount())
 				.uniqueResult();
 		return Integer.parseInt(result.toString());
 	}
-	
 
 }

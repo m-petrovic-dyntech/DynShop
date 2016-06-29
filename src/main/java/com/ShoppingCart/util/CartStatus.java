@@ -7,10 +7,4 @@ public enum CartStatus {
 	DENIED_DELIVERY,
 	FINISHED,
 	FAILED;
-	
-	public String toString() {
-        return name().toLowerCase();
-        
-        
-    }
 }

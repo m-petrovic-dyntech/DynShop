@@ -1,9 +1,12 @@
 package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,9 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.MailService;
 import com.ShoppingCart.service.ShoppingCartService;
+import com.ShoppingCart.util.CartStatus;
 import com.ShoppingCart.util.ControllerUtil;
+import com.ShoppingCart.util.DeliveryStatus;
 
 @Controller
 public class AdminController extends ControllerUtil {
@@ -92,7 +97,7 @@ public class AdminController extends ControllerUtil {
 		JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountCategories());
 		modelAndView.addObject("categories", shoppingCartService.getCategories(page, size));
 		modelAndView.addObject("pagination", pagination);
-		System.out.println("*************** " + pagination.toString());
+		// System.out.println("*************** " + pagination.toString());
 
 		modelAndView.setViewName("admin_panel_categories");
 		return modelAndView;
@@ -128,7 +133,8 @@ public class AdminController extends ControllerUtil {
 
 	@RequestMapping(value = { "/admin/panel/editCategory" }, method = RequestMethod.GET)
 	public ModelAndView adminEditCategory(ModelAndView modelAndView, @RequestParam("id") int id,
-			@RequestParam("name") String name, @RequestParam("enabled") Boolean enabled, HttpSession session) {
+			@RequestParam("name") String name, @RequestParam("enabled") Boolean enabled, HttpSession session,
+			HttpServletRequest request) {
 
 		Category category = (Category) shoppingCartService.getCategoryById(id);
 		category.setName(name);
@@ -136,7 +142,10 @@ public class AdminController extends ControllerUtil {
 
 		shoppingCartService.editCategory(category);
 
-		modelAndView.setViewName("redirect:/admin/panel/categories");
+		// getReditectLink("redirect:/admin/panel/categories", request,
+		// Arrays.asList("id", "enabled", "name"));
+		modelAndView.setViewName(
+				getReditectLink("redirect:/admin/panel/categories", request, Arrays.asList("id", "enabled", "name")));
 		return modelAndView;
 	}
 
@@ -188,15 +197,15 @@ public class AdminController extends ControllerUtil {
 		ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
 		Delivery delivery = new Delivery();
 
-		if (status.equals("pending_delivery")) {
-			delivery.setStatus("pending");
+		if (status.equals(CartStatus.PENDING_DELIVERY.toString())) {
+			delivery.setStatus(DeliveryStatus.PENDING);
 			delivery.setNote("administrator je odobrio porudzbinu");
 			shoppingCartService.addDelivery(delivery);
 			cart.setDelivery(delivery);
 		}
 		List<ShoppingCartItem> cartItems = (List<ShoppingCartItem>) shoppingCartService.getItemsByCart(cart, null,
 				null);
-		cart.setStatus(status);
+		cart.setStatus(CartStatus.valueOf(status));
 		shoppingCartService.editCart(cart);
 		List<String> downloadLinks = new ArrayList<String>();
 
@@ -217,22 +226,21 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/deliveries" }, method = RequestMethod.GET)
-	public ModelAndView adminDelivery(ModelAndView modelAndView, @RequestParam(required = false) String status, @RequestParam(required = false) Integer page,
-			@RequestParam(required = false) Integer size, HttpSession session) {
+	public ModelAndView adminDelivery(ModelAndView modelAndView, @RequestParam(required = false) String status,
+			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
+			HttpSession session) {
 		initializeSession(session);
 		JtoPagination pagination;
-		
-		if(status == null)
+
+		if (status == null)
 			pagination = new JtoPagination(page, size, shoppingCartService.getCountDeliveryCarts());
-		else 
+		else
 			pagination = new JtoPagination(page, size, shoppingCartService.getCountDeliveryCarts(status));
-		
-		System.out.println("*****************   " + pagination);
 
 		modelAndView.addObject("carts", shoppingCartService.getDeliveryCarts(status, page, size));
 		modelAndView.addObject("pagination", pagination);
 		modelAndView.setViewName("admin_panel_deliveries");
 		return modelAndView;
 	}
-	
+
 }

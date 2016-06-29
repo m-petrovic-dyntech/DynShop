@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.dto.JtoDelivery;
@@ -20,13 +19,11 @@ import com.ShoppingCart.entity.Delivery;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.entity.ShoppingCartItem;
-import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.service.StorageManagementService;
 import com.ShoppingCart.util.CartStatus;
 import com.ShoppingCart.util.ControllerUtil;
 import com.ShoppingCart.util.DeliveryStatus;
-import com.fasterxml.jackson.annotation.JsonFormat.Value;
 
 @Controller
 public class DeliveryController  extends ControllerUtil{
@@ -78,7 +75,7 @@ public class DeliveryController  extends ControllerUtil{
 		storageManagementService.changeDeliveryStatus(delivery);
 
 		ShoppingCart cart = storageManagementService.getCartByDeliveryId(delivery);
-		cart.setStatus(CartStatus.FINISHED.toString());
+		cart.setStatus(CartStatus.FINISHED);
 		shoppingCartService.editCart(cart);
 		
 		List<ShoppingCartItem> items = shoppingCartService.getItemsByCart(cart, null, null);	
@@ -102,7 +99,7 @@ public class DeliveryController  extends ControllerUtil{
 		storageManagementService.changeDeliveryStatus(delivery);
 		
 		ShoppingCart cart = storageManagementService.getCartByDeliveryId(delivery);
-		cart.setStatus(CartStatus.DENIED_DELIVERY.toString());
+		cart.setStatus(CartStatus.DENIED_DELIVERY);
 		shoppingCartService.editCart(cart);
 		
 		modelAndView.setViewName("redirect:/storage_management/pendingOrders");

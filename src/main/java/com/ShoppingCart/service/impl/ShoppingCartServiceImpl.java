@@ -50,8 +50,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		else
 			return shoppingCartDao.getCategories(page, size);
 	}
-	
-	
+
 	@Override
 	public Category getCategoryById(Integer id) {
 		if (id == null)
@@ -148,7 +147,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		else
 			return shoppingCartDao.getDisabledProducts(page, size);
 	}
-	
+
 	@Override
 	public int getCountCategories() {
 		return shoppingCartDao.getCountCategories();
@@ -199,9 +198,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public void editCart(ShoppingCart cart) {
-		shoppingCartDao.editCart(cart);	
+		shoppingCartDao.editCart(cart);
 	}
-	
+
 	@Override
 	public int getCountPandingCarts() {
 		return shoppingCartDao.getCountPandingCarts();
@@ -214,27 +213,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public List<ShoppingCart> getDeliveryCarts(String status, Integer page, Integer size) {
-		if(status == null)
-			if(page == null || size == null)
+		if (status == null)
+			if (page == null || size == null)
 				return shoppingCartDao.getDeliveryCarts();
 			else
 				return shoppingCartDao.getDeliveryCarts(page, size);
+		else if (page == null || size == null)
+			return shoppingCartDao.getDeliveryCarts(status);
 		else
-			if(page == null || size == null)
-				return shoppingCartDao.getDeliveryCarts(status);
-			else
-				return shoppingCartDao.getDeliveryCarts(status, page, size);
+			return shoppingCartDao.getDeliveryCarts(status, page, size);
 	}
 
 	@Override
 	public int getCountDeliveryCarts() {
 		return shoppingCartDao.getCountDeliveryCarts();
 	}
-	
-	@Override 
+
+	@Override
 	public int getCountDeliveryCarts(String status) {
 		return shoppingCartDao.getCountDeliveryCarts(status);
 	}
-	
-	
+
 }

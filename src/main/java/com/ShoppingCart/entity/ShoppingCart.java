@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +19,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.ShoppingCart.util.CartStatus;
 
 @Entity
 @Table(name="shoppingcarts")
@@ -41,7 +45,8 @@ public class ShoppingCart {
 	private String paymentMethod;
 	
 	@Column(name="status")
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private CartStatus status;
 	
 	@ManyToOne
 	@JoinColumn(name = "CUSTOMER_ID", referencedColumnName="ID")
@@ -100,11 +105,11 @@ public class ShoppingCart {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public String getStatus() {
+	public CartStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(CartStatus status) {
 		this.status = status;
 	}
 

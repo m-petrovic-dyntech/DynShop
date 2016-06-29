@@ -26,6 +26,7 @@ import com.ShoppingCart.entity.ShoppingCartItem;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.MailService;
 import com.ShoppingCart.service.ShoppingCartService;
+import com.ShoppingCart.util.CartStatus;
 import com.ShoppingCart.util.ControllerUtil;
 
 @Controller
@@ -269,7 +270,7 @@ public class AnonymousController extends ControllerUtil {
 
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		cart.setPaymentMethod(paymentMethod);
-		cart.setStatus("pending");
+		cart.setStatus(CartStatus.PENDING);
 		cart.setEnabled(true);
 		shoppingCartService.saveCart(cart);
 		
