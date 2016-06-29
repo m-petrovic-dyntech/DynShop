@@ -1,6 +1,8 @@
 package com.ShoppingCart.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -48,6 +50,8 @@ public class AdminUserController extends ControllerUtil{
 			customer.setRoles(customerService.getRolesByCustomer(customer));
 
 		}
+		List<Role> roles= customerService.getRoles();
+		modelAndView.addObject("roles", roles);
 		modelAndView.addObject("customers", customers);
 		modelAndView.addObject("pagination", pagination);
 		// System.out.println("*************** " +

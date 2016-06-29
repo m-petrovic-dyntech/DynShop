@@ -34,4 +34,8 @@ public interface CustomerService {
 	public void removeRole(Role role);
 	
 	public Role getRoleById(int id);
+	
+	public List<Role> getRoles();
+	
+	public Role getRoleByTitle(String title);
 }

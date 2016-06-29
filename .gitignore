@@ -13,3 +13,5 @@
 /target/
 src/main/webapp/WEB-INF/css/.sass-cache/
 src/main/webapp/WEB-INF/css/main.css.map
+*.java
+src/main/resources/hibernate.cfg.xml

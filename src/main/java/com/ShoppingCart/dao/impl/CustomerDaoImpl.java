@@ -146,4 +146,17 @@ public class CustomerDaoImpl implements CustomerDao {
 		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
+	
+	@Override
+	@Transactional
+	public Role getRoleByTitle(String title) {
+		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("roleTitle", title)).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Role> getRoles() {
+		return getSession().createCriteria(Role.class).list();
+	}
 }
