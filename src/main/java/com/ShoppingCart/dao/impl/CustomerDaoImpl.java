@@ -149,8 +149,8 @@ public class CustomerDaoImpl implements CustomerDao {
 	
 	@Override
 	@Transactional
-	public Role getRoleByTitle(String title) {
-		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("roleTitle", title)).uniqueResult();
+	public List<Role> getRoleByTitle(String title) {
+		return getSession().createCriteria(Role.class).add(Restrictions.eq("roleTitle", title)).list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -158,5 +158,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Transactional
 	public List<Role> getRoles() {
 		return getSession().createCriteria(Role.class).list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Role> getUniqueRoles() {
+		List<String> roleTitles= getSession().createCriteria(Role.class).setProjection(Projections.distinct(Projections.property("roleTitle"))).list();
+		List<Role> roles= new ArrayList<>();
+		for (String role : roleTitles) {
+			Role rola= getRoleByTitle(role).get(0);
+			if(rola!=null)
+				roles.add(rola);
+		}
+		return roles;
 	}
 }

@@ -50,7 +50,10 @@ public class AdminUserController extends ControllerUtil{
 			customer.setRoles(customerService.getRolesByCustomer(customer));
 
 		}
-		List<Role> roles= customerService.getRoles();
+		List<Role> roles= customerService.getUniqueRoles();
+		for (Role role : roles) {
+			System.out.println("rola"+ role);
+		}
 		modelAndView.addObject("roles", roles);
 		modelAndView.addObject("customers", customers);
 		modelAndView.addObject("pagination", pagination);

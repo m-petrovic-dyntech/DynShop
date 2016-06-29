@@ -37,5 +37,9 @@ public interface CustomerService {
 	
 	public List<Role> getRoles();
 	
-	public Role getRoleByTitle(String title);
+	public List<Role> getRoleByTitle(String title);
+	
+	public List<Role> getUniqueRoles();
+	
+	
 }

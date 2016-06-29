@@ -37,8 +37,10 @@ public interface CustomerDao {
 	
 	public Role getRoleById(int id);
 
-	public Role getRoleByTitle(String title);
+	public List<Role> getRoleByTitle(String title);
 
 	public List<Role> getRoles();
+	
+	public List<Role> getUniqueRoles();
 
 }
