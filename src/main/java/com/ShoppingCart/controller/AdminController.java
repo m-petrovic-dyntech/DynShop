@@ -103,23 +103,22 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET) // to
 	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, @PathVariable(value = "id") int id,
-			HttpSession session) {
+			HttpServletRequest request, HttpSession session) {
 		initializeSession(session);
 
 		Product product = (Product) shoppingCartService.getProductById(id);
 		product.setEnabled(Boolean.FALSE);
-
 		shoppingCartService.editProduct(product);
 
-		modelAndView.setViewName("redirect:/admin/panel/products");
+		modelAndView.setViewName(getReditectLink("redirect:/admin/panel/products", request, Arrays.asList("id")));
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/panel/deleteCategory/{id}" }, method = RequestMethod.GET) // to
 	public ModelAndView adminDeleteCategory(ModelAndView modelAndView, @PathVariable(value = "id") int id,
-			HttpSession session) {
+			HttpServletRequest request, HttpSession session) {
 		initializeSession(session);
 
 		Category category = (Category) shoppingCartService.getCategoryById(id);
@@ -127,11 +126,11 @@ public class AdminController extends ControllerUtil {
 
 		shoppingCartService.editCategory(category);
 
-		modelAndView.setViewName("redirect:/admin/panel/categories");
+		modelAndView.setViewName(getReditectLink("redirect:/admin/panel/categories", request, Arrays.asList("id")));
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/editCategory" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/panel/editCategory" }, method = RequestMethod.GET) // to
 	public ModelAndView adminEditCategory(ModelAndView modelAndView, @RequestParam("id") int id,
 			@RequestParam("name") String name, @RequestParam("enabled") Boolean enabled, HttpSession session,
 			HttpServletRequest request) {
@@ -142,38 +141,39 @@ public class AdminController extends ControllerUtil {
 
 		shoppingCartService.editCategory(category);
 
-		// getReditectLink("redirect:/admin/panel/categories", request,
-		// Arrays.asList("id", "enabled", "name"));
 		modelAndView.setViewName(
 				getReditectLink("redirect:/admin/panel/categories", request, Arrays.asList("id", "enabled", "name")));
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/editProduct" }, method = RequestMethod.GET)
-	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product,
-			HttpSession session) {
+	@RequestMapping(value = { "/admin/panel/editProduct" }, method = RequestMethod.GET) // to
+	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product, 
+			HttpServletRequest request, HttpSession session) {
 
 		shoppingCartService.editProduct(product);
-
-		modelAndView.setViewName("redirect:/admin/panel/product");
+		modelAndView.setViewName(
+				getReditectLink("redirect:/admin/panel/product", request, Arrays.asList()));
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/addProduct" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/panel/addProduct" }, method = RequestMethod.GET) // to
 	public ModelAndView adminAddProduct(ModelAndView modelAndView, @ModelAttribute("productAddModel") Product product,
+			HttpServletRequest request,
 			HttpSession session) {
 
 		shoppingCartService.addProduct(product);
-		modelAndView.setViewName("redirect:/admin/panel/product");
+		modelAndView.setViewName(
+				getReditectLink("redirect:/admin/panel/product", request, Arrays.asList()));
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/addCategory" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/admin/panel/addCategory" }, method = RequestMethod.GET) // to
 	public ModelAndView adminAddCategory(ModelAndView modelAndView,
-			@ModelAttribute("categoryAddModel") Category category, HttpSession session) {
+			@ModelAttribute("categoryAddModel") Category category, HttpServletRequest request, HttpSession session) {
 
 		shoppingCartService.addCategory(category);
-		modelAndView.setViewName("redirect:/admin/panel/categories");
+		modelAndView.setViewName(
+				getReditectLink("redirect:/admin/panel/categories", request, Arrays.asList()));
 		return modelAndView;
 	}
 
@@ -190,9 +190,10 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/changeCartStatus/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminChangeCartStatus(ModelAndView modelAndView, HttpSession session,
-			@PathVariable(value = "id") int id, @RequestParam(required = true) String status) {
+	@RequestMapping(value = { "/admin/panel/changeCartStatus/{id}" }, method = RequestMethod.GET) // to
+	public ModelAndView adminChangeCartStatus(ModelAndView modelAndView,
+			@PathVariable(value = "id") int id, @RequestParam(required = true) String status, 
+			HttpServletRequest request, HttpSession session) {
 		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
 		Delivery delivery = new Delivery();
@@ -220,8 +221,8 @@ public class AdminController extends ControllerUtil {
 		mailService.sendConfirmShoppingMail(customerService.getCustomerById(getAuthenticatedUser().getId()),
 				"info@dyntechshop.com", "j.dumeljic@dyntechdoo.com", "Vasa kupovina je uspesno obavljena",
 				downloadLinks, template);
-
-		modelAndView.setViewName("redirect:/admin/panel/pendingCarts");
+		modelAndView.setViewName(
+				getReditectLink("redirect:/admin/panel/pendingCarts", request, Arrays.asList("id", "status")));
 		return modelAndView;
 	}
 

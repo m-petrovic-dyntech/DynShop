@@ -46,14 +46,17 @@ public class ControllerUtil {
 		String redirectParameters = link;
 
 		Integer i = 1;
+		Integer firstTime = 1;
 		if (parameterMap.size() > 0) {
 
 			for (Map.Entry<String, String[]> parameter : parameterMap.entrySet()) {
-				if (!ignored.contains(parameter.getKey())) {
-					if (i < parameterMap.size() && i != 1) {
+				if (!ignored.contains(parameter.getKey()) && !parameter.getValue()[0].equals("")) {
+					if (i <= parameterMap.size() && firstTime != 1) {
 						redirectParameters += "&";
+					
 					} else {
 						redirectParameters += "?";
+						firstTime++;
 					}
 					redirectParameters += parameter.getKey() + "=" + parameter.getValue()[0];
 
@@ -66,7 +69,7 @@ public class ControllerUtil {
 		} else {
 
 			System.out.println("***********  " + redirectParameters);
-			return link;
+			return redirectParameters;
 		}
 	}
 }
