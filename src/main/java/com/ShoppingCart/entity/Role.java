@@ -2,6 +2,7 @@ package com.ShoppingCart.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class Role {
 	@Column(name="enabled")
 	private Boolean enabled;
 	
-	@ManyToMany(mappedBy = "roles")
+	@ManyToMany(mappedBy = "roles", cascade=CascadeType.ALL)
 	private List<Customer> customers;
 
 	public List<Customer> getCustomers() {

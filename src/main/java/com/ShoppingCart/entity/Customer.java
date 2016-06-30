@@ -2,8 +2,10 @@ package com.ShoppingCart.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,10 +55,10 @@ public class Customer {
 	@Column(name = "enabled")
 	private Boolean enabled;
 	
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade=CascadeType.ALL)
 	private List<ShoppingCart> shoppingCarts;
 
-	@ManyToMany
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 	
