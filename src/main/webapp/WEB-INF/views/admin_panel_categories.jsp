@@ -43,6 +43,8 @@
                                                                             <span class="categories-item-name-value">
                                                                                 ${category.name}
                                                                             </span>
+                                                                            <input type="hidden" name="size" value="${pagination.pageSize < pagination.numberOfItems? pagination.pageSize : ''}" />
+                                                                            <input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}" />
                                                                             <input type="hidden" value="${category.id}" name="id" />
                                                                             <input type="hidden" value="${category.enabled}" name="enabled" />
                                                                             <!-- **** -->
@@ -54,7 +56,7 @@
                                                                             <a class="btn btn-danger categories-item-edit-no"><span class="glyphicon glyphicon-remove"></span></a>
                                                                         </td>
                                                                         <td class="vertical-middle categories-col-remove">
-                                                                            <a class="btn btn-danger" href="${pageContext.request.contextPath}/admin/panel/deleteCategory/${category.id}"><span class="glyphicon glyphicon-trash"></span></a>
+                                                                            <a class="btn btn-danger" href="${pageContext.request.contextPath}/admin/panel/deleteCategory/${category.id}${pagination.pageSize < pagination.numberOfItems? '?page=' += pagination.currentPage += '&size=' += pagination.pageSize : ''}"><span class="glyphicon glyphicon-trash"></span></a>
                                                                         </td>
                                                                     </tr>
                                                                 </form>
@@ -137,6 +139,8 @@
                                                     <form id="product" action="${pageContext.request.contextPath}/admin/panel/addCategory" method="GET" class="categories-item-form">
                                                         <div class="input-group">
                                                             <input type="hidden" value="true" name="enabled" />
+                                                            <input type="hidden" name="size" value="${pagination.pageSize < pagination.numberOfItems? pagination.pageSize : ''}" />
+                                                            <input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}" />
                                                             <input type="text" name="name" class="form-control" placeholder="Category Name">
                                                             <span class="input-group-btn">
                                                                 <button type="submit" class="btn btn-success glyphicon glyphicon-ok" id="categories-add-button"></button>

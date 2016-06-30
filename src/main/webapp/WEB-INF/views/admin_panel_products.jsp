@@ -59,7 +59,7 @@
                                                                 <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenu${loop.index}" data-toggle="dropdown" title="Edit" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-trash"></span></button>
                                                                 <div class="dropdown-menu admin_panel-products-delete_popup" aria-labelledby="dropdownMenu${loop.index}">
                                                                     <button class="btn btn-danger" class="admin_panel-products-delete_popup-close"><span class="glyphicon glyphicon-remove"></span></button>
-                                                                    <a href="${pageContext.request.contextPath}/admin/panel/deleteProduct/${product.id}" class="btn btn-success" type="button"><span class="glyphicon glyphicon-ok"></span></a>
+                                                                    <a href="${pageContext.request.contextPath}/admin/panel/deleteProduct/${product.id}${pagination.pageSize < pagination.numberOfItems? ( '?page=' += pagination.currentPage += '&size=' += pagination.pageSize) : ''}" class="btn btn-success" type="button"><span class="glyphicon glyphicon-ok"></span></a>
                                                                 </div>
                                                             </div>
                                                         </td>

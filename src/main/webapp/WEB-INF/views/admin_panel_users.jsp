@@ -37,6 +37,7 @@
                                         <c:forEach items="${customers}" var="customer">
                                             <tr class="customers-item">
                                                 <td>
+                                                    <input type="hidden" value="${customer.enabled}" class="customers-item-enabled">
                                                     <span class="customers-item-first_name">${customer.firstName} </span>
                                                     <span class="customers-item-last_name">${customer.lastName}</span>
                                                 </td>
@@ -46,7 +47,7 @@
                                                 <td class="customers-item-phone">${customer.phone}</td>
                                                 <td>
                                                     <c:forEach items="${customer.getRoles()}" var="customerRole">
-                                                        <span class="customers-role_name" role-name="customerRole.role">${customerRole}</span>
+                                                        <span class="customers-role_name" role-name="${customerRole.role}">${customerRole}</span>
                                                     </c:forEach>
                                                 </td>
                                                 <td class="text-right customers-column-edit">
@@ -144,7 +145,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" id="customers-edit_panel-cancel">Close</button>
                                     <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
@@ -166,13 +167,12 @@
 
                             var tempRoles = $(tempParent).find('.customers-role_name');
                             var tempRolesLength = tempRoles.length;
+
+                            $('#customers-edit_panel-roles').multiselect('deselectAll', false);
                             // 
                             for (var i = 0; i < tempRolesLength; i++) {
-
-                                $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).text())
+                                $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).attr('role-name'));
                             }
-
-
                         });
 
                         /*----------  Multiselect plugin init  ----------*/
