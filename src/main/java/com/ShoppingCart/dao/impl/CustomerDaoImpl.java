@@ -7,11 +7,14 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,7 +86,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		Customer c = (Customer) getSession().createCriteria(Customer.class).add(Restrictions.eq("username", username))
 				.uniqueResult();
 		//c.setRoles((List<Role>) getSession().createCriteria(Role.class).add(Restrictions.eq("customers", c)).list());
-		System.out.println(Arrays.toString(c.getRoles().toArray()));
 		return c;
 	}
 
@@ -113,7 +115,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public List<Role> getRolesByCustomer(Customer customer) {
-		return (List<Role>) getSession().createCriteria(Role.class).add(Restrictions.eq("customer", customer)).list();
+		return (List<Role>)customer.getRoles();
 	}
 
 	@Override
@@ -157,10 +159,11 @@ public class CustomerDaoImpl implements CustomerDao {
 		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("roleTitle", title)).uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Role> getRoles() {
-		return getSession().createCriteria(Role.class).list();
+		return (List<Role>)getSession().createCriteria(Role.class).list();
 	}
 
 }

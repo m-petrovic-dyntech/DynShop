@@ -13,8 +13,10 @@ public interface CustomerDao {
 
 	public Customer getCustomerById(int id);
 
+	//da li treba da postoji add?
 	public void addCustomer(Customer customer);
 
+	//edit profile?
 	public void editCustomer(Customer newCustomer);
 
 	public Customer getCustomerByUsername(String username);

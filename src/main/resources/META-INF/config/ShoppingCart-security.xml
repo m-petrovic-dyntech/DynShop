@@ -36,7 +36,7 @@
 	</http>
 
 	<authentication-manager id="jdbc-auth">
-		<authentication-provider user-service-ref="customerService">
+		<authentication-provider user-service-ref="userService">
 			<password-encoder hash="md5" />
 			<!--<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select 
 				id, username, password, enabled from customers where username = ?" authorities-by-username-query="select 

@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.dao.CustomerDao;
-import com.ShoppingCart.dto.CustomUserDetails;
+import com.ShoppingCart.dto.UserDetailsDto;
 import com.ShoppingCart.dto.UserDto;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Role;
@@ -52,10 +52,11 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Customer c = (Customer) this.getCustomerByUsername(username);
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		
 		for (Role r : c.getRoles()) {
 			authorities.add(new SimpleGrantedAuthority(r.getRole()));
 		}
-		return new CustomUserDetails(c.getUsername(), c.getPassword(), true, true, true, true, authorities, c.getId());
+		return new UserDetailsDto(c.getUsername(), c.getPassword(), true, true, true, true, authorities, c.getId());
 	}
 
 	@Override
@@ -109,34 +110,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 		return customerDao.getRoleById(id);
 	}
 
-	@Override
-	public Customer registerNewUserAccount(UserDto userDto) throws Exception{
-		
-		if(customerDao.emailExist(userDto.getEmail()))
-			throw new Exception();
-		
-		Customer user = new Customer();
-		user.setUsername(userDto.getUsername());
-		user.setPassword(userDto.getPassword());
-		user.setAddress(userDto.getAddress());
-		user.setCity(userDto.getCity());
-		user.setFirstName(userDto.getFirstName());
-		user.setLastName(userDto.getLastName());
-		user.setEmail(userDto.getEmail());
-		user.setPhone(userDto.getPhone());
-		
-		List<Role> roleList = new ArrayList<>();
-		
-		/*
-		Role role = new Role();
-		role.setId();
-		
-		roleList.se
-		user.setRoles(roles);
-		*/
-		
-		return null;
-	}
 	
 	public Role getRoleByTitle(String title) {
 		return customerDao.getRoleByTitle(title);

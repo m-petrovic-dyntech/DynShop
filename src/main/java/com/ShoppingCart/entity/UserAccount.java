@@ -2,17 +2,14 @@ package com.ShoppingCart.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,11 +17,12 @@ import javax.persistence.Table;
 import com.ShoppingCart.util.PasswordUtil;
 
 @Entity
-@Table(name = "customers", schema="DYNTECH_SHOP_REGISTRATION")
-public class Customer {
+@Table(name = "users_accounts", schema="DYNTECH_SHOP_REGISTRATION")
+public class UserAccount {
+	
 	@Id
-	@SequenceGenerator(name = "user_gen", sequenceName = "user_seq", allocationSize = 1, initialValue = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
+	@SequenceGenerator(name = "userAcc_gen", sequenceName = "user_seq", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userAcc_gen")
 	@Column(name = "id")
 	private Integer id;
 
@@ -55,11 +53,11 @@ public class Customer {
 	@Column(name = "enabled")
 	private Boolean enabled;
 	
-	@OneToMany(mappedBy = "customer", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "customer")
 	private List<ShoppingCart> shoppingCarts;
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@ManyToMany
+    @JoinTable(name = "useracc_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 	
 	public Integer getId() {
@@ -159,8 +157,4 @@ public class Customer {
 		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		return "Customer id=" + id + ", username=" + username;
-	}
 }

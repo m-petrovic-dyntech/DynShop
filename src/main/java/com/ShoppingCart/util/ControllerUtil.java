@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.ShoppingCart.dto.CustomUserDetails;
+import com.ShoppingCart.dto.UserDetailsDto;
 import com.ShoppingCart.entity.ShoppingCart;
 
 public class ControllerUtil {
@@ -22,8 +22,8 @@ public class ControllerUtil {
 		return auth;
 	}
 
-	public CustomUserDetails getAuthenticatedUser() {
-		CustomUserDetails cud = (CustomUserDetails) getAuthentication().getPrincipal();
+	public UserDetailsDto getAuthenticatedUser() {
+		UserDetailsDto cud = (UserDetailsDto) getAuthentication().getPrincipal();
 		
 		return cud;
 	}

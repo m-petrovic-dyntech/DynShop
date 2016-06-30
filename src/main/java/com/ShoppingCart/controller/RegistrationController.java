@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ShoppingCart.dto.UserDto;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.UserAccount;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.service.MailService;
+import com.ShoppingCart.service.UserService;
 import com.ShoppingCart.util.ControllerUtil;
 import com.ShoppingCart.util.GenericResponse;
 
@@ -29,12 +31,16 @@ public class RegistrationController extends ControllerUtil{
 	@Autowired
 	private CustomerService customerService;
 	
+	@Autowired
+	private UserService userService;
+	
     @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
     @ResponseBody
     public GenericResponse registerUserAccount(@Valid final UserDto userDto, final HttpServletRequest request) throws Exception {
     	logger.debug("Registering user account with information: {}" + userDto.toString() );
-
-        final Customer registered = customerService.registerNewUserAccount(userDto);
+    	
+    	final UserAccount userAccount = userService.registerNewUserAccount(userDto);
+        //final Customer registered = customerService.registerNewUserAccount(userDto);
         //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
         return new GenericResponse("success");
     }
