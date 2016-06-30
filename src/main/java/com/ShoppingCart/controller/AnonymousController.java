@@ -1,10 +1,12 @@
 package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -40,27 +42,26 @@ public class AnonymousController extends ControllerUtil {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private MailService mailService;
 
-	//redirection based on role
+	// redirection based on role
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
 	public ModelAndView init(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
-		
+
 		if (ifUserHasRole("ROLE_ADMIN"))
-			modelAndView.setViewName("redirect:/admin/panel/products");	
+			modelAndView.setViewName("redirect:/admin/panel/products");
 		else if (ifUserHasRole("ROLE_STORAGE"))
-				modelAndView.setViewName("redirect:/storage_management/pendingOrders");	
-			else if (ifUserHasRole("ROLE_USER"))
-				modelAndView.setViewName("redirect:/products");	
-		
-			
+			modelAndView.setViewName("redirect:/storage_management/pendingOrders");
+		else if (ifUserHasRole("ROLE_USER"))
+			modelAndView.setViewName("redirect:/products");
+
 		modelAndView.addObject("customer", new Customer());
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView userLogin(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
@@ -76,7 +77,6 @@ public class AnonymousController extends ControllerUtil {
 		modelAndView.addObject("user", getAuthenticatedUser().getUsername());
 		modelAndView.setViewName("denied");
 		return modelAndView;
-
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -93,7 +93,7 @@ public class AnonymousController extends ControllerUtil {
 		initializeSession(session);
 
 		Category selectedCategory = new Category();
-		JtoPagination pagination;   //proveri sa natalijom dal je ovo ok
+		JtoPagination pagination; // proveri sa natalijom dal je ovo ok
 
 		if (category != null && category != 0) {
 			selectedCategory = shoppingCartService.getCategoryById(category);
@@ -102,9 +102,8 @@ public class AnonymousController extends ControllerUtil {
 		} else
 			pagination = new JtoPagination(page, size, shoppingCartService.getCountProducts());
 
-
 		List<Product> products = shoppingCartService.getEnabledProducts(selectedCategory, page, size);
-		List<Category> categories = (List<Category>) shoppingCartService.getCategories(page, size);
+		List<Category> categories = (List<Category>) shoppingCartService.getCategories(null, null);
 
 		modelAndView.addObject("products", products);
 		modelAndView.addObject("categories", categories);
@@ -113,9 +112,6 @@ public class AnonymousController extends ControllerUtil {
 		modelAndView.addObject("pagination", pagination);
 
 		modelAndView.setViewName("products");
-		// Testing
-		// System.out.println("*************** " + pagination.toString();
-
 		return modelAndView;
 	}
 
@@ -125,10 +121,6 @@ public class AnonymousController extends ControllerUtil {
 		initializeSession(session);
 		Product product = shoppingCartService.getProductById(id);
 
-		// Testing
-		// System.out.println("******"+product.getName()+" u kategoriji
-		// "+product.getCategory().getName());
-
 		modelAndView.setViewName("product");
 		modelAndView.addObject("product", product);
 		modelAndView.addObject("categoryId", categoryId);
@@ -136,17 +128,14 @@ public class AnonymousController extends ControllerUtil {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "product/add/{id}/{quantity}", method = RequestMethod.GET)
+	@RequestMapping(value = "product/add/{id}", method = RequestMethod.GET)
 	public ModelAndView addProductToCart(@PathVariable(value = "id") int id,
-			@PathVariable(value = "quantity") int quantity, @RequestParam(required = false) Integer categoryId,
-			HttpSession session) {
+			@RequestParam(required = false) Integer category, @RequestParam(required = true) Integer quantity,
+			HttpServletRequest request, HttpSession session) {
 		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 
 		List<ShoppingCartItem> items = (List<ShoppingCartItem>) cart.getItems();
-
-		// Testing
-		// System.out.println("BEFORE ADDING "+cart.getTotalCost());
 
 		if (cart.findItemByProductId(id) == null) {
 			Product product = shoppingCartService.getProductById(id);
@@ -172,13 +161,7 @@ public class AnonymousController extends ControllerUtil {
 		cart.setItems(items);
 		session.setAttribute("cart", cart);
 
-		// Testing
-		// System.out.println("AFTER ADDING "+cart.getTotalCost());
-
-		if (categoryId == null || categoryId == 0)
-			return new ModelAndView("redirect:/products");
-		else
-			return new ModelAndView("redirect:/products?category=" + categoryId);
+		return new ModelAndView(getRedirectLink("redirect:/products", request, Arrays.asList("quantity")));
 	}
 
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
@@ -195,10 +178,6 @@ public class AnonymousController extends ControllerUtil {
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 
 		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
-
-		// Testing
-		// System.out.println("BEFORE REMOVING " + cart.getTotalCost());
-
 		Iterator<ShoppingCartItem> itr = items.iterator();
 		while (itr.hasNext()) {
 			ShoppingCartItem element = (ShoppingCartItem) itr.next();
@@ -209,8 +188,6 @@ public class AnonymousController extends ControllerUtil {
 		}
 
 		session.setAttribute("cart", cart);
-		// Testing
-		// System.out.println("AFTER REMOVING" + cart.getTotalCost());
 		return new ModelAndView("redirect:/cart");
 
 	}
@@ -228,9 +205,6 @@ public class AnonymousController extends ControllerUtil {
 		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 
-		// Testing
-		// System.out.println("BEFORE EDIT QUANTITY " + cart.getTotalCost());
-
 		if (cart.findItemByProductId(id) != null) {
 			cart.findItemByProductId(id).setQuantity(value);
 			Double currentTotal = cart.getTotalCost() - cart.findItemByProductId(id).getTotal();
@@ -239,10 +213,6 @@ public class AnonymousController extends ControllerUtil {
 
 			cart.setTotalCost(currentTotal + cart.findItemByProductId(id).getTotal());
 		}
-
-		// Testing
-		// System.out.println("AFTER EDIT QUANTITY " + cart.getTotalCost());
-
 		return new ModelAndView("redirect:/cart");
 	}
 
@@ -252,13 +222,12 @@ public class AnonymousController extends ControllerUtil {
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 		cart.setCustomer(customerService.getCustomerById(getAuthenticatedUser().getId()));
 		List<ShoppingCartItem> items = (List<ShoppingCartItem>) cart.getItems();
-	
+
 		for (ShoppingCartItem shoppingCartItem : items) {
 			Product product = shoppingCartService.getProductById(shoppingCartItem.getProduct().getId());
-			product.setReservedQuantity(product.getReservedQuantity() + shoppingCartItem.getQuantity()); 
+			product.setReservedQuantity(product.getReservedQuantity() + shoppingCartItem.getQuantity());
 			shoppingCartService.editProduct(product);
 		}
-		
 		modelAndView.setViewName("confirmPurchase");
 		return modelAndView;
 	}
@@ -273,12 +242,12 @@ public class AnonymousController extends ControllerUtil {
 		cart.setStatus(CartStatus.PENDING);
 		cart.setEnabled(true);
 		shoppingCartService.saveCart(cart);
-		
-		if(paymentMethod.equals("cash")) 
+
+		if (paymentMethod.equals("cash"))
 			mailService.sendPaymentOrder(customerService.getCustomerById(getAuthenticatedUser().getId()),
 					"info@dyntechshop.com", "j.dumeljic@dyntechdoo.com", "Your payment order from DynTechShop",
 					"paymentOrderTemplate.vm");
-					
+
 		session.setAttribute("cart", new ShoppingCart());
 		modelAndView.addObject("cart", cart);
 		modelAndView.setViewName("redirect:/products");

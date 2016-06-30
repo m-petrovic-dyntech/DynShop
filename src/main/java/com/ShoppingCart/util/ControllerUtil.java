@@ -40,7 +40,7 @@ public class ControllerUtil {
 		return false;
 	}
 
-	public String getReditectLink(String link, HttpServletRequest request, List<String> ignored) {
+	public String getRedirectLink(String link, HttpServletRequest request, List<String> ignored) {
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		String redirectParameters = link;

@@ -41,12 +41,18 @@
                                                             U korpu
                                                         </button>
                                                         <div class="dropdown-menu products-item-cart-popup" aria-labelledby="dropdownMenu2">
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control products-item-cart-add_item-input" placeholder="Quantity" value="1">
-                                                                <span class="input-group-btn">
-                                                                <button class="btn btn-success products-item-cart-add_item" type="button" item-index="${loop.index}" item-cart-link="${pageContext.request.contextPath}/product/add/${product.id}/"><span class="glyphicon glyphicon-ok"></span></button>
-                                                                </span>
-                                                            </div>
+                                                        	<form action="${pageContext.request.contextPath}/product/add/${product.id}${category.id != null ? '?categoryId=' += category.id : ''}" method="GET">
+                                                        		<div class="input-group">
+	                                                                <input type="number" class="form-control products-item-cart-add_item-input" placeholder="Quantity" name="quantity" value="1" min="1" required>
+	                                                                 <input type="hidden" name="category" value="${category.id}"/>
+	                                                                 <input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}"/>
+	                                                                <input type="hidden" name="size" value="${pagination.pageSize < pagination.numberOfItems? pagination.pageSize : ''}"/>
+	                                                               
+	                                                                <span class="input-group-btn">
+	                                                                <button class="btn btn-success products-item-cart-add_item" type="submit"><span class="glyphicon glyphicon-ok"></span></button>
+	                                                                </span>
+	                                                            </div>
+                                                        	</form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -61,30 +67,13 @@
                                     $(document).ready(function() {
                                         $('#products-filter-select').change(function() {
                                             var tempSelected = $(this).find('option:selected').val()
+                                            
+                                            var tempQuestionMark = tempSelected ? '' : '?';
+                                            
+                                            var tempPagination = "${pagination.pageSize < pagination.numberOfItems ? tempQuestionMark += '&page=' += pagination.currentPage += '&size=' += pagination.pageSize : ''}";
 
-                                            window.location.href = '${pageContext.request.contextPath}/products' + (tempSelected ? '?category=' + tempSelected : '');
+                                            window.location.href = '${pageContext.request.contextPath}/products' + (tempSelected ? '?category=' + tempSelected : '') + tempPagination;
                                         });
-                                        $('.products-item-cart-add_item').click(function() {
-                                            addItem($(this));
-                                        });
-
-                                        $('.products-item-cart-add_item-input').keypress(function(event) {
-                                            var tempElement = $(this).next('.input-group-btn').find('.products-item-cart-add_item');
-                                            if (event.which == 13) {
-                                                addItem($(tempElement));
-                                            }
-                                        });
-
-                                        function addItem(element) {
-                                            var tempElementIndex = $(element).attr('item-index');
-                                            var tempValue = $('.products-item-' + tempElementIndex).find('.products-item-cart-add_item-input').val();
-                                            var tempLink = $(element).attr('item-cart-link');
-
-                                            var tempCategory = '${category.id}';
-                                            var tempCategoryId = '?categoryId=' + (tempCategory ? '${category.id}' : '0');
-
-                                            window.location.href = tempLink + (tempValue != '' && tempValue != 0 ? tempValue : 1) + tempCategoryId;
-                                        }
                                     })
                                     </script>
                                 </div>
