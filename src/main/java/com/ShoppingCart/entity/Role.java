@@ -32,14 +32,14 @@ public class Role {
 	private Boolean enabled;
 	
 	@ManyToMany(mappedBy = "roles")
-	private List<Customer> customers;
+	private List<UserAccount> users;
 
-	public List<Customer> getCustomers() {
-		return customers;
+	public List<UserAccount> getUsers() {
+		return users;
 	}
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
+	public void setUsers(List<UserAccount> users) {
+		this.users = users;
 	}
 
 	public Integer getId() {

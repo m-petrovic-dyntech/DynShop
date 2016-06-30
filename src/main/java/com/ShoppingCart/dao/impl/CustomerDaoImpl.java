@@ -22,7 +22,6 @@ import com.ShoppingCart.entity.Role;
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 
-	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
 
 	private SessionFactory sessionFactory;
