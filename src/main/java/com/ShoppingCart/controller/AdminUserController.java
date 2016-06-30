@@ -87,11 +87,11 @@ public class AdminUserController extends ControllerUtil{
 	}
 	
 	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.GET)
-	public ModelAndView adminEditCustomer(ModelAndView modelAndView, @ModelAttribute("customerEditModel") Customer customer,
+	public ModelAndView adminEditCustomer(ModelAndView modelAndView, @ModelAttribute("customerEditModel") Customer customer, @RequestParam(required = false) List<Role> roles,
 			HttpSession session) {
-
+		customer.setRoles(roles);
 		customerService.editCustomer(customer);
-		modelAndView.setViewName("redirect:/admin_panel_users");
+		modelAndView.setViewName("redirect:/admin/panel/users");
 		return modelAndView;
 	}
 
