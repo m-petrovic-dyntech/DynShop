@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,22 +28,24 @@ public class RegistrationController extends ControllerUtil{
 	
 	@Autowired
 	private MailService mailService;
-	
-	@Autowired
-	private CustomerService customerService;
-	
+
 	@Autowired
 	private UserService userService;
 	
-    @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "/registration", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public GenericResponse registerUserAccount(@Valid final UserDto userDto, final HttpServletRequest request) throws Exception {
-    	logger.debug("Registering user account with information: {}" + userDto.toString() );
+    public GenericResponse registerUserAccount(@RequestBody UserDto userDto, HttpServletRequest request) {
+    	logger.info("Registering user account with information: {}" + userDto.toString() );
     	
-    	final UserAccount userAccount = userService.registerNewUserAccount(userDto);
+    	try {
+			 final UserAccount userAccount = userService.registerNewUserAccount(userDto);
+			 return new GenericResponse("Registration succesfull");
+		} catch (Exception e) {
+			 return new GenericResponse("User or mail already exists!", "Already taken!");
+		}
         //final Customer registered = customerService.registerNewUserAccount(userDto);
         //eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
-        return new GenericResponse("success");
+       
     }
 	
 	

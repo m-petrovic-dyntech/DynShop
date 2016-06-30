@@ -148,12 +148,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
-	@Override
-	public boolean emailExist(String email) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	@Transactional
 	public Role getRoleByTitle(String title) {
 		return (Role) getSession().createCriteria(Role.class).add(Restrictions.eq("roleTitle", title)).uniqueResult();

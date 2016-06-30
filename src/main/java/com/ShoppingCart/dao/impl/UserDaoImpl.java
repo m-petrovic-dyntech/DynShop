@@ -2,6 +2,7 @@ package com.ShoppingCart.dao.impl;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.UserDao;
+import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.UserAccount;
 
 public class UserDaoImpl implements UserDao{
@@ -40,6 +43,24 @@ public class UserDaoImpl implements UserDao{
 				 .add(Restrictions.eq("username", username))
 				 .uniqueResult();
 		 return userAcc;
+	}
+
+	@Override
+	@Transactional
+	public UserAccount findByEmailAndPassword(String username, String email) {
+		
+		UserAccount userAcc =  (UserAccount) getSession()
+				.createCriteria(UserAccount.class)
+				.add(Restrictions.or(Restrictions.eq("username", username), Restrictions.eq("email", email)))
+				.uniqueResult();
+		
+		return userAcc;
+	}
+
+	@Override
+	@Transactional
+	public void saveUser(UserAccount userAccount) {
+		getSession().saveOrUpdate(userAccount);
 	}
 
 }

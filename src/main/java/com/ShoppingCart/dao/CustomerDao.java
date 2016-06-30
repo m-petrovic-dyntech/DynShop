@@ -43,6 +43,4 @@ public interface CustomerDao {
 	
 	public List<Role> getRoles();
 
-	public boolean emailExist(String email);
-
 }

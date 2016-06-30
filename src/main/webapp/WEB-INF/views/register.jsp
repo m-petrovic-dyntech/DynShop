@@ -110,17 +110,25 @@
 
                                 function ajaxRegister(registerData) {
                                     console.log(registerData);
-                                    return $.post('${pageContext.request.contextPath}/user/registration', {
-                                        username: registerData.username,
-                                        password: registerData.password,
-                                        matchingPassword: registerData.matchingPassword,
-                                        firstName: registerData.firstName,
-                                        lastName: registerData.lastName,
-                                        city: registerData.city,
-                                        address: registerData.address,
-                                        phone: registerData.phone,
-                                        email: registerData.email,
+                                    var data = {
+                                            username: registerData.username,
+                                            password: registerData.password,
+                                            matchingPassword: registerData.matchingPassword,
+                                            firstName: registerData.firstName,
+                                            lastName: registerData.lastName,
+                                            city: registerData.city,
+                                            address: registerData.address,
+                                            phone: registerData.phone,
+                                            email: registerData.email,
+                                        };
+                                    return $.ajax({
+                                    	method:'POST',
+                                    	url: '${pageContext.request.contextPath}/registration',
+                                    	contentType: "application/json",
+                                    	dataType: 'json',
+                                    	data: JSON.stringify(data)
                                     });
+                                    
                                 }
 
                             });

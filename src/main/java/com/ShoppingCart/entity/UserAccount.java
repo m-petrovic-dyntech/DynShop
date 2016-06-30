@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ import com.ShoppingCart.util.PasswordUtil;
 public class UserAccount {
 	
 	@Id
-	@SequenceGenerator(name = "userAcc_gen", sequenceName = "user_seq", allocationSize = 1, initialValue = 1)
+	@SequenceGenerator(name = "userAcc_gen", sequenceName = "userAcc_seq", allocationSize = 1, initialValue = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userAcc_gen")
 	@Column(name = "id")
 	private Integer id;
@@ -56,7 +57,7 @@ public class UserAccount {
 	@OneToMany(mappedBy = "customer")
 	private List<ShoppingCart> shoppingCarts;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "useracc_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<Role> roles;
 	

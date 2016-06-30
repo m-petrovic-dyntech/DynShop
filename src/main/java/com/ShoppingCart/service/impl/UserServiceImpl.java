@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.ShoppingCart.dao.RoleDao;
 import com.ShoppingCart.dao.UserDao;
 import com.ShoppingCart.dto.UserDetailsDto;
 import com.ShoppingCart.dto.UserDto;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	RoleDao roleDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,10 +50,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public UserAccount registerNewUserAccount(UserDto userDto) throws Exception {
 
-		/*
-		 * if(customerDao.emailExist(userDto.getEmail())) throw new Exception();
-		 */
-
+		if(userExist(userDto.getUsername(), userDto.getEmail())){
+			throw new Exception();
+		}
+		
 		UserAccount userAcc = new UserAccount();
 		userAcc.setUsername(userDto.getUsername());
 		userAcc.setPassword(userDto.getPassword());
@@ -59,8 +63,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		userAcc.setLastName(userDto.getLastName());
 		userAcc.setEmail(userDto.getEmail());
 		userAcc.setPhone(userDto.getPhone());
+		
+		
+		Role role = roleDao.getRoleByName("ROLE_USER");		
+		List<Role> roles = new ArrayList<>();
+		roles.add(role);
+		userAcc.setRoles(roles);
+		userDao.saveUser(userAcc);
 
 		return userAcc;
+	}
+
+	private boolean userExist(String username, String email) {
+		final UserAccount userAcc = userDao.findByEmailAndPassword(username, email);
+        if (userAcc != null) {
+            return true;
+        }
+        return false;
 	}
 
 }

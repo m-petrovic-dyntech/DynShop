@@ -21,6 +21,7 @@
 
 	<context:component-scan base-package="com.ShoppingCart.dao" />
 	<context:component-scan base-package="com.ShoppingCart.service" />
+	<context:component-scan base-package="com.ShoppingCart.controller" />
 	<mvc:annotation-driven />
 	<tx:annotation-driven />
 	
@@ -65,6 +66,10 @@
 	</bean>
 	
 	<bean name="userDao" class="com.ShoppingCart.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean name="roleDao" class="com.ShoppingCart.dao.impl.RoleDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
