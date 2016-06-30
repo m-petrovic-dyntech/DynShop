@@ -38,7 +38,7 @@
                                             <tr class="customers-item">
                                                 <td>
                                                     <input type="hidden" value="${customer.enabled}" class="customers-item-enabled">
-                                                    <span class="customers-item-first_name">${customer.firstName} </span>
+                                                    <span class="customers-item-first_name">${customer.firstName}</span>
                                                     <span class="customers-item-last_name">${customer.lastName}</span>
                                                 </td>
                                                 <td class="customers-item-username">${customer.username}</td>
@@ -74,79 +74,81 @@
                                     <h4 class="modal-title" id="myModalLabel">Edit User</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="container-fluid row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="customers-edit_panel-first_name">First Name</label>
-                                                <input type="text" class="form-control" id="customers-edit_panel-first_name" placeholder="First Name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="customers-edit_panel-last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="customers-edit_panel-last_name" placeholder="Last Name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="container-fluid row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="customers-edit_panel-city">City</label>
-                                                <input type="text" class="form-control" id="customers-edit_panel-city" placeholder="City">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="customers-edit_panel-address">Address</label>
-                                                <input type="text" class="form-control" id="customers-edit_panel-address" placeholder="Address">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="customers-edit_panel-phone">Phone</label>
-                                                <input type="text" class="form-control" id="customers-edit_panel-phone" placeholder="Phone">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="container-fluid row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="customers-edit_panel-password">Password</label>
-                                                <input type="password" class="form-control" id="customers-edit_panel-password" placeholder="Password">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <div class="container-fluid row">
-                                                    <label for="customers-edit_panel-password">Roles</label>
+                                    <form action="${pageContext.request.contextPath}/admin/panel/editCustomer" method="GET" id="customers-edit_panel-form">
+                                        <div class="container-fluid row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="customers-edit_panel-first_name">First Name</label>
+                                                    <input type="text" class="form-control" id="customers-edit_panel-first_name" name="firstName" placeholder="First Name">
                                                 </div>
-                                                <select name="roles" id="customers-edit_panel-roles" multiple="multiple">
-                                                    <c:forEach items="${roles}" var="role">
-                                                        <option value="${role.role}">${role}</option>
-                                                    </c:forEach>
-                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="customers-edit_panel-last_name">Last Name</label>
+                                                    <input type="text" class="form-control" id="customers-edit_panel-last_name" name="lastName" placeholder="Last Name">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>User status</label>
-                                                <div class="container-fluid row">
-                                                    <span class="customers-edit_panel-status"> 
+                                        <hr>
+                                        <div class="container-fluid row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="customers-edit_panel-city">City</label>
+                                                    <input type="text" class="form-control" id="customers-edit_panel-city" name="city" placeholder="City">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="customers-edit_panel-address">Address</label>
+                                                    <input type="text" class="form-control" id="customers-edit_panel-address" name="address" placeholder="Address">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="customers-edit_panel-phone">Phone</label>
+                                                    <input type="text" class="form-control" id="customers-edit_panel-phone" name="phone" placeholder="Phone">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="container-fluid row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="customers-edit_panel-password">Password</label>
+                                                    <input type="password" class="form-control" id="customers-edit_panel-password" name="password" placeholder="Password">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div class="container-fluid row">
+                                                        <label for="customers-edit_panel-password">Roles</label>
+                                                    </div>
+                                                    <select name="roles" id="customers-edit_panel-roles" multiple="multiple">
+                                                        <c:forEach items="${roles}" var="role">
+                                                            <option value="${role.role}">${role}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>User status</label>
+                                                    <div class="container-fluid row">
+                                                        <span class="customers-edit_panel-status"> 
                                                         <input type="radio" name="enabled" value="true" id="customers-edit_panel-status-enable"/><br/><label for="customers-edit_panel-status-enable">Enable</label>
                                                     </span>
-                                                    <span class="customers-edit_panel-status"> 
+                                                        <span class="customers-edit_panel-status"> 
                                                         <input type="radio" name="enabled" value="false" id="customers-edit_panel-status-disable"/><br/><label for="customers-edit_panel-status-disable">Disable</label>
                                                     </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal" id="customers-edit_panel-cancel">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="submit" class="btn btn-primary" form="customers-edit_panel-form">Save changes</button>
                                 </div>
                             </div>
                         </div>
@@ -172,6 +174,12 @@
                             // 
                             for (var i = 0; i < tempRolesLength; i++) {
                                 $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).attr('role-name'));
+                            }
+                            console.log($(tempParent).find('.customers-item-enabled').val())
+                            if (JSON.parse($(tempParent).find('.customers-item-enabled').val())) {
+                                $('#customers-edit_panel-status-enable').prop('checked', true);
+                            } else {
+                                $('#customers-edit_panel-status-disable').prop('checked', true);
                             }
                         });
 
