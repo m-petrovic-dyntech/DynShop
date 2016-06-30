@@ -43,8 +43,8 @@
                                                                             <span class="categories-item-name-value">
                                                                                 ${category.name}
                                                                             </span>
+                                                                           	<input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}" />
                                                                             <input type="hidden" name="size" value="${pagination.pageSize < pagination.numberOfItems? pagination.pageSize : ''}" />
-                                                                            <input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}" />
                                                                             <input type="hidden" value="${category.id}" name="id" />
                                                                             <input type="hidden" value="${category.enabled}" name="enabled" />
                                                                             <!-- **** -->
