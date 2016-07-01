@@ -1,9 +1,13 @@
 package com.ShoppingCart.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
@@ -25,7 +29,7 @@ import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.util.ControllerUtil;
 
 @Controller
-public class AdminUserController extends ControllerUtil{
+public class AdminUserController extends ControllerUtil {
 	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
 
@@ -39,21 +43,14 @@ public class AdminUserController extends ControllerUtil{
 		initializeSession(session);
 		JtoPagination pagination = new JtoPagination(page, size, customerService.getCountCustomer());
 		List<Customer> customers = customerService.getAllCustomers(page, size);
+		
 		for (Customer customer : customers) {
-			System.out.println("**************************************************");
 			List<Role> roles = customerService.getRolesByCustomer(customer);
-			for (Role role : roles) {
-				System.out.println(customer.toString());
-				System.out.println(role.toString());
-			}
-			System.out.println("*********************************************&&&");
 			customer.setRoles(customerService.getRolesByCustomer(customer));
-
 		}
+		
 		List<Role> roles= customerService.getUniqueRoles();
-		for (Role role : roles) {
-			System.out.println("rola"+ role);
-		}
+		
 		modelAndView.addObject("roles", roles);
 		modelAndView.addObject("customers", customers);
 		modelAndView.addObject("pagination", pagination);
@@ -86,11 +83,26 @@ public class AdminUserController extends ControllerUtil{
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.GET)
-	public ModelAndView adminEditCustomer(ModelAndView modelAndView, @ModelAttribute("customerEditModel") Customer customer, @RequestParam(required = false) List<Role> roles,
+	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.POST)
+	public ModelAndView adminEditCustomer(ModelAndView modelAndView,
+			@ModelAttribute("customerEditModel") Customer customer,
+			HttpServletRequest request,
 			HttpSession session) {
-		customer.setRoles(roles);
-		customerService.editCustomer(customer);
+		Map<String, String[]> parameterMap = (Map<String, String[]>)request.getParameterMap();
+		List<String> roles = new ArrayList<String>();
+		for(String s : parameterMap.get("customer_roles")) {
+			s = s.replace("ROLE_", "");
+			s = s.toLowerCase();
+			s = s.substring(0, 1).toUpperCase()+s.substring(1);
+			roles.add(s);
+		}
+		//Roles list contains titles of roles, ex: [Admin, User]
+		//Must fetch roles from db by title
+		//Must insert those roles to this customer and saveOrUpdate model
+		//System.out.println(Arrays.toString(roles.toArray()));
+		//customerService.getRoleByTitle();
+		//customer.setRoles(roles);
+		//customerService.editCustomer(customer);
 		modelAndView.setViewName("redirect:/admin/panel/users");
 		return modelAndView;
 	}
