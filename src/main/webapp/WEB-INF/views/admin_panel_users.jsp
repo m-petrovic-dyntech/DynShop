@@ -50,7 +50,7 @@
                                     <td class="customers-item-phone">${customer.phone}</td>
                                     <td>
                                         <c:forEach items="${customer.getRoles()}" var="customerRole">
-                                            <span class="customers-role_name" role-name="${customerRole.id}">${customerRole}</span>
+                                            <span class="customers-role_name" role-name="${customerRole.role}">${customerRole}</span>
                                         </c:forEach>
                                     </td>
                                     <td class="text-right customers-column-edit">
