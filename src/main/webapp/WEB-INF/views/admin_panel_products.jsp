@@ -148,7 +148,7 @@
                                     var tempSelectValue = $(this).val();
                                     var tempLink = '${pageContext.request.contextPath}/${baseUrl}?page=${pagination.currentPage}&size=' + tempSelectValue;
                                     window.location = tempLink;
-                                })
+                                });
                             });
                             </script>
                         </jsp:attribute>

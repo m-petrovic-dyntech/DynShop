@@ -43,7 +43,7 @@
                                                                             <span class="categories-item-name-value">
                                                                                 ${category.name}
                                                                             </span>
-                                                                           	<input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}" />
+                                                                            <input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}" />
                                                                             <input type="hidden" name="size" value="${pagination.pageSize < pagination.numberOfItems? pagination.pageSize : ''}" />
                                                                             <input type="hidden" value="${category.id}" name="id" />
                                                                             <input type="hidden" value="${category.enabled}" name="enabled" />
@@ -136,9 +136,10 @@
                                             <div class="col-sm-4">
                                                 <div class="col-sm-10 row">
                                                     <h4>Add Category</h4>
-                                                    <form id="product" action="${pageContext.request.contextPath}/admin/panel/addCategory" method="GET" class="categories-item-form">
+                                                    <form action="${pageContext.request.contextPath}/admin/panel/addCategory" method="POST" class="categories-item-form">
                                                         <div class="input-group">
                                                             <input type="hidden" value="true" name="enabled" />
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                                             <input type="hidden" name="size" value="${pagination.pageSize < pagination.numberOfItems? pagination.pageSize : ''}" />
                                                             <input type="hidden" name="page" value="${pagination.pageSize < pagination.numberOfItems? pagination.currentPage : ''}" />
                                                             <input type="text" name="name" class="form-control" placeholder="Category Name">

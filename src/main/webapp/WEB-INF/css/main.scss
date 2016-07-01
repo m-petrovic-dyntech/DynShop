@@ -143,6 +143,10 @@ body {
         min-height: 321px;
         overflow: hidden;
         /*-------------*/
+        > h4 {
+            height: 19px;
+            overflow: hidden;
+        }
         &:hover {
             box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.38);
             position: relative;
@@ -526,7 +530,8 @@ $tableRowColor: #f5f5f5;
 
 #admin_panel {
     &-content_box {
-        &.content_box-admin_panel_products {
+        &.content_box-admin_panel_products,
+        &.content_box-admin_panel-users {
             padding-bottom: 6px
         }
         #categories {
@@ -741,5 +746,25 @@ $tableRowColor: #f5f5f5;
     }
     &-set {
         padding-bottom: 6px;
+    }
+}
+
+
+/*=======================================
+=            Custom elements            =
+=======================================*/
+
+.d {
+    &-confirm_popup {
+        position: relative;
+        &-popup {
+            right: 100%;
+            left: auto;
+            top: -11px;
+            min-width: auto;
+            width: 104px;
+            padding: 8px 0;
+            text-align: center;
+        }
     }
 }
