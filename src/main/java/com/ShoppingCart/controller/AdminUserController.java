@@ -91,19 +91,20 @@ public class AdminUserController extends ControllerUtil {
 			HttpServletRequest request, HttpSession session) {
 		Map<String, String[]> parameterMap = (Map<String, String[]>)request.getParameterMap();
 		List<String> roles = new ArrayList<String>();
-		for(String s : parameterMap.get("customer_roles")) {
-			s = s.replace("ROLE_", "");
-			s = s.toLowerCase();
-			s = s.substring(0, 1).toUpperCase()+s.substring(1);
-			roles.add(s);
+			for(String s : parameterMap.get("customer_roles")) {
+				roles.add(s);
+			}
+		List<Role> toSet= new ArrayList<>();
+		System.out.println(customer);
+		for (String string : roles) {
+			System.out.println(string);
+			Role r= customerService.getRoleByName(string).get(0);
+			r.setId(null);
+			r.setCustomer(customer);
+			toSet.add(r);
 		}
-		//Roles list contains titles of roles, ex: [Admin, User]
-		//Must fetch roles from db by title
-		//Must insert those roles to this customer and saveOrUpdate model
-		//System.out.println(Arrays.toString(roles.toArray()));
-		//customerService.getRoleByTitle();
-		//customer.setRoles(roles);
-		//customerService.editCustomer(customer);
+		customer.setRoles(toSet);
+		customerService.editCustomer(customer);
 		modelAndView.setViewName(
 				getRedirectLink("redirect:/admin/panel/users", request, Arrays.asList()));
 		return modelAndView;

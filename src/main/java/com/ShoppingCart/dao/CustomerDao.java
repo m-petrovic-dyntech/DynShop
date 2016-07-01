@@ -43,4 +43,7 @@ public interface CustomerDao {
 	
 	public List<Role> getUniqueRoles();
 
+	public List<Role> getRoleByName(String title);
+
+
 }

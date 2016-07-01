@@ -73,6 +73,12 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	@Transactional
 	public void editCustomer(Customer newCustomer) {
+		List<Role> roles= newCustomer.getRoles();
+		for (Role role : roles) {
+			System.out.println(role+"edsddssdssd");
+			if(role.getId()==null)
+				addRole(role);
+		}
 		getSession().saveOrUpdate(newCustomer);
 	}
 
@@ -147,10 +153,18 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Role> getRoleByTitle(String title) {
 		return getSession().createCriteria(Role.class).add(Restrictions.eq("roleTitle", title)).list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Role> getRoleByName(String title) {
+		return getSession().createCriteria(Role.class).add(Restrictions.eq("role", title)).list();
 	}
 
 	@SuppressWarnings("unchecked")
