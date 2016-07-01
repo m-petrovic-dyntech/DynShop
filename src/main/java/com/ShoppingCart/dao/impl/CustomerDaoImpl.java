@@ -74,11 +74,12 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Transactional
 	public void editCustomer(Customer newCustomer) {
 		List<Role> roles= newCustomer.getRoles();
-		for (Role role : roles) {
-			System.out.println(role+"edsddssdssd");
-			if(role.getId()==null)
-				addRole(role);
-		}
+		if(!roles.isEmpty())
+			for (Role role : roles) {
+				System.out.println(role+"edsddssdssd");
+				if(role.getId()==null)
+					addRole(role);
+			}
 		getSession().saveOrUpdate(newCustomer);
 	}
 

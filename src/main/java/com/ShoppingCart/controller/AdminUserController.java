@@ -89,19 +89,29 @@ public class AdminUserController extends ControllerUtil {
 	public ModelAndView adminEditCustomer(ModelAndView modelAndView,
 			@ModelAttribute("customerEditModel") Customer customer,
 			HttpServletRequest request, HttpSession session) {
+		
 		Map<String, String[]> parameterMap = (Map<String, String[]>)request.getParameterMap();
 		List<String> roles = new ArrayList<String>();
-			for(String s : parameterMap.get("customer_roles")) {
-				roles.add(s);
-			}
+		
+		for(String s : parameterMap.get("customer_roles")) {
+			roles.add(s);
+		}
+		
+		List<Role> toUpdate= customerService.getRolesByCustomer(customer);
+		
+		for (Role role : toUpdate) {
+			customerService.removeRole(role);
+		}
+		
 		List<Role> toSet= new ArrayList<>();
-		System.out.println(customer);
+		
 		for (String string : roles) {
 			System.out.println(string);
 			Role r= customerService.getRoleByName(string).get(0);
 			r.setId(null);
 			r.setCustomer(customer);
-			toSet.add(r);
+			if(!toSet.contains(r))
+				toSet.add(r);
 		}
 		customer.setRoles(toSet);
 		customerService.editCustomer(customer);
