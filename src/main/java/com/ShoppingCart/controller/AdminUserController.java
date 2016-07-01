@@ -61,8 +61,8 @@ public class AdminUserController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/deleteCustomer/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, @PathVariable(value = "id") int id,
-			HttpSession session) {
+	public ModelAndView adminDeleteCustomer(ModelAndView modelAndView, @PathVariable(value = "id") int id, 
+			HttpServletRequest request, HttpSession session) {
 		initializeSession(session);
 
 		Customer customer = (Customer) customerService.getCustomerById(id);
@@ -70,24 +70,25 @@ public class AdminUserController extends ControllerUtil {
 
 		customerService.editCustomer(customer);
 
-		modelAndView.setViewName("redirect:/admin_panel_users");
+		modelAndView.setViewName(
+				getRedirectLink("redirect:/admin/panel/users", request, Arrays.asList()));
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/addCustomer" }, method = RequestMethod.GET)
 	public ModelAndView adminAddCustomer(ModelAndView modelAndView, @ModelAttribute("customerAddModel") Customer customer,
-			HttpSession session) {
+			HttpServletRequest request, HttpSession session) {
 
 		customerService.addCustomer(customer);
-		modelAndView.setViewName("redirect:/admin_panel_users");
+		modelAndView.setViewName(
+				getRedirectLink("redirect:/admin/panel/users", request, Arrays.asList()));
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.POST)
 	public ModelAndView adminEditCustomer(ModelAndView modelAndView,
 			@ModelAttribute("customerEditModel") Customer customer,
-			HttpServletRequest request,
-			HttpSession session) {
+			HttpServletRequest request, HttpSession session) {
 		Map<String, String[]> parameterMap = (Map<String, String[]>)request.getParameterMap();
 		List<String> roles = new ArrayList<String>();
 		for(String s : parameterMap.get("customer_roles")) {
@@ -103,7 +104,8 @@ public class AdminUserController extends ControllerUtil {
 		//customerService.getRoleByTitle();
 		//customer.setRoles(roles);
 		//customerService.editCustomer(customer);
-		modelAndView.setViewName("redirect:/admin/panel/users");
+		modelAndView.setViewName(
+				getRedirectLink("redirect:/admin/panel/users", request, Arrays.asList()));
 		return modelAndView;
 	}
 
