@@ -74,7 +74,7 @@
                                     <h4 class="modal-title" id="myModalLabel">Edit User</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="${pageContext.request.contextPath}/admin/panel/editCustomer" method="GET" id="customers-edit_panel-form">
+                                    <form action="${pageContext.request.contextPath}/admin/panel/editCustomer" method="POST" id="customers-edit_panel-form">
                                         <div class="container-fluid row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -123,7 +123,7 @@
                                                     <div class="container-fluid row">
                                                         <label for="customers-edit_panel-password">Roles</label>
                                                     </div>
-                                                    <select name="roles" id="customers-edit_panel-roles" multiple="multiple">
+                                                    <select name="customer_roles" id="customers-edit_panel-roles" multiple="multiple">
                                                         <c:forEach items="${roles}" var="role">
                                                             <option value="${role.role}">${role}</option>
                                                         </c:forEach>
@@ -139,6 +139,7 @@
                                                     </span>
                                                         <span class="customers-edit_panel-status"> 
                                                         <input type="radio" name="enabled" value="false" id="customers-edit_panel-status-disable"/><br/><label for="customers-edit_panel-status-disable">Disable</label>
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     </span>
                                                     </div>
                                                 </div>
