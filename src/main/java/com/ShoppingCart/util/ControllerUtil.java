@@ -39,7 +39,16 @@ public class ControllerUtil {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Generates link with parameters, ignoring possible submit parameters .
+	 * 
+	 * @author Jana Dumeljić & Mario Petrović
+	 * @param link - String link to be added in generated link
+	 * @param request - HttpServletRequest object for extracting parameters
+	 * @param ignored - List of Strings with parameters to be ignored in generating of link
+	 * @return String - generated link with parameters
+	 */
 	public String getRedirectLink(String link, HttpServletRequest request, List<String> ignored) {
 
 		Map<String, String[]> parameterMap = request.getParameterMap();

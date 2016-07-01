@@ -37,7 +37,7 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${customers}" var="customer" varStatus="loop">
-                                <tr class="customers-item">
+                                <tr class="customers-item ${!customer.enabled ? 'customers-item-disabled' : ''}">
                                     <td>
                                         <input type="hidden" value="${customer.id}" class="customers-item-id">
                                         <input type="hidden" value="${customer.enabled}" class="customers-item-enabled">

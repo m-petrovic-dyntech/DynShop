@@ -649,6 +649,9 @@ $tableRowColor: #f5f5f5;
             }
         }
         .customers {
+            &-item-disabled {
+                background: rgba(217, 83, 79, 0.08);
+            }
             &-role_name {
                 text-transform: capitalize;
                 &:last-child:after {
