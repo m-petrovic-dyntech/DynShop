@@ -13,11 +13,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Category;
@@ -89,11 +91,11 @@ public class AnonymousController extends ControllerUtil {
 	@RequestMapping(value = { "/products", "admin/products", "/" }, method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView modelAndView, @RequestParam(required = false) Integer category,
 			@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size,
-			HttpSession session) {
+			HttpSession session, @ModelAttribute("infoQuantity") final String infoQuantity) {
 		initializeSession(session);
 
 		Category selectedCategory = new Category();
-		JtoPagination pagination; // proveri sa natalijom dal je ovo ok
+		JtoPagination pagination;
 
 		if (category != null && category != 0) {
 			selectedCategory = shoppingCartService.getCategoryById(category);
@@ -110,7 +112,7 @@ public class AnonymousController extends ControllerUtil {
 		modelAndView.addObject("category", selectedCategory);
 		modelAndView.addObject("cart", session.getAttribute("cart"));
 		modelAndView.addObject("pagination", pagination);
-
+		modelAndView.addObject("infoQuantity", infoQuantity);
 		modelAndView.setViewName("products");
 		return modelAndView;
 	}
@@ -131,36 +133,44 @@ public class AnonymousController extends ControllerUtil {
 	@RequestMapping(value = "product/add/{id}", method = RequestMethod.GET)
 	public ModelAndView addProductToCart(@PathVariable(value = "id") int id,
 			@RequestParam(required = false) Integer category, @RequestParam(required = true) Integer quantity,
-			HttpServletRequest request, HttpSession session) {
+			HttpServletRequest request, final RedirectAttributes redirectAttributes, HttpSession session) {
 		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
 
 		List<ShoppingCartItem> items = (List<ShoppingCartItem>) cart.getItems();
+		Product product = shoppingCartService.getProductById(id);
+		String infoQuantity;
 
-		if (cart.findItemByProductId(id) == null) {
-			Product product = shoppingCartService.getProductById(id);
-			ShoppingCartItem item = new ShoppingCartItem();
+		if (quantity <= product.getQuantityInStock() - product.getReservedQuantity()) {
 
-			item.setProduct(product);
-			item.setQuantity(quantity);
-			item.total = quantity * product.getPrice();
-			item.setTotal(item.getQuantity() * product.getPrice());
-			item.setShoppingCart(cart);
+			if (cart.findItemByProductId(id) == null) {
 
-			items.add(item);
-		} else {
-			// edit existing ShoppingCartItem quantity
-			cart.setTotalCost(cart.getTotalCost() - cart.findItemByProductId(id).getTotal());
-			cart.findItemByProductId(id).setQuantity(cart.findItemByProductId(id).getQuantity() + quantity);
-			cart.findItemByProductId(id).setTotal(
-					cart.findItemByProductId(id).getQuantity() * cart.findItemByProductId(id).getProduct().getPrice());
-			items.set(items.indexOf(cart.findItemByProductId(id)), cart.findItemByProductId(id));
-		}
+				ShoppingCartItem item = new ShoppingCartItem();
 
-		cart.setTotalCost(cart.getTotalCost() + cart.findItemByProductId(id).getTotal());
-		cart.setItems(items);
-		session.setAttribute("cart", cart);
+				item.setProduct(product);
+				item.setQuantity(quantity);
+				item.total = quantity * product.getPrice();
+				item.setTotal(item.getQuantity() * product.getPrice());
+				item.setShoppingCart(cart);
 
+				items.add(item);
+			} else {
+				// edit existing ShoppingCartItem quantity
+				cart.setTotalCost(cart.getTotalCost() - cart.findItemByProductId(id).getTotal());
+				cart.findItemByProductId(id).setQuantity(cart.findItemByProductId(id).getQuantity() + quantity);
+				cart.findItemByProductId(id).setTotal(cart.findItemByProductId(id).getQuantity()
+						* cart.findItemByProductId(id).getProduct().getPrice());
+				items.set(items.indexOf(cart.findItemByProductId(id)), cart.findItemByProductId(id));
+			}
+
+			cart.setTotalCost(cart.getTotalCost() + cart.findItemByProductId(id).getTotal());
+			cart.setItems(items);
+			session.setAttribute("cart", cart);
+			infoQuantity = "Quantity is ok";
+		} else
+			infoQuantity = "Quantity isn't ok";
+
+		redirectAttributes.addFlashAttribute("infoQuantity", infoQuantity);
 		return new ModelAndView(getRedirectLink("redirect:/products", request, Arrays.asList("quantity")));
 	}
 
