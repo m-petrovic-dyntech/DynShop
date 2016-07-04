@@ -37,17 +37,21 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${products}" var="product" varStatus="loop">
-                                <tr class="${!product.enabled ? 'admin_panel-product-disabled' : ''}">
-                                    <td class=" vertical-middle">
-                                        ${product.name}
+                                <tr class="${!product.enabled ? 'admin_panel-product-disabled' : ''} products-item">
+                                    <td class="vertical-middle">
+                                        <input type="hidden" class="products-item-id" value="${product.id}" />
+                                        <span class="products-item-name">${product.name}</span>
                                     </td>
                                     <td>
+                                        <input type="hidden" class="products-item-desc" value="${product.description}" />
                                         ${fn:substring(product.description, 0, 120)}${product.description.length() > 120 ? '...' : ''}
                                     </td>
                                     <td class="text-center vertical-middle">
+                                        <input type="hidden" class="products-item-category_id" value="${product.category.id}" />
                                         ${product.category.name}
                                     </td>
                                     <td class="text-center vertical-middle">
+                                        <input type="hidden" class="products-item-price">
                                         <fmt:formatNumber value="${product.price} " currencySymbol="" type="currency" /> din
                                     </td>
                                     <td class="admin_panel-products-col-edit">
@@ -154,14 +158,14 @@
                             <div class="container-fluid row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="products-edit_panel-first_name">First Name</label>
-                                        <input type="text" class="form-control" id="products-edit_panel-first_name" name="firstName" placeholder="First Name">
+                                        <label for="products-edit_panel-product_name">Product Name</label>
+                                        <input type="text" class="form-control" id="products-edit_panel-product_name" name="name" placeholder="Product Name...">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="products-edit_panel-first_name">Category</label>
-                                        <form:select path="categories" class="form-control" id="products-filter-select">
+                                        <label for="products-edit_panel-category">Category</label>
+                                        <form:select path="categories" class="form-control" id="products-edit_panel-category">
                                             <form:options items="${categories}" itemValue="id" itemLabel="name" />
                                         </form:select>
                                     </div>
@@ -205,10 +209,19 @@
                             </div>
                             <div class="container-fluid row">
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="products-edit_panel-quantity_in_stock">Product type</label><br/>
-                                        <label for="products-edit_panel-quantity-disable">Regular</label>
-                                        <input type="radio" name="productType" value="false" id="products-edit_panel-quantity_regular"/><br/>
+                                    <div class="form-group" id="products-edit_panel-product_type">
+                                        <label for="products-edit_panel-product_type-title">Product type</label><br/>
+                                        <div>
+                                            <input type="radio" name="productType" id="products-edit_panel-product_type-regular"/>
+                                            <label for="products-edit_panel-product_type-regular">Regular</label><br/>
+                                            <input type="radio" name="productType" id="products-edit_panel-product_type-digital"/>
+                                            <label for="products-edit_panel-product_type-digital">Digital copy</label>
+                                            <div id="products-edit_panel-product_type-digital-box" class="form-group">
+                                                <label for="products-edit_panel-quantity_in_stock">Download link</label>
+                                                <input type="text" class="form-control" id="products-edit_panel-product_type-link" name="downloadLink" placeholder="Download link">
+                                                <div class="overlay"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -231,6 +244,34 @@
                 var tempSelectValue = $(this).val();
                 var tempLink = '${pageContext.request.contextPath}/${baseUrl}?page=${pagination.currentPage}&size=' + tempSelectValue;
                 window.location = tempLink;
+            });
+            /*----------  Open popup with choosen product's data  ----------*/
+            $('.products-item-edit_button').click(function() {
+                var tempParent = $(this).closest('.products-item');
+
+                var tempPanel = $('#products-edit_panel');
+
+                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
+                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
+                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
+                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
+                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
+                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
+
+                var tempRoles = $(tempParent).find('.customers-role_name');
+                var tempRolesLength = tempRoles.length;
+
+                $('#customers-edit_panel-roles').multiselect('deselectAll', false);
+                // 
+                for (var i = 0; i < tempRolesLength; i++) {
+                    $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).attr('role-name'));
+                }
+                console.log($(tempParent).find('.customers-item-enabled').val())
+                if (JSON.parse($(tempParent).find('.customers-item-enabled').val())) {
+                    $('#customers-edit_panel-status-enable').prop('checked', true);
+                } else {
+                    $('#customers-edit_panel-status-disable').prop('checked', true);
+                }
             });
         });
         </script>
