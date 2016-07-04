@@ -113,7 +113,7 @@
                                     var data = {
                                             username: registerData.username,
                                             password: registerData.password,
-                                            matchingPassword: registerData.matchingPassword,
+                                            matchingPassword: registerData.confirmPassword,
                                             firstName: registerData.firstName,
                                             lastName: registerData.lastName,
                                             city: registerData.city,

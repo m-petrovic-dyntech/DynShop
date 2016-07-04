@@ -12,8 +12,16 @@ public class UserDto {
 	private String password;
 	
 	@NotNull
-    @Size(min = 1)
-    private String matchingPassword;
+	@Size(min = 1)
+	private String matchingPassword;
+
+	public String getMatchingPassword() {
+		return matchingPassword;
+	}
+
+	public void setMatchingPassword(String matchingPassword) {
+		this.matchingPassword = matchingPassword;
+	}
 
 	@NotNull
 	@Size(min = 1)

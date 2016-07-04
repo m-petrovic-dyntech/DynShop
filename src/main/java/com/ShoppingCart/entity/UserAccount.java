@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -45,8 +46,9 @@ public class UserAccount {
 	@Column(name = "address")
 	private String address;
 
-	@Column(name = "city")
-	private String city;
+	@ManyToOne
+	@JoinColumn(name = "city_id", referencedColumnName="id")
+	private City city;
 	
 	@Column(name = "email")
 	private String email;
@@ -117,14 +119,7 @@ public class UserAccount {
 		this.address = address;
 	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
+	
 	public Boolean getEnabled() {
 		return enabled;
 	}

@@ -19,6 +19,7 @@
         				http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 
+   
 	<context:component-scan base-package="com.ShoppingCart.dao" />
 	<context:component-scan base-package="com.ShoppingCart.service" />
 	<context:component-scan base-package="com.ShoppingCart.controller" />
