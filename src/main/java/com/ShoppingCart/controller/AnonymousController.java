@@ -33,6 +33,7 @@ import com.ShoppingCart.service.ShoppingCartService;
 import com.ShoppingCart.util.CartStatus;
 import com.ShoppingCart.util.ControllerUtil;
 
+
 @Controller
 public class AnonymousController extends ControllerUtil {
 
@@ -196,7 +197,6 @@ public class AnonymousController extends ControllerUtil {
 				itr.remove();
 			}
 		}
-
 		session.setAttribute("cart", cart);
 		return new ModelAndView("redirect:/cart");
 
@@ -205,7 +205,14 @@ public class AnonymousController extends ControllerUtil {
 	@RequestMapping(value = { "/cart/deleteAll" }, method = RequestMethod.GET)
 	public ModelAndView deleteCart(HttpSession session) {
 		initializeSession(session);
-		session.setAttribute("cart", new ShoppingCart());
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+		ArrayList<ShoppingCartItem> items = (ArrayList<ShoppingCartItem>) cart.getItems();
+		for (ShoppingCartItem item : items) {
+			Product product = shoppingCartService.getProductById(item.getProduct().getId());
+			product.setReservedQuantity(item.getProduct().getReservedQuantity());
+			shoppingCartService.editProduct(product);
+		}
+		session.setAttribute("cart", new ShoppingCart()); 
 		return new ModelAndView("redirect:/products");
 	}
 
