@@ -465,6 +465,8 @@ body {
       height: 100%; }
   #admin_panel-customers {
     padding: 13px 20px 0; }
+    #admin_panel-customers table {
+      margin: 0; }
     #admin_panel-customers-page_size_option {
       width: 70px;
       float: right; }
@@ -485,12 +487,17 @@ body {
     #admin_panel-customers .customers-column-delete {
       width: 57px; }
 
-/**
- *
- * Edit customer modal panel
- *
- */
+/* Edit customer modal panel */
 #customers-edit_panel .customers-edit_panel-status {
+  float: left;
+  padding: 0 9px;
+  text-align: center; }
+
+#products-edit_panel-description {
+  max-width: 100%;
+  min-height: 100px;
+  max-height: 250px; }
+#products-edit_panel .products-edit_panel-quantity {
   float: left;
   padding: 0 9px;
   text-align: center; }

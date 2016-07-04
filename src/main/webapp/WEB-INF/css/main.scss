@@ -638,6 +638,9 @@ $tableRowColor: #f5f5f5;
     /*----------  Customers  ----------*/
     &-customers {
         padding: 13px 20px 0;
+        table {
+            margin: 0;
+        }
         &-page_size_option {
             width: 70px;
             float: right;
@@ -674,15 +677,26 @@ $tableRowColor: #f5f5f5;
 }
 
 
-/**
- *
- * Edit customer modal panel
- *
- */
+/* Edit customer modal panel */
 
 #customers {
     &-edit_panel {
         .customers-edit_panel-status {
+            float: left;
+            padding: 0 9px;
+            text-align: center;
+        }
+    }
+}
+
+#products {
+    &-edit_panel {
+        &-description {
+            max-width: 100%;
+            min-height: 100px;
+            max-height: 250px;
+        }
+        .products-edit_panel-quantity {
             float: left;
             padding: 0 9px;
             text-align: center;
