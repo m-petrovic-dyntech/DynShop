@@ -75,6 +75,7 @@ public class AdminController extends ControllerUtil {
 			JtoPagination pagination = new JtoPagination(page, size, shoppingCartService.getCountProducts());
 			modelAndView.addObject("products", shoppingCartService.getProducts(null, page, size));
 			modelAndView.addObject("pagination", pagination);
+			modelAndView.addObject("categories", shoppingCartService.getCategories(null, null));
 			// System.out.println("************ " + pagination.toString());
 		} else {
 			JtoPagination pagination = new JtoPagination(page, size,
@@ -82,6 +83,7 @@ public class AdminController extends ControllerUtil {
 			modelAndView.addObject("products",
 					shoppingCartService.getProducts(shoppingCartService.getCategoryById(categoryId), page, size));
 			modelAndView.addObject("pagination", pagination);
+			modelAndView.addObject("categories", shoppingCartService.getCategories(null, null));
 			// System.out.println("************ " + pagination.toString());
 
 		}
