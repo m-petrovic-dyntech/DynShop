@@ -13,15 +13,12 @@
                         <a class="navbar-brand" href="${pageContext.request.contextPath}/products">DynTech Shop</a>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <sec:authorize access="isAnonymous()">
-                                    <li><a href="${pageContext.request.contextPath}/products">Products</a></li>
-                                </sec:authorize>
                                 <sec:authorize access="hasRole('ROLE_ADMIN')">
                                     <li><a href="${pageContext.request.contextPath}/admin/panel/products">Control panel</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/products">Products</a></li>
                                     <li><a href="${pageContext.request.contextPath}/admin/cartLogs">Cart Logs</a></li>
                                 </sec:authorize>
-                                <sec:authorize access="hasRole('ROLE_USER')">
+                                <sec:authorize access="!hasRole('ROLE_ADMIN')">
                                     <li><a href="${pageContext.request.contextPath}/products">Products</a></li>
                                 </sec:authorize>
                             </ul>

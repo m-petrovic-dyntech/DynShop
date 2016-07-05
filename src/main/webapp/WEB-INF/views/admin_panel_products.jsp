@@ -51,7 +51,11 @@
                                         ${product.category.name}
                                     </td>
                                     <td class="text-center vertical-middle">
-                                        <input type="hidden" class="products-item-price">
+                                        <input type="hidden" class="products-item-price" value="${product.price}">
+                                        <input type="hidden" class="products-item-quantity" value="${product.quantityInStock}">
+                                        <input type="hidden" class="products-item-enabled" value="${product.enabled}">
+                                        <input type="hidden" class="products-item-product_type" value="${product.productType}">
+                                        <input type="hidden" class="products-item-download_link" value="${product.downloadLink}">
                                         <fmt:formatNumber value="${product.price} " currencySymbol="" type="currency" /> din
                                     </td>
                                     <td class="admin_panel-products-col-edit">
@@ -152,8 +156,7 @@
                         <h4 class="modal-title" id="myModalLabel">Edit Product</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="${pageContext.request.contextPath}/admin/panel/editProduct" method="POST" id="products-edit_panel-form">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <form action="${pageContext.request.contextPath}/admin/panel/editProduct" method="GET" id="products-edit_panel-form">
                             <input type="hidden" id="products-edit_panel-id" name="id">
                             <div class="container-fluid row">
                                 <div class="col-md-4">
@@ -162,10 +165,10 @@
                                         <input type="text" class="form-control" id="products-edit_panel-product_name" name="name" placeholder="Product Name...">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="products-edit_panel-category">Category</label>
-                                        <form:select path="categories" class="form-control" id="products-edit_panel-category">
+                                        <form:select path="categories" name="categoryId" class="form-control" id="products-edit_panel-category">
                                             <form:options items="${categories}" itemValue="id" itemLabel="name" />
                                         </form:select>
                                     </div>
@@ -186,16 +189,16 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="products-edit_panel-quantity_in_stock">Quantity</label>
                                         <input type="text" class="form-control" id="products-edit_panel-quantity_in_stock" name="quantityInStock" placeholder="Quantity...">
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Quantity in stock</label>
+                                        <label>Product status</label>
                                         <div class="container-fluid row">
                                             <span class="products-edit_panel-quantity"> 
                                                 <input type="radio" name="enabled" value="true" id="products-edit_panel-quantity-enable"/><br/><label for="products-edit_panel-quantity-enable">Enable</label>
@@ -212,9 +215,9 @@
                                     <div class="form-group" id="products-edit_panel-product_type">
                                         <label for="products-edit_panel-product_type-title">Product type</label><br/>
                                         <div>
-                                            <input type="radio" name="productType" id="products-edit_panel-product_type-regular"/>
+                                            <input type="radio" name="productType" id="products-edit_panel-product_type-regular" value="0"/>
                                             <label for="products-edit_panel-product_type-regular">Regular</label><br/>
-                                            <input type="radio" name="productType" id="products-edit_panel-product_type-digital"/>
+                                            <input type="radio" name="productType" id="products-edit_panel-product_type-digital" value="1"/>
                                             <label for="products-edit_panel-product_type-digital">Digital copy</label>
                                             <div id="products-edit_panel-product_type-digital-box" class="form-group">
                                                 <label for="products-edit_panel-quantity_in_stock">Download link</label>
@@ -251,26 +254,31 @@
 
                 var tempPanel = $('#products-edit_panel');
 
-                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
-                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
-                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
-                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
-                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
-                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.wwwww').text());
+                $(tempPanel).find('#products-edit_panel-id').val($(tempParent).find('.products-item-id').val());
+                $(tempPanel).find('#products-edit_panel-product_name').val($(tempParent).find('.products-item-name').text());
+                $(tempPanel).find('#products-edit_panel-description').val($(tempParent).find('.products-item-desc').val());
+                $(tempPanel).find('#products-edit_panel-price').val($(tempParent).find('.products-item-price').val());
+                $(tempPanel).find('#products-edit_panel-category').val($(tempParent).find('.products-item-category_id').val());
+                $(tempPanel).find('#products-edit_panel-quantity_in_stock').val($(tempParent).find('.products-item-quantity').val());
+                $(tempPanel).find('#products-edit_panel-product_type-link').val($(tempParent).find('.products-item-download_link').val());
 
-                var tempRoles = $(tempParent).find('.customers-role_name');
-                var tempRolesLength = tempRoles.length;
+                // var tempRoles = $(tempParent).find('.customers-role_name');
+                // var tempRolesLength = tempRoles.length;
 
-                $('#customers-edit_panel-roles').multiselect('deselectAll', false);
-                // 
-                for (var i = 0; i < tempRolesLength; i++) {
-                    $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).attr('role-name'));
-                }
-                console.log($(tempParent).find('.customers-item-enabled').val())
-                if (JSON.parse($(tempParent).find('.customers-item-enabled').val())) {
-                    $('#customers-edit_panel-status-enable').prop('checked', true);
+                // // 
+                // for (var i = 0; i < tempRolesLength; i++) {
+                //     $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).attr('role-name'));
+                // }
+                // console.log($(tempParent).find('.customers-item-enabled').val())
+                if ($(tempParent).find('.products-item-product_type').val() == 1) {
+                    $('#products-edit_panel-product_type-regular').prop('checked', true);
                 } else {
-                    $('#customers-edit_panel-status-disable').prop('checked', true);
+                    $('#products-edit_panel-product_type-digital').prop('checked', true);
+                }
+                if (JSON.parse($(tempParent).find('.products-item-enabled').val())) {
+                    $('#products-edit_panel-quantity-enable').prop('checked', true);
+                } else {
+                    $('#products-edit_panel-quantity-disable').prop('checked', true);
                 }
             });
         });

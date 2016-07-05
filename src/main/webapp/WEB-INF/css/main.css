@@ -3,6 +3,8 @@
 ==========================================*/
 .dropup .dropdown-menu {
   left: -48px; }
+  .dropup .dropdown-menu form {
+    margin-bottom: 0; }
 
 /*=====  End of Bootstrap override  ======*/
 body {
@@ -504,7 +506,8 @@ body {
 #products-edit_panel-product_type label {
   position: relative;
   top: -2px;
-  padding-left: 3px; }
+  padding-left: 3px;
+  cursor: pointer; }
 #products-edit_panel-product_type-digital-box {
   position: relative;
   padding: 6px; }
@@ -541,6 +544,9 @@ body {
 
 .height-100 {
   height: 100%; }
+
+.float-right {
+  float: right; }
 
 /*==================================
 =            Pagination            =

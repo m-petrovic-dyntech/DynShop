@@ -255,7 +255,7 @@
                 for (var i = 0; i < tempRolesLength; i++) {
                     $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).attr('role-name'));
                 }
-                console.log($(tempParent).find('.customers-item-enabled').val())
+                
                 if (JSON.parse($(tempParent).find('.customers-item-enabled').val())) {
                     $('#customers-edit_panel-status-enable').prop('checked', true);
                 } else {
