@@ -81,5 +81,15 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- Convertors -->
+	<bean id="conversionService"
+      class="org.springframework.context.support.ConversionServiceFactoryBean">
+    <property name="converters">
+        <list>
+            <bean class="com.ShoppingCart.convertor.CityConvertor"/>
+        </list>
+    </property>
+</bean>
 
 </beans>

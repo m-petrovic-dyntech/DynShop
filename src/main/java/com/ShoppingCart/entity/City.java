@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="city")
 public class City {
@@ -27,9 +29,11 @@ public class City {
 	private String zipCode;
 	
 	@OneToMany(mappedBy = "city")
+	@JsonIgnore
 	private List<Municipality> municipalities;
 	
 	@OneToMany(mappedBy="city")
+	@JsonIgnore
 	private List<UserAccount> users;
 	
 	public Integer getId() {

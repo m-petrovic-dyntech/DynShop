@@ -2,11 +2,9 @@ package com.ShoppingCart.service;
 
 import java.util.List;
 
-import org.springframework.security.core.userdetails.User;
-
-import com.ShoppingCart.dto.UserDetailsDto;
-import com.ShoppingCart.dto.UserDto;
+import com.ShoppingCart.entity.City;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Municipality;
 import com.ShoppingCart.entity.Role;
 
 public interface CustomerService {
@@ -39,10 +37,13 @@ public interface CustomerService {
 	
 	public Role getRoleById(int id);
 
-	
-
 	public Role getRoleByTitle(String title);
 	
 	public List<Role> getRoles();
 
+	public List<City> getAllCities();
+	
+	public City getCityById(int id);
+	
+	public List<Municipality> getMunicipalityByCity(City city);
 }

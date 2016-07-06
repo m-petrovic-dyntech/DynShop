@@ -1,5 +1,6 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
     <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
         <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
             <%@ page contentType="text/html; charset=UTF-8" %>
                 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -57,9 +58,10 @@
                                                 <label for="registration-form-username">City</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-                                                    <input type="text" class="form-control" placeholder="City" aria-describedby="basic-addon1" id="registration-form-city">
-                                                </div>
-                                            </div>
+													<form:select  items="${cities}" itemLabel="name"  itemValue="id" path="cities" class="form-control" id="register-form-city">
+			                                        </form:select>  
+			                                    </div>
+                                            </div>                                          
                                             <div class="form-group">
                                                 <label for="registration-form-username">Address</label>
                                                 <div class="input-group">
@@ -106,6 +108,16 @@
                                         console.log('FAILED');
                                     });
                                 });
+                                
+                                $('#register-form-city').change(function(){
+                                	ajaxGetLists('municipality', $(this).val()).done(function(result){
+                                		console.log(result.data);
+                                		
+                                		console.log('Ajax call for list: municipality ---- DONE');
+                                	}).fail(function(){
+                                		console.log('Ajax call for list: municipality ---- FAILED');
+                                	});
+                                });
 
 
                                 function ajaxRegister(registerData) {
@@ -129,6 +141,15 @@
                                     	data: JSON.stringify(data)
                                     });
                                     
+                                }
+                                
+                                function ajaxGetLists(source, id){
+                                	return $.ajax({
+                                    	method:'GET',
+                                    	url: '${pageContext.request.contextPath}/registration/' + source + '?id=' + id,
+                                    	contentType: "application/json",
+                                    	dataType: 'json'
+                                    });
                                 }
 
                             });

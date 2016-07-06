@@ -1,31 +1,27 @@
 package com.ShoppingCart.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ShoppingCart.dao.CustomerDao;
+import com.ShoppingCart.entity.City;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Municipality;
 import com.ShoppingCart.entity.Role;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 
-	private final Log logger = LogFactory.getLog(getClass());
+//	private final Log logger = LogFactory.getLog(getClass());
 
 	private SessionFactory sessionFactory;
 	@SuppressWarnings("unused")
@@ -79,7 +75,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		getSession().saveOrUpdate(newCustomer);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public Customer getCustomerByUsername(String username) {
@@ -91,6 +86,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Customer> getEnabledCustomers() {
 		return (List<Customer>) getSession().createCriteria(Customer.class)
 				.add(Restrictions.eq("enabled", Boolean.TRUE)).list();
@@ -98,6 +94,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Customer> getDisabledCustomers() {
 		return (List<Customer>) getSession().createCriteria(Customer.class)
 				.add(Restrictions.eq("enabled", Boolean.FALSE)).list();
@@ -111,7 +108,6 @@ public class CustomerDaoImpl implements CustomerDao {
 		return Integer.parseInt(result.toString());
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Role> getRolesByCustomer(Customer customer) {
@@ -160,4 +156,26 @@ public class CustomerDaoImpl implements CustomerDao {
 		return (List<Role>)getSession().createCriteria(Role.class).list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<City> getAllCities() {
+		return getSession().createCriteria(City.class).list();
+	}
+
+	@Override
+	@Transactional
+	public City getCityById(int id) {
+		return (City) getSession().createCriteria(City.class).add(Restrictions.eq("id", id)).uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Municipality> getMunicipalityByCity(City city) {
+		return (List<Municipality>) getSession().createCriteria(Municipality.class)
+				.add(Restrictions.eq("city",  city)).list();
+	}
+
+	
 }

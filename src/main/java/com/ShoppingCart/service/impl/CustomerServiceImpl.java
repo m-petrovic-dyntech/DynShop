@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,8 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.ShoppingCart.dao.CustomerDao;
 import com.ShoppingCart.dto.UserDetailsDto;
-import com.ShoppingCart.dto.UserDto;
+import com.ShoppingCart.entity.City;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Municipality;
 import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.service.CustomerService;
 
@@ -118,6 +118,21 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	@Override
 	public List<Role> getRoles() {
 		return customerDao.getRoles();
+	}
+
+	@Override
+	public List<City> getAllCities() {
+		return customerDao.getAllCities();
+	}
+
+	@Override
+	public City getCityById(int id) {
+		return customerDao.getCityById(id);
+	}
+
+	@Override
+	public List<Municipality> getMunicipalityByCity(City city) {
+		return customerDao.getMunicipalityByCity(city);
 	}
 
 }

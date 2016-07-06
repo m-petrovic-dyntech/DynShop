@@ -16,8 +16,9 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 	   a special character must occur at least once
 	   no whitespace allowed in the entire string
 	   at least eight places */
-	private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}(?=\\S+$)$";
-	
+	private static final String PASSWORD_PATTERN = "^(?=.*[a-z]).{3,}$";
+//	private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}(?=\\S+$)$";
+
 	@Override
 	public void initialize(ValidPassword constraintAnnotation) {
 	}

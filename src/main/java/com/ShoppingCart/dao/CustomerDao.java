@@ -2,7 +2,9 @@ package com.ShoppingCart.dao;
 
 import java.util.List;
 
+import com.ShoppingCart.entity.City;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Municipality;
 import com.ShoppingCart.entity.Role;
 
 public interface CustomerDao {
@@ -42,5 +44,10 @@ public interface CustomerDao {
 	public Role getRoleByTitle(String title);
 	
 	public List<Role> getRoles();
-
+	
+	public List<City> getAllCities();
+	
+	public City getCityById(int id);
+	
+	public List<Municipality> getMunicipalityByCity(City city);
 }

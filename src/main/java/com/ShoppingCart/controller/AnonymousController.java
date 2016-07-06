@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Category;
+import com.ShoppingCart.entity.City;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.ShoppingCart;
@@ -81,6 +82,9 @@ public class AnonymousController extends ControllerUtil {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView userRegister(ModelAndView modelAndView, HttpSession session) {
 		initializeSession(session);
+		List<City> cities = (List<City>) customerService.getAllCities();
+		
+		modelAndView.addObject("cities", cities);
 		modelAndView.setViewName("register");
 		return modelAndView;
 	}
@@ -92,7 +96,7 @@ public class AnonymousController extends ControllerUtil {
 		initializeSession(session);
 
 		Category selectedCategory = new Category();
-		JtoPagination pagination;   //proveri sa natalijom dal je ovo ok
+		JtoPagination pagination;   
 
 		if (category != null && category != 0) {
 			selectedCategory = shoppingCartService.getCategoryById(category);
