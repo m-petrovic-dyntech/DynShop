@@ -58,10 +58,19 @@
                                                 <label for="registration-form-username">City</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-													<form:select  items="${cities}" itemLabel="name"  itemValue="id" path="cities" class="form-control" id="register-form-city">
+													<form:select path="cities" class="form-control" id="register-form-city">
+														<form:option value="">-- Select --</form:option>
+														<form:options items="${cities}" itemLabel="name"  itemValue="id"></form:options>
 			                                        </form:select>  
 			                                    </div>
-                                            </div>                                          
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="registration-form-username">Municipality</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
+													<select disabled class="form-control" id="register-form-municipality"></select>  
+			                                    </div>
+                                            </div>
                                             <div class="form-group">
                                                 <label for="registration-form-username">Address</label>
                                                 <div class="input-group">
@@ -85,7 +94,7 @@
                             </div>
                             <script type="text/javascript">
                             $(document).ready(function() {
-
+								
                                 $('#registration-form-submit').click(function() {
 
                                     var tempRegisterObject = {
@@ -109,15 +118,48 @@
                                     });
                                 });
                                 
-                                $('#register-form-city').change(function(){
-                                	ajaxGetLists('municipality', $(this).val()).done(function(result){
-                                		console.log(result.data);
-                                		
-                                		console.log('Ajax call for list: municipality ---- DONE');
-                                	}).fail(function(){
-                                		console.log('Ajax call for list: municipality ---- FAILED');
+                                //Sorting objects in array by Name value
+                                function sortByName(arr) {
+                                	var sortedArr = arr.sort(function(a, b) {
+                                		return a.name.localeCompare(b.name);
                                 	});
+                                	
+                                	return arr;
+                                }
+                                
+                                $('#register-form-city').change(function(){
+                                	onCityChange($(this).val());
                                 });
+                                
+                                function onCityChange(cityId) {
+                                	//HTML
+                            		var html = "";
+                                	
+                                	if(cityId!=="undefined" && cityId!=="") {
+	                                	ajaxGetLists('municipality', cityId).done(function(result) {
+	                                		
+	                                		//Sorting by value
+											result = sortByName(result);
+											
+	                                		//Building list of objects
+	                                		for(var i=0;i<result.length;i++) {
+	                                			html += "<option value="+result[i].id+">"+result[i].name+"</option>";
+	                                		}
+	                                		
+	                                		//Appending to html
+	                                		$("#register-form-municipality").html(html);
+	                                		//Removing disabled state
+	                                		$("#register-form-municipality").removeAttr('disabled');
+	                                	}).fail(function(){
+	                                		console.log('Ajax call for list: municipality ---- FAILED');
+	                                	});
+                                	} else {
+                                		//Setting empty list
+                                		$("#register-form-municipality").html(html);
+                                		//Adding disabled state
+                                		$("#register-form-municipality").attr('disabled', 'disabled');
+                                	}
+                                }
 
 
                                 function ajaxRegister(registerData) {
