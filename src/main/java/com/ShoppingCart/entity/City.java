@@ -32,10 +32,6 @@ public class City {
 	@JsonIgnore
 	private List<Municipality> municipalities;
 	
-	@OneToMany(mappedBy="city")
-	@JsonIgnore
-	private List<UserAccount> users;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -66,16 +62,6 @@ public class City {
 
 	public void setMunicipalities(List<Municipality> municipalities) {
 		this.municipalities = municipalities;
-	}
-	
-	
-
-	public List<UserAccount> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<UserAccount> users) {
-		this.users = users;
 	}
 
 	@Override

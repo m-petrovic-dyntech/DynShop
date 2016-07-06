@@ -46,4 +46,6 @@ public interface CustomerService {
 	public City getCityById(int id);
 	
 	public List<Municipality> getMunicipalityByCity(City city);
+
+	public Municipality getMunicipalityById(int id);
 }

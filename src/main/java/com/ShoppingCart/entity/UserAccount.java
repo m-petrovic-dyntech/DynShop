@@ -47,8 +47,8 @@ public class UserAccount {
 	private String address;
 
 	@ManyToOne
-	@JoinColumn(name = "city_id", referencedColumnName="id")
-	private City city;
+	@JoinColumn(name = "municipality_id", referencedColumnName="id")
+	private Municipality municipality;
 	
 	@Column(name = "email")
 	private String email;
@@ -152,5 +152,22 @@ public class UserAccount {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Municipality getMunicipality() {
+		return municipality;
+	}
+
+	public void setMunicipality(Municipality municipality) {
+		this.municipality = municipality;
+	}
+
+	@Override
+	public String toString() {
+		return "UserAccount [id=" + id + ", username=" + username + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", municipality=" + municipality + ", email=" + email + ", enabled=" + enabled + ", roles="
+				+ roles + "]";
+	}
+	
+	
 
 }

@@ -177,5 +177,11 @@ public class CustomerDaoImpl implements CustomerDao {
 				.add(Restrictions.eq("city",  city)).list();
 	}
 
+	@Override
+	@Transactional
+	public Municipality getMunicipalityById(int id) {
+		return (Municipality) getSession().createCriteria(Municipality.class).add(Restrictions.eq("id", id)).uniqueResult();
+	}
+
 	
 }

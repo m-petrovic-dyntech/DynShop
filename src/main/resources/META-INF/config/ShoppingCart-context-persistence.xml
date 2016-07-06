@@ -88,6 +88,7 @@
     <property name="converters">
         <list>
             <bean class="com.ShoppingCart.convertor.CityConvertor"/>
+            <bean class="com.ShoppingCart.convertor.MunicipalityConvertor"/>
         </list>
     </property>
 </bean>

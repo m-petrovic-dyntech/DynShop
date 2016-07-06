@@ -64,7 +64,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		userAcc.setEmail(userDto.getEmail());
 		userAcc.setPhone(userDto.getPhone());
 		
-		
 		Role role = roleDao.getRoleByName("ROLE_USER");		
 		List<Role> roles = new ArrayList<>();
 		roles.add(role);

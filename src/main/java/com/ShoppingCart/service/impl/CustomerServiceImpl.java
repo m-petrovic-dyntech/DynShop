@@ -129,6 +129,11 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 	public City getCityById(int id) {
 		return customerDao.getCityById(id);
 	}
+	
+	@Override
+	public Municipality getMunicipalityById(int id) {
+		return customerDao.getMunicipalityById(id);
+	}
 
 	@Override
 	public List<Municipality> getMunicipalityByCity(City city) {
