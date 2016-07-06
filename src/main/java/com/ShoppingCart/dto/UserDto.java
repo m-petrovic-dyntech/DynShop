@@ -45,6 +45,10 @@ public class UserDto {
 	
 	@NotNull
 	@Size(min = 1)
+	private String municipality;
+	
+	@NotNull
+	@Size(min = 1)
 	private String email;
 
 	public String getUsername() {
@@ -111,10 +115,19 @@ public class UserDto {
 		this.email = email;
 	}
 
+	public String getMunicipality() {
+		return municipality;
+	}
+
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+
 	@Override
 	public String toString() {
-		return "UserDto [username=" + username + ", password=" + password + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", phone=" + phone + ", address=" + address + ", city=" + city + "]";
+		return "UserDto [username=" + username + ", password=" + password + ", matchingPassword=" + matchingPassword
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone + ", address=" + address
+				+ ", city=" + city + ", municipality=" + municipality + ", email=" + email + "]";
 	}
 
 	

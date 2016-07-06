@@ -175,6 +175,7 @@
                                             address: registerData.address,
                                             phone: registerData.phone,
                                             email: registerData.email,
+                                            municipality: registerData.municipality
                                         };
                                     return $.ajax({
                                     	method:'POST',

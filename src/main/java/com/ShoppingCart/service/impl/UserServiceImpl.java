@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ import com.ShoppingCart.dao.UserDao;
 import com.ShoppingCart.dto.UserDetailsDto;
 import com.ShoppingCart.dto.UserDto;
 import com.ShoppingCart.entity.Customer;
+import com.ShoppingCart.entity.Municipality;
 import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.UserAccount;
 import com.ShoppingCart.service.UserService;
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	
 	@Autowired
 	RoleDao roleDao;
+	
+	@Autowired
+	ConversionService conversionService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,13 +57,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 		if(userExist(userDto.getUsername(), userDto.getEmail())){
 			throw new Exception();
-		}
+		} else {
 		
 		UserAccount userAcc = new UserAccount();
 		userAcc.setUsername(userDto.getUsername());
 		userAcc.setPassword(userDto.getPassword());
 		userAcc.setAddress(userDto.getAddress());
-		//userAcc.setCity(userDto.getCity());
+		Municipality m= conversionService.convert(Integer.valueOf(userDto.getMunicipality()), Municipality.class);
+		userAcc.setMunicipality(m);
 		userAcc.setFirstName(userDto.getFirstName());
 		userAcc.setLastName(userDto.getLastName());
 		userAcc.setEmail(userDto.getEmail());
@@ -69,8 +75,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		roles.add(role);
 		userAcc.setRoles(roles);
 		userDao.saveUser(userAcc);
-
 		return userAcc;
+		}
 	}
 
 	private boolean userExist(String username, String email) {
