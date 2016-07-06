@@ -58,7 +58,7 @@
                                                 <label for="registration-form-username">City</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-													<form:select path="cities" class="form-control" id="register-form-city">
+													<form:select path="cities" class="form-control" id="registration-form-city">
 														<form:option value="">-- Select --</form:option>
 														<form:options items="${cities}" itemLabel="name"  itemValue="id"></form:options>
 			                                        </form:select>  
@@ -68,7 +68,7 @@
                                                 <label for="registration-form-username">Municipality</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
-													<select disabled class="form-control" id="register-form-municipality"></select>  
+													<select name="municipality" disabled class="form-control" id="registration-form-municipality"></select>  
 			                                    </div>
                                             </div>
                                             <div class="form-group">
@@ -102,6 +102,7 @@
                                         password: $('#registration-form-password').val(),
                                         confirmPassword: $('#registration-form-confirm_password').val(),
                                         city: $('#registration-form-city').val(),
+                                        municipality: $("#registration-form-municipality").val(),
                                         address: $('#registration-form-address').val(),
                                         phone: $('#registration-form-phone').val(),
                                         email: $('#registration-form-email').val(),
@@ -127,7 +128,7 @@
                                 	return arr;
                                 }
                                 
-                                $('#register-form-city').change(function(){
+                                $('#registration-form-city').change(function() {
                                 	onCityChange($(this).val());
                                 });
                                 
@@ -147,17 +148,17 @@
 	                                		}
 	                                		
 	                                		//Appending to html
-	                                		$("#register-form-municipality").html(html);
+	                                		$("#registration-form-municipality").html(html);
 	                                		//Removing disabled state
-	                                		$("#register-form-municipality").removeAttr('disabled');
+	                                		$("#registration-form-municipality").removeAttr('disabled');
 	                                	}).fail(function(){
 	                                		console.log('Ajax call for list: municipality ---- FAILED');
 	                                	});
                                 	} else {
                                 		//Setting empty list
-                                		$("#register-form-municipality").html(html);
+                                		$("#registration-form-municipality").html(html);
                                 		//Adding disabled state
-                                		$("#register-form-municipality").attr('disabled', 'disabled');
+                                		$("#registration-form-municipality").attr('disabled', 'disabled');
                                 	}
                                 }
 
