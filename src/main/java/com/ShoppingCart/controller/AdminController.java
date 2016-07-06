@@ -152,9 +152,21 @@ public class AdminController extends ControllerUtil {
 	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product, 
 			HttpServletRequest request, HttpSession session) {
 
-		shoppingCartService.editProduct(product);
+		Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
+		product.setCategory(shoppingCartService.getCategoryById(categoryId));
+		
+		Product toChangeProduct = shoppingCartService.getProductById(product.getId());
+		toChangeProduct.setName(product.getName());
+		toChangeProduct.setCategory(product.getCategory());
+		toChangeProduct.setDescription(product.getDescription());
+		toChangeProduct.setPrice(product.getPrice());
+		toChangeProduct.setEnabled(product.getEnabled());
+		toChangeProduct.setProductType(product.getProductType());
+		toChangeProduct.setDownloadLink(product.getDownloadLink());
+		
+		shoppingCartService.editProduct(toChangeProduct);
 		modelAndView.setViewName(
-				getRedirectLink("redirect:/admin/panel/product", request, Arrays.asList()));
+				getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList("id", "name", "categoryId", "description", "price", "enabled", "productType")));
 		return modelAndView;
 	}
 
@@ -165,7 +177,7 @@ public class AdminController extends ControllerUtil {
 
 		shoppingCartService.addProduct(product);
 		modelAndView.setViewName(
-				getRedirectLink("redirect:/admin/panel/product", request, Arrays.asList()));
+				getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList()));
 		return modelAndView;
 	}
 
