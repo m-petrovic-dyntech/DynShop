@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -47,13 +45,13 @@ public class Customer {
 
 	@Column(name = "enabled")
 	private Boolean enabled;
-	
+
 	@OneToMany(mappedBy = "customer")
 	private List<ShoppingCart> shoppingCarts;
 
 	@OneToMany(mappedBy = "customer")
 	private List<Role> roles;
-	
+
 	public Integer getId() {
 		return id;
 	}

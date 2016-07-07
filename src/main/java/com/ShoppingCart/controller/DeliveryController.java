@@ -27,7 +27,6 @@ import com.ShoppingCart.util.DeliveryStatus;
 
 @Controller
 public class DeliveryController  extends ControllerUtil{
-
 	
 	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
@@ -35,10 +34,7 @@ public class DeliveryController  extends ControllerUtil{
 	@Autowired
 	
 	private ShoppingCartService shoppingCartService;
-//
-//	@Autowired
-//	private CustomerService customerService;
-	
+
 	@Autowired
 	private StorageManagementService storageManagementService;
 	
@@ -64,7 +60,7 @@ public class DeliveryController  extends ControllerUtil{
 		return modelAndView;
 	}
 	
-	//TODO REST poziv za get item iz korpe sa id_cart
+	// TODO REST poziv za get item iz korpe sa id_cart
 	
 	@RequestMapping(value = "/storage_management/sentOrder/{id}", method = RequestMethod.GET)
 	public ModelAndView sentProduct(ModelAndView modelAndView, HttpSession session,@PathVariable(value = "id") int id) {

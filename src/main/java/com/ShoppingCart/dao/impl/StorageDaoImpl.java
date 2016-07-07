@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ShoppingCart.dao.StorageDao;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Delivery;
-import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.ShoppingCart;
 import com.ShoppingCart.util.DeliveryStatus;
 
@@ -39,13 +38,14 @@ public class StorageDaoImpl implements StorageDao {
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Delivery> getPendingOrders() {
-	
-		return (List<Delivery>) getSession().createCriteria(Delivery.class).add(Restrictions.eq("status", DeliveryStatus.PENDING)).list();
+
+		return (List<Delivery>) getSession().createCriteria(Delivery.class)
+				.add(Restrictions.eq("status", DeliveryStatus.PENDING)).list();
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class StorageDaoImpl implements StorageDao {
 	@Override
 	@Transactional
 	public Delivery getOrderById(int id) {
-		
+
 		return (Delivery) getSession().createCriteria(Delivery.class).add(Restrictions.eq("id", id)).uniqueResult();
 	}
 
@@ -70,7 +70,8 @@ public class StorageDaoImpl implements StorageDao {
 	@Override
 	@Transactional
 	public ShoppingCart getCartByDeliveryId(Delivery delivery) {
-		return (ShoppingCart) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("delivery", delivery)).uniqueResult();
+		return (ShoppingCart) getSession().createCriteria(ShoppingCart.class).add(Restrictions.eq("delivery", delivery))
+				.uniqueResult();
 	}
 
 }

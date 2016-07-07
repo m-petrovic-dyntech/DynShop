@@ -105,7 +105,7 @@ public class AdminController extends ControllerUtil {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET) 
+	@RequestMapping(value = { "/admin/panel/deleteProduct/{id}" }, method = RequestMethod.GET)
 	public ModelAndView adminDeleteProduct(ModelAndView modelAndView, @PathVariable(value = "id") int id,
 			HttpServletRequest request, HttpSession session) {
 		initializeSession(session);
@@ -149,12 +149,12 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/editProduct" }, method = RequestMethod.GET)
-	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product, 
+	public ModelAndView adminEditProduct(ModelAndView modelAndView, @ModelAttribute("productEditModel") Product product,
 			HttpServletRequest request, HttpSession session) {
 
 		Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
 		product.setCategory(shoppingCartService.getCategoryById(categoryId));
-		
+
 		Product toChangeProduct = shoppingCartService.getProductById(product.getId());
 		toChangeProduct.setName(product.getName());
 		toChangeProduct.setCategory(product.getCategory());
@@ -163,21 +163,19 @@ public class AdminController extends ControllerUtil {
 		toChangeProduct.setEnabled(product.getEnabled());
 		toChangeProduct.setProductType(product.getProductType());
 		toChangeProduct.setDownloadLink(product.getDownloadLink());
-		
+
 		shoppingCartService.editProduct(toChangeProduct);
-		modelAndView.setViewName(
-				getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList("id", "name", "categoryId", "description", "price", "enabled", "productType", "downloadLink")));
+		modelAndView.setViewName(getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList("id", "name",
+				"categoryId", "description", "price", "enabled", "productType", "downloadLink")));
 		return modelAndView;
 	}
 
 	@RequestMapping(value = { "/admin/panel/addProduct" }, method = RequestMethod.GET)
 	public ModelAndView adminAddProduct(ModelAndView modelAndView, @ModelAttribute("productAddModel") Product product,
-			HttpServletRequest request,
-			HttpSession session) {
+			HttpServletRequest request, HttpSession session) {
 
 		shoppingCartService.addProduct(product);
-		modelAndView.setViewName(
-				getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList()));
+		modelAndView.setViewName(getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList()));
 		return modelAndView;
 	}
 
@@ -186,8 +184,7 @@ public class AdminController extends ControllerUtil {
 			@ModelAttribute("categoryAddModel") Category category, HttpServletRequest request, HttpSession session) {
 
 		shoppingCartService.addCategory(category);
-		modelAndView.setViewName(
-				getRedirectLink("redirect:/admin/panel/categories", request, Arrays.asList()));
+		modelAndView.setViewName(getRedirectLink("redirect:/admin/panel/categories", request, Arrays.asList()));
 		return modelAndView;
 	}
 
@@ -205,9 +202,8 @@ public class AdminController extends ControllerUtil {
 	}
 
 	@RequestMapping(value = { "/admin/panel/changeCartStatus/{id}" }, method = RequestMethod.GET)
-	public ModelAndView adminChangeCartStatus(ModelAndView modelAndView,
-			@PathVariable(value = "id") int id, @RequestParam(required = true) String status, 
-			HttpServletRequest request, HttpSession session) {
+	public ModelAndView adminChangeCartStatus(ModelAndView modelAndView, @PathVariable(value = "id") int id,
+			@RequestParam(required = true) String status, HttpServletRequest request, HttpSession session) {
 		initializeSession(session);
 		ShoppingCart cart = (ShoppingCart) shoppingCartService.getCartById(id);
 		Delivery delivery = new Delivery();
