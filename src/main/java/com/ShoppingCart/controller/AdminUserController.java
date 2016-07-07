@@ -2,10 +2,8 @@ package com.ShoppingCart.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Customer;
-import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.util.ControllerUtil;
@@ -85,38 +82,51 @@ public class AdminUserController extends ControllerUtil {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.GET)
 	public ModelAndView adminEditCustomer(ModelAndView modelAndView,
 			@ModelAttribute("customerEditModel") Customer customer,
 			HttpServletRequest request, HttpSession session) {
 		
+		Customer toChangecustomer = customerService.getCustomerById(customer.getId());
+		toChangecustomer.setFirstName(customer.getFirstName());
+		toChangecustomer.setLastName(customer.getLastName());
+		toChangecustomer.setCity(customer.getCity());
+		toChangecustomer.setAddress(customer.getAddress());
+		toChangecustomer.setPhone(customer.getPhone());
+		toChangecustomer.setPassword(customer.getPassword());
+		
+		toChangecustomer.setEnabled(customer.getEnabled());
 		Map<String, String[]> parameterMap = (Map<String, String[]>)request.getParameterMap();
 		List<String> roles = new ArrayList<String>();
 		
-		for(String s : parameterMap.get("customer_roles")) {
+		for(String s : parameterMap.get("customer_roles")) { //iscitavanje stare role
 			roles.add(s);
 		}
 		
 		List<Role> toUpdate= customerService.getRolesByCustomer(customer);
-		
-		for (Role role : toUpdate) {
-			customerService.removeRole(role);
-		}
-		
 		List<Role> toSet= new ArrayList<>();
 		
 		for (String string : roles) {
 			System.out.println(string);
 			Role r= customerService.getRoleByName(string).get(0);
 			r.setId(null);
+			for (Role role : toUpdate) {
+				if(role.getRoleTitle().equals(r.getRoleTitle()))
+					r.setEnabled(role.getEnabled());
+			}
 			r.setCustomer(customer);
 			if(!toSet.contains(r))
 				toSet.add(r);
 		}
-		customer.setRoles(toSet);
-		customerService.editCustomer(customer);
+		
+		for (Role role : toUpdate) {
+			customerService.removeRole(role);
+		}
+		toChangecustomer.setRoles(toSet);
+
+		customerService.editCustomer(toChangecustomer);
 		modelAndView.setViewName(
-				getRedirectLink("redirect:/admin/panel/users", request, Arrays.asList()));
+				getRedirectLink("redirect:/admin/panel/users", request, Arrays.asList("id", "firstName", "lastName", "city", "address", "phone", "password", "customer_roles", "enabled")));
 		return modelAndView;
 	}
 

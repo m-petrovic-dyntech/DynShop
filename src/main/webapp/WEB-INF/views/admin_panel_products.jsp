@@ -215,9 +215,9 @@
                                     <div class="form-group" id="products-edit_panel-product_type">
                                         <label for="products-edit_panel-product_type-title">Product type</label><br/>
                                         <div>
-                                            <input type="radio" name="productType" id="products-edit_panel-product_type-regular" value="0"/>
+                                            <input type="radio" name="productType" id="products-edit_panel-product_type-regular" value="NO_DIGITAL"/>
                                             <label for="products-edit_panel-product_type-regular">Regular</label><br/>
-                                            <input type="radio" name="productType" id="products-edit_panel-product_type-digital" value="1"/>
+                                            <input type="radio" name="productType" id="products-edit_panel-product_type-digital" value="DIGITAL"/>
                                             <label for="products-edit_panel-product_type-digital">Digital copy</label>
                                             <div id="products-edit_panel-product_type-digital-box" class="form-group">
                                                 <label for="products-edit_panel-quantity_in_stock">Download link</label>
@@ -270,10 +270,10 @@
                 //     $(tempPanel).find('#customers-edit_panel-roles').multiselect('select', $(tempRoles[i]).attr('role-name'));
                 // }
                 // console.log($(tempParent).find('.customers-item-enabled').val())
-                if ($(tempParent).find('.products-item-product_type').val() == 1) {
-                    $('#products-edit_panel-product_type-regular').prop('checked', true);
-                } else {
+                if ($(tempParent).find('.products-item-product_type').val() == "DIGITAL") {
                     $('#products-edit_panel-product_type-digital').prop('checked', true);
+                } else {
+                    $('#products-edit_panel-product_type-regular').prop('checked', true);
                 }
                 if (JSON.parse($(tempParent).find('.products-item-enabled').val())) {
                     $('#products-edit_panel-quantity-enable').prop('checked', true);

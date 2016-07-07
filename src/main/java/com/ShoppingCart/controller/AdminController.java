@@ -166,7 +166,7 @@ public class AdminController extends ControllerUtil {
 		
 		shoppingCartService.editProduct(toChangeProduct);
 		modelAndView.setViewName(
-				getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList("id", "name", "categoryId", "description", "price", "enabled", "productType")));
+				getRedirectLink("redirect:/admin/panel/products", request, Arrays.asList("id", "name", "categoryId", "description", "price", "enabled", "productType", "downloadLink")));
 		return modelAndView;
 	}
 

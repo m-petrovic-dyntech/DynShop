@@ -2,6 +2,8 @@ package com.ShoppingCart.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.ShoppingCart.util.ProductType;
 
 @Entity
 @Table(name="products")
@@ -32,7 +36,8 @@ public class Product {
 	private Boolean enabled;
 	
 	@Column(name="productType")
-	private Integer productType;
+	@Enumerated(EnumType.STRING)
+	private ProductType productType;
 	
 	@Column(name="downloadLink")
 	private String downloadLink;
@@ -95,13 +100,7 @@ public class Product {
 		this.category = category;
 	}
 	
-	public Integer getProductType() {
-		return productType;
-	}
 
-	public void setProductType(Integer productType) {
-		this.productType = productType;
-	}
 
 	public String getDownloadLink() {
 		return downloadLink;
@@ -125,6 +124,14 @@ public class Product {
 
 	public void setReservedQuantity(Integer reservedQuantity) {
 		this.reservedQuantity = reservedQuantity;
+	}
+
+	public ProductType getProductType() {
+		return productType;
+	}
+
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
 	}
 	
 }
