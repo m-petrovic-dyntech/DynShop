@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ShoppingCart.dao.StorageDao;
 import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Delivery;
-import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.ShoppingCart;
 
 @Repository
@@ -39,6 +38,7 @@ public class StorageDaoImpl implements StorageDao {
 		return sessionFactory.getCurrentSession();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Delivery> getPendingOrders() {

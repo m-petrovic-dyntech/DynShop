@@ -17,19 +17,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ShoppingCart.dto.JtoPagination;
 import com.ShoppingCart.entity.Customer;
-import com.ShoppingCart.entity.Product;
 import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.service.CustomerService;
 import com.ShoppingCart.util.ControllerUtil;
 
 @Controller
-public class AdminUserController extends ControllerUtil{
+public class AdminUserController extends ControllerUtil {
 	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@RequestMapping(value = { "/admin/panel/users" }, method = RequestMethod.GET)
 	public ModelAndView adminGetUsers(ModelAndView modelAndView, @RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size, HttpSession session) {
@@ -69,19 +68,19 @@ public class AdminUserController extends ControllerUtil{
 		modelAndView.setViewName("redirect:/admin_panel_users");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/addCustomer" }, method = RequestMethod.GET)
-	public ModelAndView adminAddCustomer(ModelAndView modelAndView, @ModelAttribute("customerAddModel") Customer customer,
-			HttpSession session) {
+	public ModelAndView adminAddCustomer(ModelAndView modelAndView,
+			@ModelAttribute("customerAddModel") Customer customer, HttpSession session) {
 
 		customerService.addCustomer(customer);
 		modelAndView.setViewName("redirect:/admin_panel_users");
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = { "/admin/panel/editCustomer" }, method = RequestMethod.GET)
-	public ModelAndView adminEditCustomer(ModelAndView modelAndView, @ModelAttribute("customerEditModel") Customer customer,
-			HttpSession session) {
+	public ModelAndView adminEditCustomer(ModelAndView modelAndView,
+			@ModelAttribute("customerEditModel") Customer customer, HttpSession session) {
 
 		customerService.editCustomer(customer);
 		modelAndView.setViewName("redirect:/admin_panel_users");

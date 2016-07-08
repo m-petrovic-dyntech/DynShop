@@ -15,7 +15,6 @@ import com.ShoppingCart.dao.RoleDao;
 import com.ShoppingCart.dao.UserDao;
 import com.ShoppingCart.dto.UserDetailsDto;
 import com.ShoppingCart.dto.UserDto;
-import com.ShoppingCart.entity.Customer;
 import com.ShoppingCart.entity.Municipality;
 import com.ShoppingCart.entity.Role;
 import com.ShoppingCart.entity.UserAccount;
